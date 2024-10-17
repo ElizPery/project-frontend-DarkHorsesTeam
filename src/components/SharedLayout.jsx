@@ -4,8 +4,9 @@ import Loader from '../components/Loader/Loader';
 
 export const SharedLayout = ({ children }) => {
     return (
-      <div>
-        <Suspense fallback={<Loader />}>{children}</Suspense>
-      </div>
+        <div>
+            <h1>Header</h1>
+            <Suspense fallback={<Loader />}>{children}</Suspense>
+        </div>
     );
 };
