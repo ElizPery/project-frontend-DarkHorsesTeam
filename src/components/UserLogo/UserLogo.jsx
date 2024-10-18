@@ -17,7 +17,7 @@ const UserLogo = () => {
         if (name) {
             return name.charAt(0).toUpperCase();
         } else if (email) {
-            return '@';
+            return email.charAt(0).toUpperCase();
         }
         return '?';
     };
@@ -28,7 +28,7 @@ const UserLogo = () => {
 
     return (
         <div className={css.userLogo}>
-            <span className={css.userLogoName}>{name || email}</span>
+            <span className={css.userLogoName}>{name || email.split('@')[0]}</span>
             <button className={css.userLogoButton} onClick={toggleModal}>
                 {photo ? (
                     <img className={css.userLogoAvatar} src={photo} alt={name} />

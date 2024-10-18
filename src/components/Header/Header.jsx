@@ -10,7 +10,10 @@ const Header = () => {
     const isLoading = useSelector(selectIsLoading);
     const isRefreshing = useSelector(selectIsRefreshing);
     const error = useSelector(selectError);
-
+// const isLoggedIn = true; 
+//     const isLoading = false;
+//     const isRefreshing = false;
+//     const error = null;
     if (isLoading || isRefreshing) {
         return (
             <header className={css.header}>
