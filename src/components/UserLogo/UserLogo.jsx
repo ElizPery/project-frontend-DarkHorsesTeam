@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 //import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import { selectUser } from "../../redux/auth/selectors.js";
 import css from "./UserLogo.module.css";
+import icons from '../../images/icons/icons.svg';
 const UserLogo = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const user = useSelector(selectUser);
@@ -16,7 +17,7 @@ const UserLogo = () => {
         if (name) {
             return name.charAt(0).toUpperCase();
         } else if (email) {
-            return email.charAt(0).toUpperCase()
+            return '@';
         }
         return '?';
     };
@@ -35,7 +36,7 @@ const UserLogo = () => {
                     <div className={css.userLogoInitial}>{getInitials()}</div>
                 )}
                 <svg className={css.userLogoIcon} width="16" height="16">
-                    <use href="../../../images/icons/icons.svg#icon-chevron-double-up" />
+                    <use href={`${icons}#icon-chevron-double-up`} />
                 </svg>
             </button>
             {isModalOpen && <h2>Modal</h2>}
