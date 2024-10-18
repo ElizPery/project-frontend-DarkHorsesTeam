@@ -1,0 +1,86 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+.section {
+  position: relative;
+  padding: 26px 20px;
+  height: 94vh;
+  overflow: hidden;
+}
+
+.title {
+  color: var(--primary-black);
+  font-family: 'Roboto', sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.23;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.bg_point {
+  position: absolute;
+  top: 50px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 100vw;
+  z-index: -2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.bg_bottle {
+  margin-top: 60px;
+  position: relative;
+  right: -50%;
+  transform: translateX(-50%);
+  z-index: -2;
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1439px) {
+  .section {
+    position: static;
+    padding: 40px 32px;
+  }
+
+  .point {
+    display: none;
+  }
+
+  .bg_bottle {
+    position: absolute;
+    margin: 0;
+    top: -28px;
+    transform: translateX(-50%);
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .section {
+    display: flex;
+    justify-content: end;
+    padding: 174px 216px;
+    position: relative;
+  }
+
+  .point {
+    display: block;
+  }
+
+  .bg_point {
+    top: 0;
+    width: 97.5vw;
+  }
+
+  .bg_bottle {
+    position: absolute;
+    margin: 0;
+    bottom: 40px;
+    left: 316px;
+    width: 49.3vw;
+  }
+}
