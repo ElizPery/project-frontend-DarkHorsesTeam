@@ -1,0 +1,60 @@
+.userLogo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.userLogoButton {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+.userLogoAvatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.userLogoInitial {
+
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #d0bebe;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary-black);
+    border: 2px solid var(--primary-black);
+}
+
+.userLogoName {
+    color: var(--primary-black);
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+
+.userLogoIcon {
+    width: 16px;
+    height: 16px;
+    stroke: var(--primary-blue);
+}
+@media screen and (min-width: 768px) {
+.userLogoName{
+    font-size: 18px;
+    line-height: 24px;
+}
+}
+
+@media screen and (min-width: 1280px) {
+
+}
