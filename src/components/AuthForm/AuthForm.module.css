@@ -1,0 +1,139 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--primary-black);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.33;
+  text-align: left;
+}
+
+.field_email,
+.field_pwd {
+  border: 1px solid var(--secondary-light-blue);
+  background-color: var(--primary-white);
+  border-radius: 6px;
+  padding: 12px 10px;
+  color: var(--primary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.field_email:focus,
+.field_email:active,
+.field_pwd:focus,
+.field_pwd:active {
+  outline: none;
+}
+
+.field_pwd::placeholder,
+.field_email::placeholder {
+  color: var(--secondary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.pwd_btn {
+  position: absolute;
+  top: 44px;
+  right: 10px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pwd_btn_icon {
+  stroke: var(--primary-blue);
+  fill: transparent;
+  width: 16px;
+  height: 16px;
+}
+
+.btn {
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px 0px var(--primary-blue);
+  background: var(--primary-blue);
+  -webkit-tap-highlight-color: transparent;
+  color: var(--primary-white);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  padding: 8px 30px;
+}
+
+.btn:hover {
+  box-shadow: 0px 4px 14px 0px var(--primary-blue);
+}
+
+.btn:active {
+  box-shadow: none;
+}
+
+.link {
+  color: var(--primary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+
+  max-width: fit-content;
+}
+
+.link:hover,
+.link:focus,
+.link:active {
+  color: var(--secondary-orange);
+}
+
+.error_message {
+  color: var(--secondary-red);
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+  text-align: left;
+}
+
+.field_email.error,
+.field_pwd.error {
+  border-color: var(--secondary-red);
+  color: var(--secondary-red);
+}
+
+.pwd_btn_icon.error {
+  stroke: var(--secondary-red);
+}
+
+.field_email.error::placeholder,
+.field_pwd.error::placeholder {
+  color: var(--secondary-red);
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1439px) {
+  .form {
+    width: 43.75vw;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .form {
+    width: 26.67vw;
+  }
+}
