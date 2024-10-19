@@ -36,7 +36,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    setSubmitting(true); // Set submitting to true when starting the submission
+    setSubmitting(true);
     try {
       let userData;
 
@@ -54,14 +54,14 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
         };
       }
       await onSubmit(userData);
-      resetForm(); // Reset form after successful submission
-      navigate('/signin'); // Navigate only after successful submission
+      resetForm();
+      navigate('/signin');
     } catch (error) {
       console.error('Registration error:', error);
       const message = error.response?.data?.message || 'Registration failed';
-      setErrorMessage(message); // Set the error message to be displayed
+      setErrorMessage(message);
     } finally {
-      setSubmitting(false); // Always set submitting to false
+      setSubmitting(false);
     }
   };
 
