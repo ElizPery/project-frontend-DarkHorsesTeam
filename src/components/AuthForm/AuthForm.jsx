@@ -53,8 +53,6 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           password: values.password,
         };
       }
-
-      console.log(userData);
       await onSubmit(userData);
       resetForm(); // Reset form after successful submission
       navigate('/signin'); // Navigate only after successful submission
