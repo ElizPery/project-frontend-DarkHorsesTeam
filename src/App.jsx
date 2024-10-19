@@ -49,6 +49,6 @@ function App() {
       </Routes>
     </SharedLayout>
   );
-};
+}
 
 export default App;

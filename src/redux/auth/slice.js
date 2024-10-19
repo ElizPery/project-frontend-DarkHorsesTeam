@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn } from './operations.js';
+import { logIn, signUp } from './operations.js';
 import toast from 'react-hot-toast';
 
 const initialState = {
@@ -49,6 +49,14 @@ const authSlice = createSlice({
         toast.error(`Login failed: ${action.payload}`);
       })
       .addCase(logIn.fulfilled, handleFulfilled);
+    builder
+      .addCase(signUp.pending, handlePending)
+      .addCase(signUp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error(`Registration failed: ${action.payload}`);
+      })
+      .addCase(signUp.fulfilled, handleFulfilled);
     // .addCase(register.pending, handlePending)
   },
 });
