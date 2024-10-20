@@ -16,13 +16,13 @@ export default function WaterConsumptionTracker () {
             </li>
             <li className={css.item}>
                 <svg className={css.icons}>
-                    <use href={`${icons}#calendar-days/outline`}></use>
+                    <use href={`${icons}#presentation-chart-bar/outline`}></use>
                 </svg>
                 <p className={css.itemText}>View statistics</p>
             </li>
             <li className={css.item}>
                 <svg className={css.icons}>
-                    <use href={`${icons}#calendar-days/outline`}></use>
+                    <use href={`${icons}#wrench-screwdriver/outline`}></use>
                 </svg>
                 <p className={css.itemText}>Personal rate setting</p>
             </li>
