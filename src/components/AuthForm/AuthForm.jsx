@@ -24,7 +24,6 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
     setVisiblePass(prevVisiblePass => !prevVisiblePass);
   };
 
-  // Toggle repeat password visibility
   const toggleRepeatPasswordVisibility = () => {
     setVisibleRepeatPass(prevVisibleRepeatPass => !prevVisibleRepeatPass);
   };
