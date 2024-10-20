@@ -1,0 +1,61 @@
+.container {
+    max-width: 320px;
+    padding: 24px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    background-image: url(../../images/welcomePage/background-mobile.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+}
+
+
+@media screen and (min-resolution:2dppx), (min-resolution:192dpi), (min-device-pixel-ratio: 2) {
+    .container {
+        background-image: url(../../images/welcomePage/background-mobile_2x.png);
+    }
+}
+
+/* TABLET */
+
+@media screen and (min-width:768px) {
+    .container {
+        max-width: 768px;
+        gap: 60px;
+        padding: 40px 32px 50px 32px;
+        background-image: url(../../images/welcomePage/background-tablet.png);
+        background-size: 768px;
+    }
+
+@media screen and (min-resolution:2dppx),
+(min-resolution:192dpi),
+(min-device-pixel-ratio: 2) {
+    .container {
+        background-image: url(../../images/welcomePage/background-tablet_2x.png);
+        }
+    }
+}
+
+/* PC */
+
+@media screen and (min-width:1440px) {
+    .container {
+        max-width: 1440px;
+        gap: 81px;
+        flex-direction: row;
+        padding: 80px 210px 294px 216px;
+        align-items: flex-end;
+        background-image: url(../../images/welcomePage/desk-background-main.png), url(../../images/welcomePage/background-main-desk.png);
+    }
+
+@media screen and (min-resolution:2dppx),
+(min-resolution:192dpi),
+(min-device-pixel-ratio: 2) {
+    .container {
+        background-image: url(../../images/welcomePage/desk-background-main_2x.png), url(../../images/welcomePage/background-main-desk_2x.png);
+        background-size: 1440px;
+    }
+}
+}
