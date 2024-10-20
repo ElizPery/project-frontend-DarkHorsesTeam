@@ -18,6 +18,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
     password: useId(),
     repeatPassword: useId(),
   };
+  const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -29,7 +30,9 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
   };
 
   const userSchema = Yup.object().shape({
-    email: Yup.string().email('Incorrect email').required('Email is required'),
+    email: Yup.string()
+      .matches(emailRegexp, 'Incorrect email format')
+      .required('Email is required'),
     password: Yup.string()
       .min(8, 'Too short')
       .max(64, 'Too long')
