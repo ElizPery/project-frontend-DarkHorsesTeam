@@ -10,19 +10,19 @@ export default function WaterConsumptionTracker () {
         <ul className={css.list}>
             <li className={css.item}>
                 <svg className={css.icons}>
-                    <use href={`${icons}#calendar-days/outline`}></use>
+                    <use href={`${icons}#icon-habit-drive`}></use>
                 </svg>
                 <p className={css.itemText}>Habit drive</p>
             </li>
             <li className={css.item}>
                 <svg className={css.icons}>
-                    <use href={`${icons}#presentation-chart-bar/outline`}></use>
+                    <use href={`${icons}#icon-view-statistics`}></use>
                 </svg>
                 <p className={css.itemText}>View statistics</p>
             </li>
             <li className={css.item}>
                 <svg className={css.icons}>
-                    <use href={`${icons}#wrench-screwdriver/outline`}></use>
+                    <use href={`${icons}#icon-personal-rate-setting`}></use>
                 </svg>
                 <p className={css.itemText}>Personal rate setting</p>
             </li>
