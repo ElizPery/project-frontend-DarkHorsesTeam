@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
 export const signUp = createAsyncThunk(
   'auth/register',
   async (userData, thunkAPI) => {
