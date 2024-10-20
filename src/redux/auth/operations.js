@@ -10,7 +10,22 @@ export const signUp = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 409) {
+          return thunkAPI.rejectWithValue(
+            'This email is already registered. Please sign in.'
+          );
+        }
+        if (status === 400) {
+          return thunkAPI.rejectWithValue(
+            'Invalid data provided. Please check your inputs.'
+          );
+        }
+      }
+      return thunkAPI.rejectWithValue(
+        'Something went wrong. Please try again.'
+      );
     }
   }
 );
