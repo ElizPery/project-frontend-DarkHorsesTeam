@@ -4,10 +4,26 @@ import { logoutUser } from '../../redux/auth/operations';
 import { MODAL_NAME } from '../../constants';
 import { useTranslation } from 'react-i18next';
 import { IoClose } from 'react-icons/io5';
+import { useEffect, useCallback } from 'react';
 
 const LogOutModal = ({ onClose }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const handleEscKey = useCallback((e) => {
+    if (e.key === 'Escape') {
+      //onClose();
+      onClose(MODAL_NAME.LOGOUT_MODAL);
+    }
+  }, [onClose]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [handleEscKey]);
+
 
   const handleLogout = () => {
     dispatch(logoutUser());
