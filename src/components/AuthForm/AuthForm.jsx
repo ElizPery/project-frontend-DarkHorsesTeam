@@ -10,9 +10,9 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
   const [inputValue, setInputValue] = useState('');
   const [maskedValue, setMaskedValue] = useState('');
   const [visiblePass, setVisiblePass] = useState(false);
-  const [inputRepeatValue, setInputRepeatValue] = useState(''); // Actual repeat password
-  const [maskedRepeatValue, setMaskedRepeatValue] = useState(''); // Masked repeat password
-  const [visibleRepeatPass, setVisibleRepeatPass] = useState(false); // Manages visibility of repeat password
+  const [inputRepeatValue, setInputRepeatValue] = useState('');
+  const [maskedRepeatValue, setMaskedRepeatValue] = useState('');
+  const [visibleRepeatPass, setVisibleRepeatPass] = useState(false);
   const fieldId = {
     email: useId(),
     password: useId(),
@@ -21,12 +21,12 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
-    setVisiblePass(prevVisiblePass => !prevVisiblePass); // Toggles visibility for main password
+    setVisiblePass(prevVisiblePass => !prevVisiblePass);
   };
 
   // Toggle repeat password visibility
   const toggleRepeatPasswordVisibility = () => {
-    setVisibleRepeatPass(prevVisibleRepeatPass => !prevVisibleRepeatPass); // Toggles visibility for repeat password
+    setVisibleRepeatPass(prevVisibleRepeatPass => !prevVisibleRepeatPass);
   };
 
   const userSchema = Yup.object().shape({
@@ -142,34 +142,31 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
               <Field name="password">
                 {({ field, form }) => (
                   <input
-                    type="text" // Always use type='text' because we're manually handling the masking
+                    type="text"
                     {...field}
                     className={`${styles.field_pwd} ${
                       touched.password && errors.password ? styles.error : ''
                     }`}
                     id={fieldId.password}
                     placeholder="Password"
-                    value={visiblePass ? inputValue : maskedValue} // Show masked or actual password
-                    onChange={e => handleInputChange(e, form.setFieldValue)} // Call the input handler
+                    value={visiblePass ? inputValue : maskedValue}
+                    onChange={e => handleInputChange(e, form.setFieldValue)}
                   />
                 )}
               </Field>
-              {/* Toggle Password Visibility Button */}
               <button
                 className={styles.pwd_btn}
                 type="button"
-                onClick={togglePasswordVisibility} // Toggles visibility on click
+                onClick={togglePasswordVisibility}
                 title={visiblePass ? 'Hide password' : 'Show password'}
               >
                 {visiblePass ? (
                   <svg className={styles.pwd_btn_icon}>
                     <use href={`${icons}#icon-eye`}></use>{' '}
-                    {/* Show "eye" icon when password is visible */}
                   </svg>
                 ) : (
                   <svg className={styles.pwd_btn_icon}>
                     <use href={`${icons}#icon-eye-slash`}></use>{' '}
-                    {/* Show "eye-slash" icon when hidden */}
                   </svg>
                 )}
               </button>
@@ -181,7 +178,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
                 <Field name="repeatPassword">
                   {({ field, form }) => (
                     <input
-                      type="text" // Always type='text' since we manually handle masking
+                      type="text"
                       {...field}
                       className={`${styles.field_pwd} ${
                         touched.repeatPassword && errors.repeatPassword
@@ -192,29 +189,26 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
                       placeholder="Repeat password"
                       value={
                         visibleRepeatPass ? inputRepeatValue : maskedRepeatValue
-                      } // Toggle between masked and actual password
+                      }
                       onChange={e =>
                         handleRepeatInputChange(e, form.setFieldValue)
-                      } // Input handler for repeat password
+                      }
                     />
                   )}
                 </Field>
-                {/* Toggle Button for Repeat Password */}
                 <button
                   className={styles.pwd_btn}
                   type="button"
-                  onClick={toggleRepeatPasswordVisibility} // Toggles visibility for repeat password
+                  onClick={toggleRepeatPasswordVisibility}
                   title={visibleRepeatPass ? 'Hide password' : 'Show password'}
                 >
                   {visibleRepeatPass ? (
                     <svg className={styles.pwd_btn_icon}>
                       <use href={`${icons}#icon-eye`}></use>{' '}
-                      {/* "Eye" icon for showing password */}
                     </svg>
                   ) : (
                     <svg className={styles.pwd_btn_icon}>
                       <use href={`${icons}#icon-eye-slash`}></use>{' '}
-                      {/* "Eye-slash" icon for hiding password */}
                     </svg>
                   )}
                 </button>
