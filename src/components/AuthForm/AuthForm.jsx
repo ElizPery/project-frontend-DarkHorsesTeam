@@ -172,6 +172,11 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
                   </svg>
                 )}
               </button>
+              <ErrorMessage
+                className={styles.error_message}
+                name="password"
+                component="span"
+              />
             </label>
             {/* Repeat Password Field */}
             {submitButtonLabel === 'Sign up' && (
