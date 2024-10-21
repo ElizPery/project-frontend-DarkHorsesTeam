@@ -11,11 +11,39 @@ const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = '';
 };
 
+export const signUp = createAsyncThunk(
+  'auth/register',
+  async (userData, thunkAPI) => {
+    try {
+      const response = await axios.post('auth/register', userData);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        const status = error.response.status;
+        if (status === 409) {
+          return thunkAPI.rejectWithValue(
+            'This email is already registered. Please sign in.'
+          );
+        }
+        if (status === 400) {
+          return thunkAPI.rejectWithValue(
+            'Invalid data provided. Please check your inputs.'
+          );
+        }
+      }
+      return thunkAPI.rejectWithValue(
+        'Something went wrong. Please try again.'
+      );
+    }
+  }
+);
+
 export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, thunkApi) => {
     try {
-      await axios.post("/auth/logout");
+      await axios.post("auth/logout");
 
       clearAuthHeader();
 
