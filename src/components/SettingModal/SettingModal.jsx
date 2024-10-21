@@ -2,14 +2,18 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './SettingModal.module.css';
 import icons from '../../images/icons/icons.svg';
-const SettingModal = ({ isOpen, onClose }) => { //userData
+import * as Yup from 'yup';
+
+const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+const SettingModal = ({ isOpen, onClose }) => {
     const [photo, setPhoto] = useState(null);
-    const [gender, setGender] = useState('Woman');
+    const [gender, setGender] = useState('woman');
     const [name, setName] = useState('David');
     const [email, setEmail] = useState('david01@gmail.com');
-    const [outdatedPassword, setOutdatedPassword] = useState('Password'); 
-    const [newPassword, setNewPassword] = useState('Password'); 
-    const [repeatPassword, setRepeatPassword] = useState('Password'); 
+    const [outdatedPassword, setOutdatedPassword] = useState('Password');
+    const [newPassword, setNewPassword] = useState('Password');
+    const [repeatPassword, setRepeatPassword] = useState('Password');
     const [visibleOutdatedPassword, setVisibleOutdatedPassword] = useState(false);
     const [visibleNewPassword, setVisibleNewPassword] = useState(false);
     const [visibleRepeatPassword, setVisibleRepeatPassword] = useState(false);
@@ -17,89 +21,93 @@ const SettingModal = ({ isOpen, onClose }) => { //userData
     const [serverError, setServerError] = useState(null);
     useEffect(() => {
         if (isOpen) {
-            // Отримуємо дані користувача
             fetchUserData();
         }
     }, [isOpen]);
     const fetchUserData = async () => {
         try {
-            const response = await axios.get('https://project-backend-darkhorsesteam.onrender.com/user', {
-                headers: {
-                    // Authorization: `Bearer ${token}`, // Додаємо токен в заголовок
-                },
-            });
-            const userData = response.data.data;
-            setPhoto(userData.photo);
-            setGender(userData.gender);
-            setName(userData.name);
-            setEmail(userData.email);
+            const response = await axios.get('https://project-backend-darkhorsesteam.onrender.com/user');
+            const userData = response.data.data || {};
+
+            // Використовуємо актуальні дані або значення за замовчуванням
+            setPhoto(userData.photo || null);
+            setGender(userData.gender || 'woman');
+            setName(userData.name || 'David');
+            setEmail(userData.email || 'david01@gmail.com');
         } catch (error) {
-            if (error.response) {
-                if (error.response.status === 401) {
-                  //  setServerError('Authorization header is not found');
-                } else if (error.response.status === 404) {
-                    setServerError('User not found');
+            console.error(error.response?.data || error.message);
+            setServerError('Failed to fetch user data. Please try again.');
+
+            // Використовуємо значення за замовчуванням у разі помилки
+            setName('David');
+            setEmail('david01@gmail.com');
+        }
+    };
+    const handlePhotoChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append('photo', file);
+            setPhoto(URL.createObjectURL(file)); // Оновлення попереднього перегляду фото
+            try {
+                const response = await axios.patch('https://project-backend-darkhorsesteam.onrender.com/user/change-photo', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                // Якщо фото оновлено успішно, оновлюємо локальне фото
+                if (response.data.status === 200) {
+                    setPhoto(response.data.data.photo);
                 }
-            } else {
-                setServerError('Failed to fetch user data. Please try again.');
+            } catch (error) {
+                console.error(error.response?.data || error.message);
+                setServerError('Failed to update photo. Please try again.');
             }
         }
     };
-    const handlePhotoChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setPhoto(URL.createObjectURL(file)); // Оновлюємо фото
-            const formData = new FormData();
-            formData.append('photo', file);
-            // Відправка фото на бекенд
-            // axios.patch('https://project-backend-darkhorsesteam.onrender.com/user/change-photo', formData, {
-            //     headers: {
-            //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-            //     },
-            // });
+    const validateUserUpdate = async (data) => {
+        const schema = Yup.object().shape({
+            name: Yup.string().min(3).max(32).optional(),
+            email: Yup.string().matches(emailRegexp, 'Incorrect email format'),
+            currentPwd: Yup.string().min(8, 'Too short').max(64, 'Too long').required('Old password is required'),
+            password: Yup.string().min(8, 'Too short').max(64, 'Too long').optional(),
+            gender: Yup.string().oneOf(['man', 'woman']).optional(),
+        });
+        try {
+            await schema.validate(data, { abortEarly: false });
+            return {};
+        } catch (err) {
+            const validationErrors = {};
+            err.inner.forEach((error) => {
+                validationErrors[error.path] = error.message;
+            });
+            return validationErrors;
         }
     };
-    const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
-    const validatePassword = (password) => password.length >= 8 && password.length <= 64;
-    const validateName = (name) => name.length <= 32;
     const handleSave = async () => {
-        const newErrors = {};
-        if (!validateEmail(email)) newErrors.email = 'Invalid email';
-        if (!validatePassword(newPassword)) newErrors.password = 'Password must be between 8 and 64 characters';
-        if (!validateName(name)) newErrors.name = 'Name must be at most 32 characters';
-        if (!gender) newErrors.gender = 'Gender must be selected';
-        // Перевірка старого пароля
-        if (!outdatedPassword) {
-            newErrors.outdatedPassword = 'Please enter your outdated password';
-        } else {
-            // Логіка перевірки старого пароля
-            // const response = await axios.post('https://project-backend-darkhorsesteam.onrender.com/user/verify-password', { password: outdatedPassword }, {
-            //     headers: {
-            //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-            //     },
-            // });
-            // if (!response.data.isValid) {
-            //     newErrors.outdatedPassword = 'Invalid outdated password';
-            // }
+        const userData = {
+            name,
+            email,
+            gender,
+            currentPwd: outdatedPassword,
+            password: newPassword,
+        };
+        const validationErrors = await validateUserUpdate(userData);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
         }
-        setErrors(newErrors);
-        if (Object.keys(newErrors).length === 0) {
-            // Оновлення інформації користувача
-            // await axios.patch('https://project-backend-darkhorsesteam.onrender.com/user/update-info', {
-            //     name,
-            //     email,
-            //     gender,
-            //     currentPwd: outdatedPassword,
-            //     password: newPassword,
-            // }, {
-            //     headers: {
-            //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-            //     },
-            // });
+        try {
+            await axios.patch('https://project-backend-darkhorsesteam.onrender.com/user/update-info', userData);
             onClose(); // Закриваємо модальне вікно після успішного сабміту
+        } catch (error) {
+            console.error(error.response?.data || error.message);
+            if (error.response) {
+                setServerError(error.response.data.message || 'Failed to update user data.');
+            }
         }
     };
-    if (!isOpen) return null; // Якщо модальне вікно закрито, нічого не рендеримо
+    if (!isOpen) return null;
 
 return (
         <div className={styles.backdrop} onClick={onClose}>
@@ -112,7 +120,7 @@ return (
                         </svg>
                     </button>
                 </div>
-                {serverError && <p className={styles.error}>{serverError}</p>} {/* Виводимо помилку сервера */}
+                {serverError && <p className={styles.error}>{serverError}</p>}
                 <div className={styles.photoSection}>
                     <h2 className={styles.subtitle}>Your photo</h2>
                     <div className={styles.photoContainer}>
@@ -144,9 +152,9 @@ return (
                                     <input
                                         type="radio"
                                         name="gender"
-                                        value="Woman"
-                                        checked={gender === 'Woman'}
-                                        onChange={() => setGender('Woman')}
+                                        value="woman"
+                                        checked={gender === 'woman'}
+                                        onChange={() => setGender('woman')}
                                         className={styles.radioGroupItem}
                                     />
                                     Woman
@@ -155,9 +163,9 @@ return (
                                     <input
                                         type="radio"
                                         name="gender"
-                                        value="Man"
-                                        checked={gender === 'Man'}
-                                        onChange={() => setGender('Man')}
+                                        value="man"
+                                        checked={gender === 'man'}
+                                        onChange={() => setGender('man')}
                                         className={styles.radioGroupItem}
                                     />
                                     Man
@@ -198,7 +206,7 @@ return (
                                 onChange={(e) => setOutdatedPassword(e.target.value)}
                                 className={errors.outdatedPassword ? styles.errorInput : ''}
                             />
-                            {errors.outdatedPassword && <p className={styles.error}>{errors.outdatedPassword}</p>} {/* Виводимо помилку старого пароля */}
+                            {errors.outdatedPassword && <p className={styles.error}>{errors.outdatedPassword}</p>}
                             <svg
                                 className={styles.icon_eye}
                                 width={16}
@@ -214,9 +222,7 @@ return (
                                 type={visibleNewPassword ? 'text' : 'password'}
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
-                                className={errors.password ? styles.errorInput : ''}
                             />
-                            {errors.password && <p className={styles.error}>{errors.password}</p>}
                             <svg
                                 className={styles.icon_eye}
                                 width={16}
