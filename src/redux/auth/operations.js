@@ -1,15 +1,33 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = '';
+axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
 
-const setAuthHeader = token => {
+const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-// const clearAuthHeader = () => {
-//   axios.defaults.headers.common.Authorization = '';
-// };
+const clearAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = '';
+};
+
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, thunkApi) => {
+    try {
+      await axios.post("/auth/logout");
+
+      clearAuthHeader();
+
+      localStorage.removeItem('token');
+    } catch (error) {
+
+        return thunkApi.rejectWithValue(
+        error.response?.data?.message || 'Logout failed'
+      );
+    }
+  }
+);
 
 export const logIn = createAsyncThunk(
   'auth/logIn',
@@ -23,3 +41,4 @@ export const logIn = createAsyncThunk(
     }
   }
 );
+
