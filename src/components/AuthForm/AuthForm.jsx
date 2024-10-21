@@ -47,6 +47,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
+    setErrorMessage('');
     try {
       let userData;
 
@@ -57,23 +58,21 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           password: values.password,
           name,
         };
-
-        await onSubmit(userData);
-        navigate('/signin');
+        const result = await onSubmit(userData);
+        if (result?.error) {
+          setErrorMessage(result.error);
+        } else {
+          resetForm();
+          navigate('/signin');
+        }
       } else {
         userData = {
           email: values.email,
           password: values.password,
         };
-
-        await onSubmit(userData);
-        navigate('/home');
       }
-      resetForm();
-    } catch (error) {
-      console.error('Registration error:', error);
-      const message = error.response?.data?.message || 'Registration failed';
-      setErrorMessage(message);
+    } catch {
+      setErrorMessage('An unexpected error occurred');
     } finally {
       setSubmitting(false);
     }
