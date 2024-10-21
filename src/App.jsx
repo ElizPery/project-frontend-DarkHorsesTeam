@@ -1,4 +1,5 @@
 import { lazy, useEffect } from 'react';
+
 import { selectIsRefreshing } from './redux/auth/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import RefreshingPage from './pages/RefreshingPage/RefreshingPage';
@@ -45,10 +46,11 @@ function App() {
             <PrivateRoute component={<HomePage />} redirectTo="/signin" />
           }
         />
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </SharedLayout>
   );
-};
+}
 
 export default App;

@@ -1,5 +1,7 @@
+
 import { createSlice } from '@reduxjs/toolkit';
 import { logIn, fetchUser, updateUserInfo, changeUserPhoto, signUp, logoutUser } from './operations';
+import { createSlice } from "@reduxjs/toolkit";
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
@@ -8,7 +10,7 @@ axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
 const initialState = {
   user: {
     name: null,
-    email: null,
+    email: "eli@gmail.com",
     photo: null,
     gender: 'woman',
     weight: null,
@@ -16,7 +18,7 @@ const initialState = {
     dailyNorma: 1500,
   },
   token: null,
-  isLoggedIn: false,
+  isLoggedIn: true,
   isRefreshing: false,
   isLoading: false,
   isFetchingUser: false,
@@ -45,83 +47,86 @@ const handleFulfilledLogin = (state, action) => {
 
 
 const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  extraReducers: (builder) => {
-
-    // Authentication
-    builder
-      .addCase(signUp.pending, handlePending)
-      .addCase(signUp.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-        toast.error(`Sign up failed: ${action.payload}`);
-      })
-      .addCase(signUp.fulfilled, handleFulfilledLogin)
-      .addCase(logIn.pending, handlePending)
-      .addCase(logIn.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-        toast.error(`Login failed: ${action.payload}`);
-      })
-      .addCase(logIn.fulfilled, handleFulfilledLogin)
-      .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isLoggedIn = false;
-        state.token = null;
-        state.user = initialState.user; 
-      })
-      .addCase(logoutUser.rejected, (state, action) => {
-        state.isLoading = false;
-        toast.error(`Logout failed: ${action.payload}`);
-      });
-
-
-    // User 
-    builder
-      .addCase(fetchUser.pending, (state) => {
-        state.isFetchingUser = true;
-        state.fetchUserError = null;
-      })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isFetchingUser = false;
-      })
-      .addCase(fetchUser.rejected, (state, action) => {
-        state.isFetchingUser = false;
-        state.fetchUserError = action.payload;
-        toast.error(`Fetch user failed: ${action.payload}`);
-      })
-      .addCase(updateUserInfo.pending, (state) => {
-        state.isUpdatingInfo = true;
-        state.updateInfoError = null;
-      })
-      .addCase(updateUserInfo.fulfilled, (state, action) => {
-        state.user = { ...state.user, ...action.payload };
-        state.isUpdatingInfo = false;
-      })
-      .addCase(updateUserInfo.rejected, (state, action) => {
-        state.isUpdatingInfo = false;
-        state.updateInfoError = action.payload;
-        toast.error(`Update info failed: ${action.payload}`);
-      })
-      .addCase(changeUserPhoto.pending, (state) => {
-        state.isChangingPhoto = true;
-        state.changePhotoError = null;
-      })
-      .addCase(changeUserPhoto.fulfilled, (state, action) => {
-        state.user.photo = action.payload.photo;
-        state.isChangingPhoto = false;
-      })
-      .addCase(changeUserPhoto.rejected, (state, action) => {
-        state.isChangingPhoto = false;
-        state.changePhotoError = action.payload;
-        toast.error(`Change photo failed: ${action.payload}`);
-      });
-  },
-});
+    name: "auth",
+    initialState,
+  
+    extraReducers: (builder) => {
+      builder
+        .addCase(logIn.pending, handlePending)
+        .addCase(logIn.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+          toast.error(`Login failed: ${action.payload}`);
+        })
+        .addCase(logIn.fulfilled, handleFulfilled)
+        .addCase(signUp.pending, handlePending)
+        .addCase(signUp.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+          toast.error(`Registration failed: ${action.payload}`);
+        })
+        .addCase(signUp.fulfilled, handleFulfilled)
+      // .addCase(register.pending, handlePending)
+        .addCase(logoutUser.fulfilled, (state) => {
+          state.user = initialState.user;
+          state.token = null;
+          state.isLoggedIn = false;
+          state.isRefreshing = false;
+          state.isLoading = false; 
+          state.error = null;
+        })
+        .addCase(logoutUser.pending, (state) => {
+          state.isLoading = true;
+          state.error = null;
+        })
+        .addCase(logoutUser.rejected, (state, action) => {
+          state.user = initialState.user;
+          state.token = null;
+          state.isLoggedIn = false;
+          state.isRefreshing = false;
+          state.isLoading = false;
+          state.error = action.payload;
+        })
+        .addCase(fetchUser.pending, (state) => {
+          state.isFetchingUser = true;
+          state.fetchUserError = null;
+        })
+        .addCase(fetchUser.fulfilled, (state, action) => {
+          state.user = action.payload;
+          state.isFetchingUser = false;
+        })
+        .addCase(fetchUser.rejected, (state, action) => {
+          state.isFetchingUser = false;
+          state.fetchUserError = action.payload;
+          toast.error(`Fetch user failed: ${action.payload}`);
+        })
+        .addCase(updateUserInfo.pending, (state) => {
+          state.isUpdatingInfo = true;
+          state.updateInfoError = null;
+        })
+        .addCase(updateUserInfo.fulfilled, (state, action) => {
+          state.user = { ...state.user, ...action.payload };
+          state.isUpdatingInfo = false;
+        })
+        .addCase(updateUserInfo.rejected, (state, action) => {
+          state.isUpdatingInfo = false;
+          state.updateInfoError = action.payload;
+          toast.error(`Update info failed: ${action.payload}`);
+        })
+        .addCase(changeUserPhoto.pending, (state) => {
+          state.isChangingPhoto = true;
+          state.changePhotoError = null;
+        })
+        .addCase(changeUserPhoto.fulfilled, (state, action) => {
+          state.user.photo = action.payload.photo;
+          state.isChangingPhoto = false;
+        })
+        .addCase(changeUserPhoto.rejected, (state, action) => {
+          state.isChangingPhoto = false;
+          state.changePhotoError = action.payload;
+          toast.error(`Change photo failed: ${action.payload}`);
+        });
+    },
+  })
 
 export default authSlice.reducer;

@@ -70,7 +70,6 @@ export const logIn = createAsyncThunk(
   }
 );
 
-//user
 export const fetchUser = createAsyncThunk(
   'auth/fetchUser',
   async (_, thunkAPI) => {
