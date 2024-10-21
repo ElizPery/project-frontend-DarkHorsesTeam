@@ -1,4 +1,5 @@
 .container {
+    margin: 0 auto;
     max-width: 320px;
     padding: 24px 20px 40px 20px;
     display: flex;
@@ -48,14 +49,12 @@
         padding: 80px 210px 294px 216px;
         align-items: flex-end;
         background-image: url(../../images/welcomePage/desk-background-main.png), url(../../images/welcomePage/background-main-desk.png);
+        background-size: 1440px;
     }
 
-@media screen and (min-resolution:2dppx),
-(min-resolution:192dpi),
-(min-device-pixel-ratio: 2) {
+@media screen and (min-resolution:2dppx), (min-resolution:192dpi), (min-device-pixel-ratio: 2) {
     .container {
         background-image: url(../../images/welcomePage/desk-background-main_2x.png), url(../../images/welcomePage/background-main-desk_2x.png);
-        background-size: 1440px;
     }
 }
 }
