@@ -1,0 +1,50 @@
+.userMenu {
+  position: absolute;
+  bottom: -95px;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  width: 118px;
+  padding: 16px;
+  box-shadow: 0px 4px 8px 0px #407bff33;
+}
+
+.menuItem1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  justify-content: center;
+  align-items: center;
+  color: #407bff;
+}
+
+.menuItem2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  color: #407bff;
+}
+
+.icon {
+  font-size: 16px;
+  margin-right: 8px;
+  color: currentColor;
+}
+
+.text {
+  font-family: Roboto;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 400px;
+  color: currentColor;
+}
+
+.menuItem1:hover {
+  color: #ff9d43;
+}
+
+.menuItem2:hover {
+  color: #ff9d43;
+}
