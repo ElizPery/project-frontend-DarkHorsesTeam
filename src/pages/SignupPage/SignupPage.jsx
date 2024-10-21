@@ -13,6 +13,7 @@ import deskBackground1x from '../../images/signinPage/background-sign-in-desk.pn
 import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x.png';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../redux/auth/operations.js';
+import { Toaster } from 'react-hot-toast';
 
 export default function SignupPage() {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ export default function SignupPage() {
             alt="Background element"
           />
         </picture>
+        <Toaster position="top-center" reverseOrder={false} />
       </div>
     </section>
   );
