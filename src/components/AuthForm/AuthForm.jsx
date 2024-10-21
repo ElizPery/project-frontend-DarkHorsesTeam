@@ -27,8 +27,28 @@ export default function AuthForm() {
 
   const handleSubmit = (values, actions) => {
     try {
-      const userData = { email: values.email, password: values.password };
-      dispatch(logIn(userData));
+      let userData;
+
+      if (submitButtonLabel === 'Sign up') {
+        const name = values.email.split('@')[0];
+        userData = {
+          email: values.email,
+          password: values.password,
+          name,
+        };
+
+        await onSubmit(userData);
+        navigate('/signin');
+      } else {
+        userData = {
+          email: values.email,
+          password: values.password,
+        };
+
+        await onSubmit(userData);
+        navigate('/home');
+      }
+      resetForm();
     } catch (error) {
       console.log(error);
     }
