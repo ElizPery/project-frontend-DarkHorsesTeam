@@ -70,13 +70,6 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           email: values.email,
           password: values.password,
         };
-        const result = await onSubmit(userData);
-        if (result?.error) {
-          setErrorMessage(result.error);
-        } else {
-          resetForm();
-          navigate('/home');
-        }
       }
     } catch {
       setErrorMessage('An unexpected error occurred');
