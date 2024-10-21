@@ -68,3 +68,37 @@ export const logIn = createAsyncThunk(
     }
   }
 );
+
+export const fetchUser = createAsyncThunk(
+  'auth/fetchUser',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('user');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const updateUserInfo = createAsyncThunk(
+  'auth/updateUserInfo',
+  async (userInfo, thunkAPI) => {
+    try {
+      const response = await axios.patch('user/update-info', userInfo);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const changeUserPhoto = createAsyncThunk(
+  'auth/changeUserPhoto',
+  async (photoData, thunkAPI) => {
+    try {
+      const response = await axios.patch('user/change-photo', photoData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
