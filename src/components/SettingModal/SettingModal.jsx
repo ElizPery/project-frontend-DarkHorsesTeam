@@ -1,70 +1,64 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 import styles from './SettingModal.module.css';
 import icons from '../../images/icons/icons.svg';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { updateUserInfo, changeUserPhoto, fetchUser } from '../../redux/auth/operations'; 
+import { selectUser, selectError, selectIsUpdatingInfo, selectIsChangingPhoto } from '../../redux/auth/selectors'; 
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+
 const SettingModal = ({ isOpen, onClose }) => {
-    const [photo, setPhoto] = useState(null);
-    const [gender, setGender] = useState('woman');
-    const [name, setName] = useState('David');
-    const [email, setEmail] = useState('david01@gmail.com');
-    const [outdatedPassword, setOutdatedPassword] = useState('Password');
-    const [newPassword, setNewPassword] = useState('Password');
-    const [repeatPassword, setRepeatPassword] = useState('Password');
-    const [visibleOutdatedPassword, setVisibleOutdatedPassword] = useState(false);
-    const [visibleNewPassword, setVisibleNewPassword] = useState(false);
-    const [visibleRepeatPassword, setVisibleRepeatPassword] = useState(false);
-    const [errors, setErrors] = useState({});
-    const [serverError, setServerError] = useState(null);
+
+    const dispatch = useDispatch(); // Використовуємо хук для доступу до dispatch
+    const user = useSelector(selectUser); // Отримуємо користувача з Redux
+    const error = useSelector(selectError); // Отримуємо помилки з Redux
+    const isUpdating = useSelector(selectIsUpdatingInfo); // Статус оновлення
+    const isChangingPhoto = useSelector(selectIsChangingPhoto); // Статус зміни фото
+
+    const [photo, setPhoto] = useState(user.photo); 
+
+    const [gender, setGender] = useState(user.gender || 'woman'); 
+    const [name, setName] = useState(user.name || 'David'); 
+    const [email, setEmail] = useState(user.email || 'david01@gmail.com'); 
+
+    const [outdatedPassword, setOutdatedPassword] = useState('Password'); 
+    const [newPassword, setNewPassword] = useState('Password'); 
+    const [repeatPassword, setRepeatPassword] = useState('Password'); 
+
+    const [visibleOutdatedPassword, setVisibleOutdatedPassword] = useState(false); 
+    const [visibleNewPassword, setVisibleNewPassword] = useState(false); 
+    const [visibleRepeatPassword, setVisibleRepeatPassword] = useState(false); 
+
+
+    const [errors, setErrors] = useState({}); // Об'єкт помилок
     useEffect(() => {
         if (isOpen) {
-            fetchUserData();
+            dispatch(fetchUser()); // Отримуємо дані користувача при відкритті модального вікна
         }
-    }, [isOpen]);
-    const fetchUserData = async () => {
-        try {
-            const response = await axios.get('https://project-backend-darkhorsesteam.onrender.com/user');
-            const userData = response.data.data || {};
+    }, [isOpen, dispatch]);
+    useEffect(() => {
+        setPhoto(user.photo); // Оновлюємо фото, якщо дані користувача змінюються
+        setGender(user.gender || 'woman');
+        setName(user.name || 'David');
+        setEmail(user.email || 'david01@gmail.com');
+    }, [user]);
 
-            // Використовуємо актуальні дані або значення за замовчуванням
-            setPhoto(userData.photo || null);
-            setGender(userData.gender || 'woman');
-            setName(userData.name || 'David');
-            setEmail(userData.email || 'david01@gmail.com');
-        } catch (error) {
-            console.error(error.response?.data || error.message);
-            setServerError('Failed to fetch user data. Please try again.');
-
-            // Використовуємо значення за замовчуванням у разі помилки
-            setName('David');
-            setEmail('david01@gmail.com');
-        }
-    };
+    
     const handlePhotoChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
             const formData = new FormData();
             formData.append('photo', file);
             setPhoto(URL.createObjectURL(file)); // Оновлення попереднього перегляду фото
-            try {
-                const response = await axios.patch('https://project-backend-darkhorsesteam.onrender.com/user/change-photo', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                });
-                // Якщо фото оновлено успішно, оновлюємо локальне фото
-                if (response.data.status === 200) {
-                    setPhoto(response.data.data.photo);
-                }
-            } catch (error) {
-                console.error(error.response?.data || error.message);
-                setServerError('Failed to update photo. Please try again.');
-            }
+            dispatch(changeUserPhoto(formData)); // Використовуємо Redux для зміни фото
         }
     };
+
+
     const validateUserUpdate = async (data) => {
         const schema = Yup.object().shape({
             name: Yup.string().min(3).max(32).optional(),
@@ -73,6 +67,7 @@ const SettingModal = ({ isOpen, onClose }) => {
             password: Yup.string().min(8, 'Too short').max(64, 'Too long').optional(),
             gender: Yup.string().oneOf(['man', 'woman']).optional(),
         });
+
         try {
             await schema.validate(data, { abortEarly: false });
             return {};
@@ -84,6 +79,8 @@ const SettingModal = ({ isOpen, onClose }) => {
             return validationErrors;
         }
     };
+
+
     const handleSave = async () => {
         const userData = {
             name,
@@ -97,19 +94,15 @@ const SettingModal = ({ isOpen, onClose }) => {
             setErrors(validationErrors);
             return;
         }
-        try {
-            await axios.patch('https://project-backend-darkhorsesteam.onrender.com/user/update-info', userData);
-            onClose(); // Закриваємо модальне вікно після успішного сабміту
-        } catch (error) {
-            console.error(error.response?.data || error.message);
-            if (error.response) {
-                setServerError(error.response.data.message || 'Failed to update user data.');
-            }
-        }
+        dispatch(updateUserInfo(userData)); // Використовуємо Redux для оновлення інформації про користувача
+        onClose(); 
     };
-    if (!isOpen) return null;
 
-return (
+
+    if (!isOpen) return null; 
+
+
+    return (
         <div className={styles.backdrop} onClick={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
@@ -120,7 +113,7 @@ return (
                         </svg>
                     </button>
                 </div>
-                {serverError && <p className={styles.error}>{serverError}</p>}
+                {error && <p className={styles.error}>{error}</p>} {/* Відображення помилки */}
                 <div className={styles.photoSection}>
                     <h2 className={styles.subtitle}>Your photo</h2>
                     <div className={styles.photoContainer}>
@@ -143,6 +136,8 @@ return (
                         </label>
                     </div>
                 </div>
+
+
                 <div className={styles.inputSectionBlock}>
                     <div className={styles.genderNameSectionBlock}>
                         <div className={styles.genderSection}>
@@ -173,6 +168,8 @@ return (
                             </div>
                             {errors.gender && <p className={styles.error}>{errors.gender}</p>}
                         </div>
+
+
                         <div className={styles.inputSection}>
                             <label className={styles.subtitle}>
                                 Your name
@@ -184,6 +181,8 @@ return (
                                 />
                                 {errors.name && <p className={styles.error}>{errors.name}</p>}
                             </label>
+
+
                             <label className={styles.subtitle}>
                                 E-mail
                                 <input
@@ -196,6 +195,8 @@ return (
                             </label>
                         </div>
                     </div>
+
+
                     <div className={styles.passwordSection}>
                         <h2 className={styles.subtitle}>Password</h2>
                         <label className={styles.icon_label}>
@@ -250,8 +251,10 @@ return (
                         </label>
                     </div>
                 </div>
+
+
                 <div className={styles.saveButtonContainer}>
-                    <button className={styles.saveButton} onClick={handleSave}>
+                    <button className={styles.saveButton} onClick={handleSave} disabled={isUpdating || isChangingPhoto}>
                         Save
                     </button>
                 </div>
@@ -259,4 +262,6 @@ return (
         </div>
     );
 };
+
+
 export default SettingModal;

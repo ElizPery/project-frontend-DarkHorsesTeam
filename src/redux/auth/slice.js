@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn } from './operations.js';
+import { logIn, fetchUser, updateUserInfo, changeUserPhoto, signUp, logoutUser } from './operations';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
+
+axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
 const initialState = {
   user: {
     name: null,
@@ -16,20 +19,23 @@ const initialState = {
   isLoggedIn: false,
   isRefreshing: false,
   isLoading: false,
+  isFetchingUser: false,
+  isUpdatingInfo: false,
+  isChangingPhoto: false,
   error: null,
+  fetchUserError: null,
+  updateInfoError: null,
+  changePhotoError: null,
 };
 
-const handlePending = state => {
+
+const handlePending = (state) => {
   state.isLoading = true;
   state.error = null;
 };
 
-// const handleRejected = (state, action) => {
-//   state.isLoading = false;
-//   state.error = action.payload;
-// };
 
-const handleFulfilled = (state, action) => {
+const handleFulfilledLogin = (state, action) => {
   state.user = action.payload.user;
   state.token = action.payload.token;
   state.isLoading = false;
@@ -37,19 +43,84 @@ const handleFulfilled = (state, action) => {
   state.error = null;
 };
 
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: builder => {
+  extraReducers: (builder) => {
+
+    // Authentication
     builder
+      .addCase(signUp.pending, handlePending)
+      .addCase(signUp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error(`Sign up failed: ${action.payload}`);
+      })
+      .addCase(signUp.fulfilled, handleFulfilledLogin)
       .addCase(logIn.pending, handlePending)
       .addCase(logIn.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         toast.error(`Login failed: ${action.payload}`);
       })
-      .addCase(logIn.fulfilled, handleFulfilled);
-    // .addCase(register.pending, handlePending)
+      .addCase(logIn.fulfilled, handleFulfilledLogin)
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isLoggedIn = false;
+        state.token = null;
+        state.user = initialState.user; 
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(`Logout failed: ${action.payload}`);
+      });
+
+
+    // User 
+    builder
+      .addCase(fetchUser.pending, (state) => {
+        state.isFetchingUser = true;
+        state.fetchUserError = null;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isFetchingUser = false;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.isFetchingUser = false;
+        state.fetchUserError = action.payload;
+        toast.error(`Fetch user failed: ${action.payload}`);
+      })
+      .addCase(updateUserInfo.pending, (state) => {
+        state.isUpdatingInfo = true;
+        state.updateInfoError = null;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.user = { ...state.user, ...action.payload };
+        state.isUpdatingInfo = false;
+      })
+      .addCase(updateUserInfo.rejected, (state, action) => {
+        state.isUpdatingInfo = false;
+        state.updateInfoError = action.payload;
+        toast.error(`Update info failed: ${action.payload}`);
+      })
+      .addCase(changeUserPhoto.pending, (state) => {
+        state.isChangingPhoto = true;
+        state.changePhotoError = null;
+      })
+      .addCase(changeUserPhoto.fulfilled, (state, action) => {
+        state.user.photo = action.payload.photo;
+        state.isChangingPhoto = false;
+      })
+      .addCase(changeUserPhoto.rejected, (state, action) => {
+        state.isChangingPhoto = false;
+        state.changePhotoError = action.payload;
+        toast.error(`Change photo failed: ${action.payload}`);
+      });
   },
 });
 
