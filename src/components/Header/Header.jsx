@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import UserLogo from "../UserLogo/UserLogo.jsx";
-//import Logo from "../Logo/Logo.jsx";
+import Logo from "../Logo/Logo.jsx";
 import Loader from "../Loader/Loader.jsx";
 import { selectIsLoggedIn, selectIsLoading, selectIsRefreshing, selectError } from "../../redux/auth/selectors.js";
 import css from "./Header.module.css";
+import UserAuth from "../UserAuth/UserAuth.jsx";
 
 const Header = () => {
     const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -17,7 +18,7 @@ const Header = () => {
     if (isLoading || isRefreshing) {
         return (
             <header className={css.header}>
-                <h3>Logo</h3>
+                <Logo />
                 <Loader />
             </header>
         );
@@ -25,7 +26,7 @@ const Header = () => {
     if (error) {
         return (
             <header className={css.header}>
-                <h3>Logo</h3>
+                <Logo />
                 <p>Error: {error}</p>
             </header>
         );
@@ -34,12 +35,12 @@ const Header = () => {
 
     return (
         <header className={css.header}>
-            <h3>Logo</h3>
+            <Logo />
             <nav className={css.headerNav}>
                 {isLoggedIn ? (
                     <UserLogo />
                 ) : (
-                    <ul></ul>
+                    <UserAuth />
                 )}
             </nav>
         </header>
