@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn, fetchUser, updateUserInfo, changeUserPhoto, signUp, logoutUser } from './operations';
+import { logIn } from './operations.js';
 import toast from 'react-hot-toast';
-import axios from 'axios';
 
-
-axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
 const initialState = {
   user: {
     name: null,
@@ -22,12 +19,15 @@ const initialState = {
   error: null,
 };
 
-
-const handlePending = (state) => {
+const handlePending = state => {
   state.isLoading = true;
   state.error = null;
 };
 
+// const handleRejected = (state, action) => {
+//   state.isLoading = false;
+//   state.error = action.payload;
+// };
 
 // const handleFulfilled = (state, action) => {
 //   state.user = action.payload.user;
@@ -36,7 +36,6 @@ const handlePending = (state) => {
 //   state.isLoggedIn = true;
 //   state.error = null;
 // };
-
 
 const authSlice = createSlice({
     name: "auth",

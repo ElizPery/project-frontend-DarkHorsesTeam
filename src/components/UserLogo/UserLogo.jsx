@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 //import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import { selectUser } from "../../redux/auth/selectors.js";
-import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import css from "./UserLogo.module.css";
 import icons from '../../images/icons/icons.svg';
 const UserLogo = () => {
@@ -46,7 +45,7 @@ const UserLogo = () => {
                     <use href={`${icons}#icon-chevron-double-up`} />
                 </svg>
             </button>
-            {isModalOpen && <UserLogoModal />}
+            {isModalOpen && <h2>Modal</h2>}
         </div>
     );
 };

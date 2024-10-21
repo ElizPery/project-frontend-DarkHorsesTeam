@@ -1,0 +1,122 @@
+.title {
+    color:#2F2F2F;
+    font-family: Roboto, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.14em;
+    margin-bottom: 16px;
+        /* 114.286% */
+}
+
+.subtitle {
+    color: #2F2F2F;
+    font-family: Roboto, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.25em;
+    margin-bottom: 24px;
+        /* 125% */
+}
+
+.listTitle {
+    color: #2F2F2F;
+    font-family: Roboto, sans-serif;
+    font-size: 18px;
+    line-height: 1.11em;
+    margin-bottom: 12px;
+        /* 111.111% */
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.icons {
+width: 32px;
+height: 32px;
+color: rgba(64, 123, 255, 1);
+fill: rgba(64, 123, 255, 1);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.itemText {
+    color:#2F2F2F;
+        font-family: Roboto, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.25em;
+        /* 125% */
+}
+
+.btn {
+    background-color: #407BFF;
+    color:#FFF;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.25em;
+    /* 125% */
+    padding: 8px 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px 0px rgba(64, 123, 255, 0.34);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover, .btn:focus {
+    box-shadow: 0px 4px 14px 0px rgba(64, 123, 255, 0.54);
+}
+
+.btn:active {
+    box-shadow: none;
+}
+
+/* TABLET */
+@media screen and (min-width:768px) {
+    .title {
+        font-size: 36px;
+        line-height: 1.17em;
+    }
+
+    .subtitle {
+        font-size: 26px;
+        line-height:1.23em;
+    }
+
+    .icons {
+        width: 40px;
+        height: 40px;
+    }
+
+    .list {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+   .btn {
+    width: 336px;
+    font-size: 18px;
+    line-height: 1.33em;
+    padding: 10px 30px;
+   }
+}
+
+/* PC */
+
+@media screen and (min-width:1440px) {
+    .list {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 384px;
+    }
+}
