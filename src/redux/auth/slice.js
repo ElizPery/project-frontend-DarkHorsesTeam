@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+import { logoutUser } from "./operations";
 import { logIn, signUp } from './operations.js';
 import toast from 'react-hot-toast';
 
@@ -38,27 +39,49 @@ const handleFulfilled = (state, action) => {
 };
 
 const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  extraReducers: builder => {
-    builder
-      .addCase(logIn.pending, handlePending)
-      .addCase(logIn.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-        toast.error(`Login failed: ${action.payload}`);
-      })
-      .addCase(logIn.fulfilled, handleFulfilled);
-    builder
-      .addCase(signUp.pending, handlePending)
+    name: "auth",
+    initialState,
+  
+    extraReducers: (builder) => {
+      builder
+        .addCase(logIn.pending, handlePending)
+        .addCase(logIn.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+          toast.error(`Login failed: ${action.payload}`);
+        })
+        .addCase(logIn.fulfilled, handleFulfilled);
+        .addCase(signUp.pending, handlePending)
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         toast.error(`Registration failed: ${action.payload}`);
       })
       .addCase(signUp.fulfilled, handleFulfilled);
-    // .addCase(register.pending, handlePending)
-  },
-});
+      // .addCase(register.pending, handlePending)
+        .addCase(logoutUser.fulfilled, (state) => {
+          state.user = initialState.user;
+          state.token = null;
+          state.isLoggedIn = false;
+          state.isRefreshing = false;
+          state.isLoading = false; 
+          state.error = null;
+        })
+  
+        .addCase(logoutUser.pending, (state) => {
+          state.isLoading = true;
+          state.error = null;
+        })
+  
+        .addCase(logoutUser.rejected, (state, action) => {
+          state.user = initialState.user;
+          state.token = null;
+          state.isLoggedIn = false;
+          state.isRefreshing = false;
+          state.isLoading = false;
+          state.error = action.payload;
+        });
+    },
+  });
 
 export default authSlice.reducer;
