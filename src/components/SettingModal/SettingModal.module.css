@@ -169,8 +169,8 @@ input:focus {
   color: var(--secondary-red);
   }
   .errorInput {
-    border: 1px solid var(--secondary-red);
-    color: var(--secondary-red);
+    border: 1px solid var(--secondary-red) !important;
+    color: var(--secondary-red) !important;
   }
   
   .saveButton {
