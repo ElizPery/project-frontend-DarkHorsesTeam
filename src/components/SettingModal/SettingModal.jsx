@@ -6,28 +6,26 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateUserInfo, changeUserPhoto, fetchUser } from '../../redux/auth/operations'; 
-import { selectUser, selectError, selectIsUpdatingInfo, selectIsChangingPhoto } from '../../redux/auth/selectors'; 
+import { selectUser, selectError, selectIsLoading } from '../../redux/auth/selectors'; 
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
 
 const SettingModal = ({ isOpen, onClose }) => {
 
     const dispatch = useDispatch(); // Використовуємо хук для доступу до dispatch
     const user = useSelector(selectUser); // Отримуємо користувача з Redux
     const error = useSelector(selectError); // Отримуємо помилки з Redux
-    const isUpdating = useSelector(selectIsUpdatingInfo); // Статус оновлення
-    const isChangingPhoto = useSelector(selectIsChangingPhoto); // Статус зміни фото
+    const isLoading = useSelector(selectIsLoading); // Статус оновлення
 
     const [photo, setPhoto] = useState(user.photo); 
 
     const [gender, setGender] = useState(user.gender || 'woman'); 
-    const [name, setName] = useState(user.name || 'David'); 
-    const [email, setEmail] = useState(user.email || 'david01@gmail.com'); 
+    const [name, setName] = useState(user.name || ''); 
+    const [email, setEmail] = useState(user.email || ''); 
 
-    const [outdatedPassword, setOutdatedPassword] = useState('Password'); 
-    const [newPassword, setNewPassword] = useState('Password'); 
-    const [repeatPassword, setRepeatPassword] = useState('Password'); 
+    const [outdatedPassword, setOutdatedPassword] = useState(''); 
+    const [newPassword, setNewPassword] = useState(''); 
+    const [repeatPassword, setRepeatPassword] = useState(''); 
 
     const [visibleOutdatedPassword, setVisibleOutdatedPassword] = useState(false); 
     const [visibleNewPassword, setVisibleNewPassword] = useState(false); 
@@ -254,7 +252,7 @@ const SettingModal = ({ isOpen, onClose }) => {
 
 
                 <div className={styles.saveButtonContainer}>
-                    <button className={styles.saveButton} onClick={handleSave} disabled={isUpdating || isChangingPhoto}>
+                    <button className={styles.saveButton} onClick={handleSave} disabled={isLoading}>
                         Save
                     </button>
                 </div>
