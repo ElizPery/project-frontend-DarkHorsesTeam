@@ -12,7 +12,13 @@ const UserLogo = () => {
     //     name: "David",
     //     email: "david@example.com"
     // };
-    const { photo, name, email } = user;
+    const {email } = user;
+
+    let name;
+    if (user.name) name = user.name;
+
+    let photo
+    if(user.photo) photo = user.photo
 
     const getInitials = () => {
         if (name) {

@@ -57,15 +57,19 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           password: values.password,
           name,
         };
+
+        await onSubmit(userData);
+        navigate('/signin');
       } else {
         userData = {
           email: values.email,
           password: values.password,
         };
+
+        await onSubmit(userData);
+        navigate('/home');
       }
-      await onSubmit(userData);
       resetForm();
-      navigate('/signin');
     } catch (error) {
       console.error('Registration error:', error);
       const message = error.response?.data?.message || 'Registration failed';
