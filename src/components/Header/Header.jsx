@@ -6,7 +6,6 @@ import {
   selectIsLoggedIn,
   selectIsLoading,
   selectIsRefreshing,
-  selectError,
 } from '../../redux/auth/selectors.js';
 import css from './Header.module.css';
 import UserAuth from '../UserAuth/UserAuth.jsx';
@@ -15,7 +14,6 @@ const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isLoading = useSelector(selectIsLoading);
   const isRefreshing = useSelector(selectIsRefreshing);
-  const error = useSelector(selectError);
 
   if (isLoading || isRefreshing) {
     return (
