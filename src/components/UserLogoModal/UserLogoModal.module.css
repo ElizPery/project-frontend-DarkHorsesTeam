@@ -1,4 +1,7 @@
 .userMenu {
+  position: absolute;
+  bottom: -95px;
+  right: 0;
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid #ffffff;
@@ -13,6 +16,7 @@
   margin-bottom: 16px;
   justify-content: center;
   align-items: center;
+  color: #407bff;
 }
 
 .menuItem2 {
@@ -20,12 +24,13 @@
   align-items: center;
   justify-content: center;
   align-items: center;
+  color: #407bff;
 }
 
 .icon {
   font-size: 16px;
   margin-right: 8px;
-  color: #407bff;
+  color: currentColor;
 }
 
 .text {
@@ -33,5 +38,13 @@
   font-size: 16px;
   line-height: 1.25;
   font-weight: 400px;
-  color: #407bff;
+  color: currentColor;
+}
+
+.menuItem1:hover {
+  color: #ff9d43;
+}
+
+.menuItem2:hover {
+  color: #ff9d43;
 }

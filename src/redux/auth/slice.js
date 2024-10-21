@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const initialState = {
   user: {
     name: null,
-    email: null,
+    email: "eli@gmail.com",
     photo: null,
     gender: 'woman',
     weight: null,
@@ -14,7 +14,7 @@ const initialState = {
     dailyNorma: 1500,
   },
   token: null,
-  isLoggedIn: false,
+  isLoggedIn: true,
   isRefreshing: false,
   isLoading: false,
   error: null,
@@ -50,14 +50,14 @@ const authSlice = createSlice({
           state.error = action.payload;
           toast.error(`Login failed: ${action.payload}`);
         })
-        .addCase(logIn.fulfilled, handleFulfilled);
+        .addCase(logIn.fulfilled, handleFulfilled)
         .addCase(signUp.pending, handlePending)
-      .addCase(signUp.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-        toast.error(`Registration failed: ${action.payload}`);
-      })
-      .addCase(signUp.fulfilled, handleFulfilled);
+        .addCase(signUp.rejected, (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+          toast.error(`Registration failed: ${action.payload}`);
+        })
+        .addCase(signUp.fulfilled, handleFulfilled)
       // .addCase(register.pending, handlePending)
         .addCase(logoutUser.fulfilled, (state) => {
           state.user = initialState.user;
@@ -67,12 +67,10 @@ const authSlice = createSlice({
           state.isLoading = false; 
           state.error = null;
         })
-  
         .addCase(logoutUser.pending, (state) => {
           state.isLoading = true;
           state.error = null;
         })
-  
         .addCase(logoutUser.rejected, (state, action) => {
           state.user = initialState.user;
           state.token = null;
@@ -80,8 +78,8 @@ const authSlice = createSlice({
           state.isRefreshing = false;
           state.isLoading = false;
           state.error = action.payload;
-        });
+        })
     },
-  });
+  })
 
 export default authSlice.reducer;
