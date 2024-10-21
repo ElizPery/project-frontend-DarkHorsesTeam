@@ -6,7 +6,7 @@ export const signUp = createAsyncThunk(
   'auth/register',
   async (userData, thunkAPI) => {
     try {
-      const response = await axios.post('/auth/register', userData);
+      const response = await axios.post('auth/register', userData);
       console.log(response.data);
       return response.data;
     } catch (error) {
