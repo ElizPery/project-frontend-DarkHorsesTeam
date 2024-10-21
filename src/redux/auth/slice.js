@@ -8,7 +8,7 @@ axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
 const initialState = {
   user: {
     name: null,
-    email: "eli@gmail.com",
+    email: null,
     photo: null,
     gender: 'woman',
     weight: null,
@@ -16,7 +16,7 @@ const initialState = {
     dailyNorma: 1500,
   },
   token: null,
-  isLoggedIn: true,
+  isLoggedIn: false,
   isRefreshing: false,
   isLoading: false,
   error: null,
