@@ -33,13 +33,13 @@ const handlePending = state => {
   state.error = null;
 };
 
-const handleFulfilled = (state, action) => {
-  state.user = action.payload.user;
-  state.token = action.payload.token;
-  state.isLoading = false;
-  state.isLoggedIn = true;
-  state.error = null;
-};
+// const handleFulfilled = (state, action) => {
+//   state.user = action.payload.user;
+//   state.token = action.payload.token;
+//   state.isLoading = false;
+//   state.isLoggedIn = true;
+//   state.error = null;
+// };
 
 const authSlice = createSlice({
   name: 'auth',
@@ -53,14 +53,27 @@ const authSlice = createSlice({
         state.error = action.payload;
         toast.error(`Login failed: ${action.payload}`);
       })
-      .addCase(logIn.fulfilled, handleFulfilled)
+      .addCase(logIn.fulfilled, (state, action) => {
+        state.token = action.payload.data.accessToken;
+        state.isLoading = false;
+        state.error = null;
+        state.isLoggedIn = true;
+      })
       .addCase(signUp.pending, handlePending)
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         toast.error(`Registration failed: ${action.payload}`);
       })
-      .addCase(signUp.fulfilled, handleFulfilled)
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.user.name = action.payload.data.name;
+        state.user.email = action.payload.data.email;
+        state.user.dailyNorma = action.payload.data.dailyNorma;
+        state.user.gender = action.payload.data.gender;
+        state.user.photo = action.payload.data.photo;
+        state.isLoading = false;
+        state.error = null;
+      })
       .addCase(logoutUser.fulfilled, state => {
         state.user = initialState.user;
         state.token = null;
@@ -86,39 +99,47 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.user = { ...state.user, ...action.payload };
+        state.user.name = action.payload.data.name;
+        state.user.email = action.payload.data.email;
+        state.user.dailyNorma = action.payload.data.dailyNorma;
+        state.user.gender = action.payload.data.gender;
+        state.user.photo = action.payload.data.photo;
         state.isLoading = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        // toast.error(`Fetch user failed: ${action.payload}`);
+        toast.error(`Fetch user failed: ${action.payload}`);
       })
       .addCase(updateUserInfo.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(updateUserInfo.fulfilled, (state, action) => {
-        state.user = { ...state.user, ...action.payload };
+        state.user.name = action.payload.data.name;
+        state.user.email = action.payload.data.email;
+        state.user.dailyNorma = action.payload.data.dailyNorma;
+        state.user.gender = action.payload.data.gender;
+        state.user.photo = action.payload.data.photo;
         state.isLoading = false;
       })
       .addCase(updateUserInfo.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        // toast.error(`Update info failed: ${action.payload}`);
+        toast.error(`Update info failed: ${action.payload}`);
       })
       .addCase(changeUserPhoto.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(changeUserPhoto.fulfilled, (state, action) => {
-        state.user.photo = action.payload.photo;
+        state.user.photo = action.payload.data.photo;
         state.isLoading = false;
       })
       .addCase(changeUserPhoto.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        // toast.error(`Change photo failed: ${action.payload}`);
+        toast.error(`Change photo failed: ${action.payload}`);
       });
   },
 });

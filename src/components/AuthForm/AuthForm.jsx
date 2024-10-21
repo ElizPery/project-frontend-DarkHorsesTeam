@@ -58,19 +58,25 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           password: values.password,
           name,
         };
+        const result = await onSubmit(userData);
+        if (result?.error) {
+          setErrorMessage(result.error);
+        } else {
+          resetForm();
+          navigate('/signin');
+        }
       } else {
         userData = {
           email: values.email,
           password: values.password,
         };
-      }
-
-      const result = await onSubmit(userData);
-      if (result?.error) {
-        setErrorMessage(result.error);
-      } else {
-        resetForm();
-        navigate('/signin');
+        const result = await onSubmit(userData);
+        if (result?.error) {
+          setErrorMessage(result.error);
+        } else {
+          resetForm();
+          navigate('/home');
+        }
       }
     } catch {
       setErrorMessage('An unexpected error occurred');
@@ -78,7 +84,6 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
       setSubmitting(false);
     }
   };
-
   const handleInputChange = (e, setFieldValue) => {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;

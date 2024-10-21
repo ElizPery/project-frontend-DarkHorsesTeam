@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 //import axios from 'axios';
 import styles from './SettingModal.module.css';
 import icons from '../../images/icons/icons.svg';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateUserInfo, changeUserPhoto, fetchUser } from '../../redux/auth/operations'; 
+import { updateUserInfo, changeUserPhoto } from '../../redux/auth/operations'; 
 import { selectUser, selectError, selectIsLoading } from '../../redux/auth/selectors'; 
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -33,17 +33,17 @@ const SettingModal = ({ isOpen, onClose }) => {
 
 
     const [errors, setErrors] = useState({}); // Об'єкт помилок
-    useEffect(() => {
-        if (isOpen) {
-            dispatch(fetchUser()); // Отримуємо дані користувача при відкритті модального вікна
-        }
-    }, [isOpen, dispatch]);
-    useEffect(() => {
-        setPhoto(user.photo); // Оновлюємо фото, якщо дані користувача змінюються
-        setGender(user.gender || 'woman');
-        setName(user.name || 'David');
-        setEmail(user.email || 'david01@gmail.com');
-    }, [user]);
+    // useEffect(() => {
+    //     if (isOpen) {
+    //         dispatch(fetchUser()); // Отримуємо дані користувача при відкритті модального вікна
+    //     }
+    // }, [isOpen, dispatch]);
+    // useEffect(() => {
+    //     setPhoto(user.photo); // Оновлюємо фото, якщо дані користувача змінюються
+    //     setGender(user.gender || 'woman');
+    //     setName(user.name || 'David');
+    //     setEmail(user.email || 'david01@gmail.com');
+    // }, [user]);
 
     
     const handlePhotoChange = async (e) => {
@@ -59,11 +59,17 @@ const SettingModal = ({ isOpen, onClose }) => {
 
     const validateUserUpdate = async (data) => {
         const schema = Yup.object().shape({
-            name: Yup.string().min(3).max(32).optional(),
-            email: Yup.string().matches(emailRegexp, 'Incorrect email format'),
-            currentPwd: Yup.string().min(8, 'Too short').max(64, 'Too long').required('Old password is required'),
-            password: Yup.string().min(8, 'Too short').max(64, 'Too long').optional(),
-            gender: Yup.string().oneOf(['man', 'woman']).optional(),
+          name: Yup.string().min(3).max(32).optional(),
+          email: Yup.string().matches(emailRegexp, 'Incorrect email format'),
+          currentPwd: Yup.string()
+            .min(8, 'Too short')
+            .max(64, 'Too long')
+            .optional('Old password is required'),
+          password: Yup.string()
+            .min(8, 'Too short')
+            .max(64, 'Too long')
+            .optional(),
+          gender: Yup.string().oneOf(['man', 'woman']).optional(),
         });
 
         try {
