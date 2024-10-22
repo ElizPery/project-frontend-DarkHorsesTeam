@@ -13,12 +13,13 @@ import deskBackground1x from '../../images/signinPage/background-sign-in-desk.pn
 import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x.png';
 import { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { logIn } from '../../redux/auth/operations.js';
+import { logIn, fetchUser } from '../../redux/auth/operations.js';
 
 export default function SigninPage() {
   const dispatch = useDispatch();
   const handleSubmit = async userData => {
     await dispatch(logIn(userData));
+    await dispatch(fetchUser());
   };
 
   return (

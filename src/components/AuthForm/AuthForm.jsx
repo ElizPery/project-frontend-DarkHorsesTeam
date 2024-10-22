@@ -49,33 +49,18 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
     setErrorMessage('');
     try {
       let userData;
-
-      if (submitButtonLabel === 'Sign up') {
-        const name = values.email.split('@')[0];
-        userData = {
-          email: values.email,
-          password: values.password,
-          name,
-        };
-        const result = await onSubmit(userData);
-        if (result?.error) {
-          console.log(result.error);
-        } else {
-          resetForm();
-          navigate('/signin');
-        }
+      userData = {
+        email: values.email,
+        password: values.password,
+      };
+      const result = await onSubmit(userData);
+      if (result?.error) {
+        console.log(result.error);
       } else {
-        userData = {
-          email: values.email,
-          password: values.password,
-        };
-        const result = await onSubmit(userData);
-        if (result?.error) {
-          console.log(result.error);
-        } else {
-          resetForm();
-          navigate('/home');
-        }
+        resetForm();
+        if (submitButtonLabel === 'Sign up') {
+          navigate('/signin')
+        } else navigate('/home');
       }
     } finally {
       setSubmitting(false);

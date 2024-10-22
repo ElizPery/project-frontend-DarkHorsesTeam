@@ -12,10 +12,7 @@ const UserLogo = () => {
     //     name: "David",
     //     email: "david@example.com"
     // };
-    const {email } = user;
-
-    let name;
-    if (user.name) name = user.name;
+    const {email, name} = user;
 
     let photo
     if(user.photo) photo = user.photo
@@ -35,7 +32,7 @@ const UserLogo = () => {
 
     return (
         <div className={css.userLogo}>
-            <span className={css.userLogoName}>{name || email.split('@')[0]}</span>
+            <span className={css.userLogoName}>{name}</span>
             <button className={css.userLogoButton} onClick={toggleModal}>
                 {photo ? (
                     <img className={css.userLogoAvatar} src={photo} alt={name} />

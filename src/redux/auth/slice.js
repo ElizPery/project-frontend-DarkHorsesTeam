@@ -65,12 +65,7 @@ const authSlice = createSlice({
         state.error = action.payload;
         toast.error(`Registration failed: ${action.payload}`);
       })
-      .addCase(signUp.fulfilled, (state, action) => {
-        state.user.name = action.payload.data.name;
-        state.user.email = action.payload.data.email;
-        state.user.dailyNorma = action.payload.data.dailyNorma;
-        state.user.gender = action.payload.data.gender;
-        state.user.photo = action.payload.data.photo;
+      .addCase(signUp.fulfilled, (state) => {
         state.isLoading = false;
         state.error = null;
       })
