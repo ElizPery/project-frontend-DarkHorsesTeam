@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useId, useState } from 'react';
 import icons from '../../images/icons/icons.svg';
 import styles from './AuthForm.module.css';
-
 export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -47,6 +46,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
+    setErrorMessage('');
     try {
       let userData;
 
@@ -57,27 +57,31 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           password: values.password,
           name,
         };
-
-        await onSubmit(userData);
-        navigate('/signin');
+        const result = await onSubmit(userData);
+        if (result?.error) {
+          console.log(result.error);
+        } else {
+          resetForm();
+          navigate('/signin');
+        }
       } else {
         userData = {
           email: values.email,
           password: values.password,
         };
-
-        await onSubmit(userData);
-        navigate('/home');
+        const result = await onSubmit(userData);
+        if (result?.error) {
+          console.log(result.error);
+        } else {
+          resetForm();
+          navigate('/home');
+        }
       }
-      resetForm();
-    } catch (error) {
-      console.error('Registration error:', error);
-      const message = error.response?.data?.message || 'Registration failed';
-      setErrorMessage(message);
     } finally {
       setSubmitting(false);
     }
   };
+
   const handleInputChange = (e, setFieldValue) => {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;
