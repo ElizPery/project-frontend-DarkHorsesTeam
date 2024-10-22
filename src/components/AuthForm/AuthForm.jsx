@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useId, useState } from 'react';
 import icons from '../../images/icons/icons.svg';
 import styles from './AuthForm.module.css';
-
 export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -70,11 +69,19 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           email: values.email,
           password: values.password,
         };
+        const result = await onSubmit(userData);
+        if (result?.error) {
+          console.log(result.error);
+        } else {
+          resetForm();
+          navigate('/home');
+        }
       }
     } finally {
       setSubmitting(false);
     }
   };
+
   const handleInputChange = (e, setFieldValue) => {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;
