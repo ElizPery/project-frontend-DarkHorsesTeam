@@ -2,14 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
 import { toast, Toaster } from 'react-hot-toast';
-
 import styles from './SettingModal.module.css';
 import icons from '../../images/icons/icons.svg';
-
 import { updateUserInfo, changeUserPhoto } from '../../redux/auth/operations';
-import { selectUser, selectError, selectIsUpdatingInfo, selectIsChangingPhoto } from '../../redux/auth/selectors';
+
+import { selectUser, selectError, selectIsLoading } from '../../redux/auth/selectors';
 
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -17,8 +15,7 @@ const SettingModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const error = useSelector(selectError);
-    const isUpdating = useSelector(selectIsUpdatingInfo);
-    const isChangingPhoto = useSelector(selectIsChangingPhoto);
+    const isLoading = useSelector(selectIsLoading); // Використовуємо isLoading
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
@@ -47,10 +44,9 @@ const SettingModal = ({ isOpen, onClose }) => {
             .max(64, 'New password must be at most 64 characters long')
             .optional(),
         repeatPassword: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match') 
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .optional(),
     });
-    
     const handlePhotoChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -64,8 +60,6 @@ const SettingModal = ({ isOpen, onClose }) => {
             }
         }
     };
-
-
     const toggleShowCurrentPassword = () => {
         setShowCurrentPassword(!showCurrentPassword);
     };
@@ -120,7 +114,8 @@ const SettingModal = ({ isOpen, onClose }) => {
                         </label>
                     </div>
                 </div>
-                <Formik
+
+<Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
@@ -129,8 +124,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                     }}
                 >
                     {({ values, errors, touched }) => (
-
-<Form>
+                        <Form>
                             <div className={styles.inputContainer}>
                                 <div className={styles.genderNameSectionBlock}>
                                     <div className={styles.genderSection}>
@@ -191,7 +185,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                                 <div className={styles.passwordSection}>
                                     <h2 className={styles.subtitle}>Password</h2>
                                     <label className={styles.icon_label}>
-                                        Current password
+                                    Outdated password:
                                         <Field name="currentPwd">
                                             {({ field }) => (
                                                 <input
@@ -258,15 +252,14 @@ const SettingModal = ({ isOpen, onClose }) => {
                                             <use href={`${icons}#${showRepeatPassword ? 'icon-eye' : 'icon-eye-slash'}`} />
                                         </svg>
                                         <ErrorMessage name="repeatPassword" component="p" className={`${styles.error}`} />
-                                        <span className={styles.passwordMask } >
-                                            
+                                        <span className={styles.passwordMask}>
                                             {showRepeatPassword ? '' : '*'.repeat(values.repeatPassword.length)}
                                         </span>
                                     </label>
                                 </div>
                             </div>
                             <div className={styles.saveButtonContainer}>
-                                <button className={styles.saveButton} type="submit" disabled={isUpdating || isChangingPhoto}>
+                                <button className={styles.saveButton} type="submit" disabled={isLoading}>
                                     Save
                                 </button>
                             </div>
