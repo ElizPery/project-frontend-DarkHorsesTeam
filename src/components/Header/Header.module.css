@@ -1,13 +1,35 @@
 .header {
     display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        height: 48px;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
 }
-@media screen and (min-width: 768px){
 
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 8px;
+}
+
+@media screen and (min-width: 768px) {
+    .header{
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+    .container {
+        margin-top: 16px;
+    }
 }
 @media screen and (min-width: 1280px){
-    
+    .header{
+        padding-left: 112px;
+        padding-right: 112px;
+    }
+    .container {
+        margin-top: 12px;
+    }
 }

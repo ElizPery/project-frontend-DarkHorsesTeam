@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 //import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import { selectUser } from "../../redux/auth/selectors.js";
+import UserLogoModal from "../UserLogoModal/UserLogoModal.jsx";
 import css from "./UserLogo.module.css";
 import icons from '../../images/icons/icons.svg';
 const UserLogo = () => {
@@ -11,7 +12,10 @@ const UserLogo = () => {
     //     name: "David",
     //     email: "david@example.com"
     // };
-    const { photo, name, email } = user;
+    const {email, name} = user;
+
+    let photo
+    if(user.photo) photo = user.photo
 
     const getInitials = () => {
         if (name) {
@@ -28,7 +32,7 @@ const UserLogo = () => {
 
     return (
         <div className={css.userLogo}>
-            <span className={css.userLogoName}>{name || email.split('@')[0]}</span>
+            <span className={css.userLogoName}>{name}</span>
             <button className={css.userLogoButton} onClick={toggleModal}>
                 {photo ? (
                     <img className={css.userLogoAvatar} src={photo} alt={name} />
@@ -39,7 +43,7 @@ const UserLogo = () => {
                     <use href={`${icons}#icon-chevron-double-up`} />
                 </svg>
             </button>
-            {isModalOpen && <h2>Modal</h2>}
+            {isModalOpen && <UserLogoModal />}
         </div>
     );
 };

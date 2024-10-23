@@ -12,14 +12,22 @@ import deskBottleBackground2x from '../../images/signinPage/bottle-sign-in-desk_
 import deskBackground1x from '../../images/signinPage/background-sign-in-desk.png';
 import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x.png';
 import { Toaster } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { logIn, fetchUser } from '../../redux/auth/operations.js';
 
 export default function SigninPage() {
+  const dispatch = useDispatch();
+  const handleSubmit = async userData => {
+    await dispatch(logIn(userData));
+    await dispatch(fetchUser());
+  };
+
   return (
     <section className={styles.section}>
       <DocumentTitle>Signin page</DocumentTitle>
       <div className={styles.container}>
         <h1 className={styles.title}>Sign In</h1>
-        <AuthForm />
+        <AuthForm onSubmit={handleSubmit} />
 
         <picture className={styles.point}>
           <source
@@ -38,6 +46,7 @@ export default function SigninPage() {
             alt="Background element"
           />
         </picture>
+
         <picture className={styles.bottle}>
           <source
             className={styles.bg_bottle}
