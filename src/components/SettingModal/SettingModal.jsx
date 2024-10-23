@@ -15,17 +15,23 @@ const SettingModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const error = useSelector(selectError);
+
+    const [photo, setPhoto] = useState(user.photo); 
+
     const isLoading = useSelector(selectIsLoading); // Використовуємо isLoading
+
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+
     const initialValues = {
         name: user?.name || 'David',
         email: user?.email || 'david01@gmail.com',
         gender: user?.gender || 'woman',
-        currentPwd: 'Password',
-        password: 'Password',
-        repeatPassword: 'Password',
+        currentPwd: '',
+        password: '',
+        repeatPassword: '',
     };
 
     const validationSchema = Yup.object({
@@ -47,19 +53,19 @@ const SettingModal = ({ isOpen, onClose }) => {
             .oneOf([Yup.ref('password'), null], 'Passwords must match')
             .optional(),
     });
-    const handlePhotoChange = async (e) => {
+
+
+     const handlePhotoChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
             const formData = new FormData();
             formData.append('photo', file);
-            try {
-                await dispatch(changeUserPhoto(formData));
-                toast.success('Photo uploaded successfully!');
-            } catch (err) {
-                toast.error('Error uploading photo!');
-            }
+            setPhoto(URL.createObjectURL(file)); // Оновлення попереднього перегляду фото
+            dispatch(changeUserPhoto(formData)); // Використовуємо Redux для зміни фото
         }
     };
+
+
     const toggleShowCurrentPassword = () => {
         setShowCurrentPassword(!showCurrentPassword);
     };
@@ -69,6 +75,8 @@ const SettingModal = ({ isOpen, onClose }) => {
     const toggleShowRepeatPassword = () => {
         setShowRepeatPassword(!showRepeatPassword);
     };
+
+
     const getInitials = () => {
         if (initialValues.name) {
             return initialValues.name.charAt(0).toUpperCase();
@@ -77,7 +85,9 @@ const SettingModal = ({ isOpen, onClose }) => {
         }
         return '?';
     };
+
     if (!isOpen) return null;
+
     return (
         <div className={styles.backdrop} onClick={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -93,8 +103,8 @@ const SettingModal = ({ isOpen, onClose }) => {
                 <div className={styles.photoSection}>
                     <h2 className={styles.subtitle}>Your photo</h2>
                     <div className={styles.photoContainer}>
-                        {user?.photo ? (
-                            <img src={user.photo} alt="User" className={styles.photo} />
+                        {photo ? (
+                            <img src={photo} alt="User" className={styles.photo} />
                         ) : (
                             <div className={styles.placeholder}>
                                 {getInitials()}
@@ -192,6 +202,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                                                     type={showCurrentPassword ? 'text' : 'password'}
                                                     {...field}
                                                     className={errors.currentPwd && touched.currentPwd ? styles.errorInput : ''}
+                                                    placeholder="Password"
                                                 />
                                             )}
                                         </Field>
@@ -216,6 +227,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                                                     type={showNewPassword ? 'text' : 'password'}
                                                     {...field}
                                                     className={errors.password && touched.password ? styles.errorInput : ''}
+                                                    placeholder="Password"
                                                 />
                                             )}
                                         </Field>
@@ -240,6 +252,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                                                     type={showRepeatPassword ? 'text' : 'password'}
                                                     {...field}
                                                     className={errors.repeatPassword && touched.repeatPassword ? styles.errorInput : ''}
+                                                    placeholder="Password"
                                                 />
                                             )}
                                         </Field>

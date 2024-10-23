@@ -14,7 +14,7 @@
     "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
-    "i18next": "^23.16.0",
+    "i18next": "^23.16.2",
     "modern-normalize": "^3.0.1",
     "notiflix": "^3.2.7",
     "notifyjs": "^3.0.0",

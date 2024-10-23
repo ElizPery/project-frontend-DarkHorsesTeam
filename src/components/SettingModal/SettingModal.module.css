@@ -15,7 +15,7 @@
   margin-top: 40px;
   background-color: var(--primary-white);
   border-radius: 10px;
-  padding: 16px;
+  padding: 12px 12px 32px 12px;
   position: relative;
   overflow: hidden;
   overflow-y: auto;
@@ -76,6 +76,7 @@
   height: 50px;
   border-radius: 50%;
   margin-right: 8px;
+  object-fit: cover;
 }
 .placeholder {
   width: 50px;
@@ -85,8 +86,9 @@
   font-size: 40px;
   justify-content: center;
   align-items: center;
-  color: var(--secondary-blue);
-  background-color: rgba(196, 206, 234, 0.794);
+  color: var(--primary-black);
+    border: 2px solid var(--primary-black);
+  background-color: #d0bebe;
 }
 .hiddenInput {
   display: none;
@@ -97,20 +99,17 @@
   flex-direction: column;
   margin-top: 24px;
 }
-.inputContainer label {
-  margin-bottom: 4px;
-}
+
 .inputContainer p{
 font-size: 14px;
 }
 .genderNameSectionBlock {
-  display: block; /* В один ряд для планшетів та десктопів */
-  flex-direction: column; /* Дозволяє переносити елементи */
-  gap: 16px; /* Відстань між елементами */
+  display: block; 
+  flex-direction: column; 
+ margin-bottom: 24px;
 }
 .radioGroup {
   display: flex;
-  margin-top: 12px;
   margin-bottom: 24px;
   gap: 8px;
 }
@@ -118,6 +117,10 @@ font-size: 14px;
 .inputSection{
   display: flex;
   flex-direction: column;
+  gap: 24px;
+}
+.inputSection label{
+margin-bottom: 0;
 }
 .inputSection input,
 .passwordSection input{
@@ -152,6 +155,23 @@ input:focus {
   display: flex;
   flex-direction: column;
 }
+.passwordSection input::placeholder {
+  color: var(--secondary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+}
+.passwordSection input.error::placeholder {
+  color: var(--secondary-red);
+}
+.passwordSection label{
+margin-bottom: 12px;
+}
+.passwordSection h2 {
+margin-bottom: 12px;
+}
 .passwordSection span{
   display: flex;
 }
@@ -164,7 +184,7 @@ input:focus {
   fill: none;
   position: absolute;
   right: 10px; /* Відстань до правого краю */
-  top: 30%; /* Розташування по вертикалі */
+  top: 65%; /* Розташування по вертикалі */
   transform: translateY(-50%); /* Центрування по вертикалі */
   cursor: pointer;
 }
@@ -205,9 +225,11 @@ font-size: 16px;
 line-height: 125%;
 
 }
-
 .icon_label {
   position: relative; /* Дозволяє позиціонувати span поверх інпуту */
+}
+.saveButtonContainer{
+  margin-top: 24px;
 }
 .saveButton {
   width: 256px;
@@ -217,8 +239,6 @@ line-height: 125%;
   color: white;
   border: none;
   cursor: pointer;
-  margin-top: 24px;
-  margin-bottom: 32px;
   border-radius: 10px;
   padding: 8px 30px;
 }
@@ -235,14 +255,15 @@ line-height: 125%;
 @media (min-width: 768px) {
   .modal {
       width: 704px;
+      padding: 24px 24px 32px 24px;
   }
   .inputSection input,
   .passwordSection input {
       width: 392px;
   }
   .icon_eye {
-      right: 290px; /* Відстань до правого краю для ширших екранів */
-      top: 50%;
+      right: 275px; /* Відстань до правого краю для ширших екранів */
+      top: 65%;
       transform: translateY(-50%);
       cursor: pointer;
   }
@@ -259,7 +280,12 @@ line-height: 125%;
   .modal {
       width: 1008px;
       height: 592px;
+      margin-top: 104px;
   }
+  .genderNameSectionBlock {
+    margin-bottom: 0;
+  }
+
   .inputContainer {
     display: flex;
  flex-direction: row;
@@ -270,12 +296,14 @@ line-height: 125%;
       margin-top: 0;
       padding-right: 152px;
   }
-  .genderSection,
-  .inputSection {
+  .genderSection {
       margin-right: 24px;
   }
   .genderNameSectionBlock {
       display: block;
+  }
+  .radioGroup {
+    margin-bottom: 52px;
   }
   .inputSectionBlock {
       display: flex;
@@ -286,7 +314,7 @@ line-height: 125%;
   }
   .icon_eye {
       right: 10px; /* Відстань до правого краю для великих екранів */
-      top: 50%;
+      top: 60%;
       transform: translateY(-50%);
       cursor: pointer;
   }
