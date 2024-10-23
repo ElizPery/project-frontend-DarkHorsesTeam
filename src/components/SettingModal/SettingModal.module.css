@@ -1,293 +1,258 @@
-.backdrop {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.modal {
-  width: 280px;
-  height: 100%;
-  margin-top: 40px;
-  background-color: var(--primary-white);
-  border-radius: 10px;
-  padding: 16px;
-  position: relative;
-  overflow: hidden;
-  overflow-y: auto;
-}
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
-.title {
-  font-family: var(--font-family);
+
+input:focus {
+    outline: none;
+    border: 1px solid var(--secondary-light-blue);
+  
+   }
+  
+  .backdrop {
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .modal {
+    width: 280px; 
+    height: 100%;
+    margin-top: 40px;
+    background-color: var(--primary-white);
+    border-radius: 10px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+  /*header*/
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .title {
+    font-family: var(--font-family);
   font-weight: 500;
-  font-size: 24px;
+  font-size: 26px;
   line-height: 123%;
   color: var(--primary-black);
-}
-.closeButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-/* Upload photo */
-.subtitle {
-  font-family: var(--font-family);
+    font-size: 24px;
+  }
+  .closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /*upload photo*/
+  .subtitle {
+    font-family: var(--font-family);
   font-weight: 500;
   font-size: 18px;
   line-height: 111%;
   color: var(--primary-black);
   margin-bottom: 8px;
-}
-.icon_upload {
-  stroke: var(--primary-blue);
-  fill: none;
-  margin-right: 8px;
-}
-.uploadLabel {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin-left: 8px;
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 129%;
-  color: var(--primary-blue);
-}
-.photoSection {
-  margin-top: 24px;
-}
-.photoContainer {
-  display: flex;
-  align-items: center;
-}
-.photo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-.placeholder {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  font-size: 40px;
-  justify-content: center;
-  align-items: center;
-  color: var(--secondary-blue);
-  background-color: rgba(196, 206, 234, 0.794);
-}
-.hiddenInput {
-  display: none;
-}
-/*gender section*/
-.inputContainer {
-  display: block;
-  flex-direction: column;
-  margin-top: 24px;
-}
-.inputContainer label {
-  margin-bottom: 4px;
-}
-.inputContainer p{
-font-size: 14px;
-}
-.genderNameSectionBlock {
-  display: block; /* В один ряд для планшетів та десктопів */
-  flex-direction: column; /* Дозволяє переносити елементи */
-  gap: 16px; /* Відстань між елементами */
-}
-.radioGroup {
-  display: flex;
-  margin-top: 12px;
-  margin-bottom: 24px;
-  gap: 8px;
-}
-/* name email*/
-.inputSection{
-  display: flex;
-  flex-direction: column;
-}
-.inputSection input,
-.passwordSection input{
-display: block;
-border-radius: 6px;
-color: var(--secondary-blue);
-margin-bottom: 4px;
-margin-top: 8px;
-outline: none;
-border: 1px solid var(--secondary-light-blue);
-border-radius: 6px;
-padding: 12px 10px;
-width: 256px;
-height: 44px;
-padding-right: 25px;
-}
-
-.inputSection input:focus,
-.passwordSection input:focus {
-color: var(--primary-blue);
-}
-
-.inputSection input:active,
-.passwordSection input:active {
-color: var(--primary-blue);
-}
-input:focus {
-  outline: none;
-  border: 1px solid var(--secondary-light-blue);
-}
-.passwordSection {
-  display: flex;
-  flex-direction: column;
-}
-.passwordSection span{
-  display: flex;
-}
-.icon_label {
-  position: relative;
-}
-
-.icon_eye {
-  stroke: var(--primary-blue);
-  fill: none;
-  position: absolute;
-  right: 10px; /* Відстань до правого краю */
-  top: 30%; /* Розташування по вертикалі */
-  transform: translateY(-50%); /* Центрування по вертикалі */
-  cursor: pointer;
-}
-.error {
-  color: var(--secondary-red);
-  font-size: 12px;
-  font-family: var(--font-family);
-  font-weight: 400;
-  line-height: 125%;
-}
-.errorInput {
-  border: 1px solid var(--secondary-red) !important;
-  color: var(--secondary-red) !important;
-}
-
-/* Стиль для помилок, які відображаються через react-hot-toast */
-.toastError {
-  background-color: transparent; /* Прозорий фон */
-  border: none; /* Прозоре обрамлення */
-  color: var(--secondary-red); 
-}
-
-.passwordMask {
-  position: absolute;
-  height: 40px;
-  left: 10px; 
-  top: 47px; 
-  transform: translateY(-50%); 
-  color: var(--primary-blue); 
-/*
-  pointer-events: none;  Запобігання взаємодії з цим елементом */
-
-  background-color: var(--primary-white);
-  padding-top: 15px;
-  font-family: var(--font-family);
-font-weight: 400;
-font-size: 16px;
-line-height: 125%;
-
-}
-
-.icon_label {
-  position: relative; /* Дозволяє позиціонувати span поверх інпуту */
-}
-.saveButton {
-  width: 256px;
-  height: 36px;
-  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
-  background-color: var(--primary-blue);
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 24px;
-  margin-bottom: 32px;
-  border-radius: 10px;
-  padding: 8px 30px;
-}
-.saveButton:hover {
-  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
-}
-.saveButton:focus {
-  box-shadow: none;
-}
-
-
-
-/* Media Queries */
-@media (min-width: 768px) {
-  .modal {
-      width: 704px;
   }
+  .icon_upload{
+    stroke: var(--primary-blue);
+    fill: none;
+    margin-right: 8px;
+  }
+  .uploadLabel{
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 129%;
+    color: var(--primary-blue);
+  }
+  
+  .photoSection {
+    margin-top: 24px;
+  }
+  .photoContainer {
+    display: flex;
+    align-items: center;
+  }
+  .photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    color:  var(--secondary-blue);
+    background-color: rgba(196, 206, 234, 0.794);
+  }
+  .hiddenInput {
+    display: none;
+  }
+  .uploadLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  /*gender section*/
+  .genderSection {
+    margin-top: 24px;
+  }
+  .radioGroup {
+    display: flex;
+    margin-top: 8px;
+    gap: 8px;
+  }
+  .inputSection {
+    margin-top: 24px;
+    display: block;
+  }
+  
   .inputSection input,
   .passwordSection input {
-      width: 392px;
+    border-radius: 6px;
+    color: var(--secondary-blue);
+    margin-bottom: 12px;
+    margin-top: 8px;
+    outline: none;
+    border: 1px solid var(--secondary-light-blue);
+  border-radius: 6px;
+  padding: 12px 10px;
+  width: 256px;
+  height: 44px;
+  padding-right: 25px;
   }
-  .icon_eye {
-      right: 290px; /* Відстань до правого краю для ширших екранів */
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
+  
+  .inputSection input:focus,
+  .passwordSection input:focus {
+  color: var(--primary-blue);
   }
-  .saveButtonContainer {
-    display: flex;
-    justify-content: flex-end;
-  }
-  .saveButton {
-      width: 160px;
-      height: 44px;
-  }
-}
-@media (min-width: 1024px) {
-  .modal {
-      width: 1008px;
-      height: 592px;
-  }
-  .inputContainer {
-    display: flex;
- flex-direction: row;
+  .inputSection input:active,
+  .passwordSection input:active {
+  color: var(--primary-blue);
   }
   .passwordSection {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .icon_label{
+  position: relative;
+  }
+  .icon_eye {
+    stroke: var(--primary-blue);
+    fill: none;
+    position: absolute;
+    right: 0px;
+    top: 40px;
+    cursor: pointer;
+   
+  }
+  .error {
+    color: var(--secondary-red);
+    font-size: 12px;
+    font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: var(--secondary-red);
+  }
+  .errorInput {
+    border: 1px solid var(--secondary-red) !important;
+    color: var(--secondary-red) !important;
+  }
+  
+  .saveButton {
+    width: 256px;
+    height: 36px;
+    box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 24px;
+    margin-bottom: 32px;
+    border-radius: 10px;
+  padding: 8px 30px;
+  width: 256px;
+  height: 36px;
+    
+  }
+  
+  .saveButton:hover {
+    box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+  
+  }
+  .saveButton:focus {
+    box-shadow: none;
+  }
+  
+  
+  @media (min-width: 768px) {
+    .modal {
+      width: 704px;
+    }
+    .inputSection input,
+    .passwordSection input {
+      width: 392px;
+  display: block;
+    }
+    .icon_eye {
+      right: 290px;
+      top: 50%;
+      transform: translateY(-20%);
+      cursor: pointer;
+    }
+    .saveButtonContainer {
+      display: flex;justify-content: flex-end;
+    }
+    .saveButton {
+      width: 160px; 
+      height: 44px;
+    }
+  }
+  
+  
+  @media (min-width: 1024px) {
+    .modal {
+      width: 1008px;
+      height: 592px;
+    }
+    .passwordSection {
       display: flex;
       flex-direction: column;
       margin-top: 0;
-      padding-right: 152px;
-  }
-  .genderSection,
-  .inputSection {
-      margin-right: 24px;
-  }
-  .genderNameSectionBlock {
+      padding-right: 152px; 
+    }
+    .genderSection,
+    .inputSection {
+      margin-right: 24px; 
+    }
+    .genderNameSectionBlock{
       display: block;
-  }
-  .inputSectionBlock {
+    }
+    .inputSectionBlock{
       display: flex;
       gap: 24px;
+    }
+  .icon_label{
+    width: 392px;
   }
-  .icon_label {
-      width: 392px;
-  }
-  .icon_eye {
-      right: 10px; /* Відстань до правого краю для великих екранів */
-      top: 50%;
+    .icon_eye {
+      right: 10px;
+      top: 60%;
       transform: translateY(-50%);
       cursor: pointer;
+    }
   }
-}
