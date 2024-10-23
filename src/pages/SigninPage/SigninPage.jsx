@@ -13,14 +13,19 @@ import deskBackground1x from '../../images/signinPage/background-sign-in-desk.pn
 import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x.png';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { logIn } from '../../redux/auth/operations.js';
-import { selectError } from '../../redux/auth/selectors.js';
+import { fetchUser, logIn } from '../../redux/auth/operations.js';
+import { selectError, selectIsLoggedIn } from '../../redux/auth/selectors.js';
 
 export default function SigninPage() {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const loginError = useSelector(selectError);
   const handleSubmit = async userData => {
     await dispatch(logIn(userData));
+    if (isLoggedIn) {
+      toast.success('Login successfully!');
+      await dispatch(fetchUser());
+    }
   };
   if (loginError) {
     toast.error(`Login failed: ${loginError}`);
