@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getWaterMonth } from "./operations";
 
 const initialState = {
     dailyWaterIntake: {
@@ -26,7 +27,18 @@ const waterSlice = createSlice({
     initialState,
     extraReducers: (builder) => {
         builder
-            // .addCase(addWater.pending, handlePending)
+            .addCase(getWaterMonth.pending, (state) => {
+                state.isLoading = true;
+                state.error = false;
+            })
+            .addCase(getWaterMonth.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.monthIntake = action.payload;
+            })
+            .addCase(getWaterMonth.rejected, (state) => {
+                state.isLoading = false;
+                state.error = true;
+            })
     }
     
 })
