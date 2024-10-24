@@ -6,23 +6,30 @@ import { toast, Toaster } from 'react-hot-toast';
 import styles from './SettingModal.module.css';
 import icons from '../../images/icons/icons.svg';
 import { updateUserInfo, changeUserPhoto } from '../../redux/auth/operations';
-
 import { selectUser, selectError, selectIsLoading } from '../../redux/auth/selectors';
-
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+
 const SettingModal = ({ isOpen, onClose }) => {
+
+
     const dispatch = useDispatch();
     const user = useSelector(selectUser);
     const error = useSelector(selectError);
+    const isLoading = useSelector(selectIsLoading);
+    const [photo, setPhoto] = useState(user.photo);
 
-    const [photo, setPhoto] = useState(user.photo); 
+    const [inputValue, setInputValue] = useState('');
+    const [maskedValue, setMaskedValue] = useState('');
+    const [visiblePass, setVisiblePass] = useState(false);
 
-    const isLoading = useSelector(selectIsLoading); // Використовуємо isLoading
+    const [inputNewValue, setInputNewValue] = useState('');
+    const [maskedNewValue, setMaskedNewValue] = useState('');
+    const [visibleNewPass, setVisibleNewPass] = useState(false);
 
-    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
-    const [showNewPassword, setShowNewPassword] = useState(false);
-    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+    const [inputRepeatValue, setInputRepeatValue] = useState('');
+    const [maskedRepeatValue, setMaskedRepeatValue] = useState('');
+    const [visibleRepeatPass, setVisibleRepeatPass] = useState(false);
 
 
     const initialValues = {
@@ -33,7 +40,6 @@ const SettingModal = ({ isOpen, onClose }) => {
         password: '',
         repeatPassword: '',
     };
-
     const validationSchema = Yup.object({
         name: Yup.string()
             .min(3, 'Name must be at least 3 characters long')
@@ -54,26 +60,99 @@ const SettingModal = ({ isOpen, onClose }) => {
             .optional(),
     });
 
+const handleSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true);
+    try {
+        // Відправка даних на бекенд
+        const result = await dispatch(updateUserInfo(values));
+        if (updateUserInfo.fulfilled.match(result)) {
+            toast.success('User information updated successfully!');
+        } else {
+            toast.error(result.payload || 'Failed to update user information.');
+        }
+    } catch (error) {
+        toast.error('An error occurred while updating user information.');
+    } finally {
+        setSubmitting(false);
+    }
+};
 
-     const handlePhotoChange = async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('photo', file);
-            setPhoto(URL.createObjectURL(file)); // Оновлення попереднього перегляду фото
-            dispatch(changeUserPhoto(formData)); // Використовуємо Redux для зміни фото
+ const handlePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append('photo', file);
+        setPhoto(URL.createObjectURL(file));
+        // Відправка фотографії на бекенд
+        const result = await dispatch(changeUserPhoto(formData));
+        if (changeUserPhoto.fulfilled.match(result)) {
+            toast.success('User photo updated successfully!');
+        } else {
+            toast.error(result.payload || 'Failed to update user photo.');
+        }
+    }
+};
+
+
+
+    const handleInputChange = (e, setFieldValue) => {
+        const { value } = e.target;
+        const inputType = e.nativeEvent.inputType;
+        if (inputType === 'deleteContentBackward') {
+            const updatedValue = inputValue.slice(0, -1);
+            setInputValue(updatedValue);
+            setMaskedValue('*'.repeat(updatedValue.length));
+            setFieldValue('password', updatedValue);
+        } else {
+            const updatedValue = inputValue + value.slice(-1);
+            setInputValue(updatedValue);
+            setMaskedValue('*'.repeat(updatedValue.length));
+            setFieldValue('password', updatedValue);
+        }
+    };
+
+    const handleNewInputChange = (e, setFieldValue) => {
+        const { value } = e.target;
+        const inputType = e.nativeEvent.inputType;
+        if (inputType === 'deleteContentBackward') {
+            const updatedValue = inputNewValue.slice(0, -1);
+            setInputNewValue(updatedValue);
+            setMaskedNewValue('*'.repeat(updatedValue.length));
+            setFieldValue('password', updatedValue);
+        } else {
+            const updatedValue = inputNewValue + value.slice(-1);
+            setInputNewValue(updatedValue);
+            setMaskedNewValue('*'.repeat(updatedValue.length));
+            setFieldValue('password', updatedValue);
+        }
+    };
+
+    const handleRepeatInputChange = (e, setFieldValue) => {
+        const { value } = e.target;
+        const inputType = e.nativeEvent.inputType;
+        if (inputType === 'deleteContentBackward') {
+            const updatedValue = inputRepeatValue.slice(0, -1);
+            setInputRepeatValue(updatedValue);
+            setMaskedRepeatValue('*'.repeat(updatedValue.length));
+            setFieldValue('repeatPassword', updatedValue);
+        } else {
+            const updatedValue = inputRepeatValue + value.slice(-1);
+            setInputRepeatValue(updatedValue);
+            setMaskedRepeatValue('*'.repeat(updatedValue.length));
+            setFieldValue('repeatPassword', updatedValue);
         }
     };
 
 
-    const toggleShowCurrentPassword = () => {
-        setShowCurrentPassword(!showCurrentPassword);
+
+    const togglePasswordVisibility = () => {
+        setVisiblePass(prev => !prev);
     };
-    const toggleShowNewPassword = () => {
-        setShowNewPassword(!showNewPassword);
+    const toggleNewPasswordVisibility = () => {
+        setVisibleNewPass(prev => !prev);
     };
-    const toggleShowRepeatPassword = () => {
-        setShowRepeatPassword(!showRepeatPassword);
+    const toggleRepeatPasswordVisibility = () => {
+        setVisibleRepeatPass(prev => !prev);
     };
 
 
@@ -85,10 +164,13 @@ const SettingModal = ({ isOpen, onClose }) => {
         }
         return '?';
     };
-
     if (!isOpen) return null;
 
-    return (
+
+
+
+
+return (
         <div className={styles.backdrop} onClick={onClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
@@ -125,15 +207,15 @@ const SettingModal = ({ isOpen, onClose }) => {
                     </div>
                 </div>
 
-<Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={(values) => {
-                        dispatch(updateUserInfo(values));
-                        onClose();
-                    }}
-                >
-                    {({ values, errors, touched }) => (
+
+
+                <Formik
+    initialValues={initialValues}
+    validationSchema={validationSchema}
+    onSubmit={handleSubmit}
+>
+    {({ values, errors, touched }) => (
+
                         <Form>
                             <div className={styles.inputContainer}>
                                 <div className={styles.genderNameSectionBlock}>
@@ -163,119 +245,171 @@ const SettingModal = ({ isOpen, onClose }) => {
                                             <ErrorMessage name="gender" component="p" className={styles.error} />
                                         </div>
                                         <div className={styles.inputSection}>
-                                            <label className={styles.subtitle}>
+
+
+
+                                            {/* Name Field */}
+                                            <label className={styles.label} htmlFor="name">
                                                 Your name
-                                                <Field name="name">
-                                                    {({ field }) => (
-                                                        <input
-                                                            type="text"
-                                                            {...field}
-                                                            className={errors.name && touched.name ? styles.errorInput : ''}
-                                                        />
-                                                    )}
-                                                </Field>
-                                                <ErrorMessage name="name" component="p" className={`${styles.error}`} />
+                                                <Field
+                                                    className={`${styles.field_name} ${
+                                                        touched.name && errors.name ? styles.error : ''
+                                                    }`}
+                                                    type="text"
+                                                    name="name"
+                                                    placeholder="Name"
+                                                    id="name"
+                                                />
+                                                <ErrorMessage className={styles.error_message} name="name" component="span" />
                                             </label>
-                                            <label className={styles.subtitle}>
+                                            {/* Email Field */}
+                                            <label className={styles.label} htmlFor="email">
                                                 E-mail
-                                                <Field name="email">
-                                                    {({ field }) => (
-                                                        <input
-                                                            type="email"
-                                                            {...field}
-                                                            className={errors.email && touched.email ? styles.errorInput : ''}
-                                                        />
-                                                    )}
-                                                </Field>
-                                                <ErrorMessage name="email" component="p" className={`${styles.error}`} />
+                                                <Field
+                                                    className={`${styles.field_email} ${
+                                                        touched.email && errors.email ? styles.error : ''
+                                                    }`}
+                                                    type="email"
+                                                    name="email"
+                                                    placeholder="E-mail"
+                                                    id="email"
+                                                />
+                                                <ErrorMessage className={styles.error_message} name="email" component="span" />
                                             </label>
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
+
                                 <div className={styles.passwordSection}>
                                     <h2 className={styles.subtitle}>Password</h2>
-                                    <label className={styles.icon_label}>
-                                    Outdated password:
+
+{/* Current Password Field */}
+                                    <label className={styles.label} htmlFor="currentPwd">
+                                        Outdated password:
                                         <Field name="currentPwd">
-                                            {({ field }) => (
+                                            {({ field, form }) => (
                                                 <input
-                                                    type={showCurrentPassword ? 'text' : 'password'}
+                                                    type={visiblePass ? 'text' : 'password'}
                                                     {...field}
-                                                    className={errors.currentPwd && touched.currentPwd ? styles.errorInput : ''}
-                                                    placeholder="Password"
+                                                    className={`${styles.field_pwd} ${
+                                                        touched.currentPwd && errors.currentPwd ? styles.error : ''
+                                                    }`}
+                                                    id="currentPwd"
+                                                    placeholder="Current Password"
+                                                    value={
+                                                        visiblePass ? inputValue : maskedValue}
+                                                    onChange={e => handleInputChange(e, form.setFieldValue)}
                                                 />
                                             )}
                                         </Field>
-                                        <svg
-                                            className={styles.icon_eye}
-                                            width={16}
-                                            height={16}
-                                            onClick={toggleShowCurrentPassword}
+                                        <button
+                                            className={styles.pwd_btn}
+                                            type="button"
+                                            onClick={togglePasswordVisibility}
+                                            title={visiblePass ? 'Hide password' : 'Show password'}
                                         >
-                                            <use href={`${icons}#${showCurrentPassword ? 'icon-eye' : 'icon-eye-slash'}`} />
-                                        </svg>
-                                        <ErrorMessage name="currentPwd" component="p" className={`${styles.error}`} />
-                                        <span className={styles.passwordMask}>
-                                            {showCurrentPassword ? '' : '*'.repeat(values.currentPwd.length)}
-                                        </span>
+                                            {visiblePass ? (
+                                                <svg className={styles.pwd_btn_icon}>
+                                                    <use href={`${icons}#icon-eye`}></use>
+                                                </svg>
+                                            ) : (
+                                                <svg className={styles.pwd_btn_icon}>
+                                                    <use href={`${icons}#icon-eye-slash`}></use>
+                                                </svg>
+                                            )}
+                                        </button>
+                                        <ErrorMessage className={styles.error_message} name="currentPwd" component="span" />
                                     </label>
-                                    <label className={styles.icon_label}>
+
+
+                                    {/* New Password Field */}
+                                    <label className={styles.label} htmlFor="password">
                                         New password
                                         <Field name="password">
-                                            {({ field }) => (
+                                            {({ field, form }) => (
                                                 <input
-                                                    type={showNewPassword ? 'text' : 'password'}
+                                                    type={visibleNewPass ? 'text' : 'password'}
                                                     {...field}
-                                                    className={errors.password && touched.password ? styles.errorInput : ''}
-                                                    placeholder="Password"
+                                                    className={`${styles.field_pwd} ${
+                                                        touched.password && errors.password ? styles.error : ''
+                                                    }`}
+                                                    id="password"
+                                                    placeholder="New Password"
+                                                    value={
+                                                        visibleNewPass ? inputNewValue : maskedNewValue}
+                                                    onChange={e => handleNewInputChange(e, form.setFieldValue)}
                                                 />
                                             )}
                                         </Field>
-                                        <svg
-                                            className={styles.icon_eye}
-                                            width={16}
-                                            height={16}
-                                            onClick={toggleShowNewPassword}
+                                        <button
+                                            className={styles.pwd_btn}
+                                            type="button"
+                                            onClick={toggleNewPasswordVisibility}
+                                            title={visibleNewPass ? 'Hide password' : 'Show password'}
                                         >
-                                            <use href={`${icons}#${showNewPassword ? 'icon-eye' : 'icon-eye-slash'}`} />
-                                        </svg>
-                                        <ErrorMessage name="password" component="p" className={`${styles.error}`} />
-                                        <span className={styles.passwordMask}>
-                                            {showNewPassword ? '' : '*'.repeat(values.password.length)}
-                                        </span>
+                                            {visibleNewPass ? (
+                                                <svg className={styles.pwd_btn_icon}>
+                                                    <use href={`${icons}#icon-eye`}></use>
+                                                </svg>
+                                            ) : (
+                                                <svg className={styles.pwd_btn_icon}>
+                                                    <use href={`${icons}#icon-eye-slash`}></use>
+                                                </svg>
+                                            )}
+                                        </button>
+                                        <ErrorMessage className={styles.error_message} name="password" component="span" />
                                     </label>
-                                    <label className={styles.icon_label}>
-                                        Repeat new password
+
+
+                                    {/* Repeat Password Field */}
+                                    <label className={styles.label} htmlFor="repeatPassword">
+                                    Repeat new password:
                                         <Field name="repeatPassword">
-                                            {({ field }) => (
+                                            {({ field, form }) => (
                                                 <input
-                                                    type={showRepeatPassword ? 'text' : 'password'}
+                                                    type={visibleRepeatPass ? 'text' : 'password'}
                                                     {...field}
-                                                    className={errors.repeatPassword && touched.repeatPassword ? styles.errorInput : ''}
-                                                    placeholder="Password"
+                                                    className={`${styles.field_pwd} ${
+                                                        touched.repeatPassword && errors.repeatPassword ? styles.error : ''
+                                                    }`}
+                                                    id="repeatPassword"
+                                                    placeholder="Repeat Password"
+                                                    value={
+                                                        visibleRepeatPass ? inputRepeatValue : maskedRepeatValue
+                                                      }
+                                                    onChange={e => handleRepeatInputChange(e, form.setFieldValue)}
                                                 />
                                             )}
                                         </Field>
-                                        <svg
-                                            className={styles.icon_eye}
-                                            width={16}
-                                            height={16}
-                                            onClick={toggleShowRepeatPassword}
+                                        <button
+                                            className={styles.pwd_btn}
+                                            type="button"
+                                            onClick={toggleRepeatPasswordVisibility}
+                                            title={visibleRepeatPass ? 'Hide password' : 'Show password'}
                                         >
-                                            <use href={`${icons}#${showRepeatPassword ? 'icon-eye' : 'icon-eye-slash'}`} />
-                                        </svg>
-                                        <ErrorMessage name="repeatPassword" component="p" className={`${styles.error}`} />
-                                        <span className={styles.passwordMask}>
-                                            {showRepeatPassword ? '' : '*'.repeat(values.repeatPassword.length)}
-                                        </span>
+                                            {visibleRepeatPass ? (
+                                                <svg className={styles.pwd_btn_icon}>
+                                                    <use href={`${icons}#icon-eye`}></use>
+                                                </svg>
+                                            ) : (
+                                                <svg className={styles.pwd_btn_icon}>
+                                                    <use href={`${icons}#icon-eye-slash`}></use>
+                                                </svg>
+                                            )}
+                                        </button>
+                                        <ErrorMessage className={styles.error_message} name="repeatPassword" component="span" />
                                     </label>
                                 </div>
                             </div>
-                            <div className={styles.saveButtonContainer}>
-                                <button className={styles.saveButton} type="submit" disabled={isLoading}>
-                                    Save
-                                </button>
-                            </div>
+                         <div className={styles.saveButtonContainer}>
+                <button className={styles.saveButton} type="submit" disabled={isLoading}>
+                    Save
+                </button>
+            </div>
                         </Form>
                     )}
                 </Formik>

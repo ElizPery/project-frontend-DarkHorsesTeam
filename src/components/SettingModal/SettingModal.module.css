@@ -72,8 +72,8 @@
   align-items: center;
 }
 .photo {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   margin-right: 8px;
   object-fit: cover;
@@ -100,9 +100,6 @@
   margin-top: 24px;
 }
 
-.inputContainer p{
-font-size: 14px;
-}
 .genderNameSectionBlock {
   display: block; 
   flex-direction: column; 
@@ -113,17 +110,22 @@ font-size: 14px;
   margin-bottom: 24px;
   gap: 8px;
 }
+
 /* name email*/
+
 .inputSection{
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
+/*
 .inputSection label{
 margin-bottom: 0;
 }
-.inputSection input,
-.passwordSection input{
+*/
+
+/*
+.inputSection input{
 display: block;
 border-radius: 6px;
 color: var(--secondary-blue);
@@ -139,18 +141,24 @@ padding-right: 25px;
 }
 
 .inputSection input:focus,
-.passwordSection input:focus {
-color: var(--primary-blue);
-}
-
+.passwordSection input:focus,
 .inputSection input:active,
 .passwordSection input:active {
 color: var(--primary-blue);
 }
+
 input:focus {
   outline: none;
   border: 1px solid var(--secondary-light-blue);
 }
+*/
+
+
+
+
+
+/* password */
+/*
 .passwordSection {
   display: flex;
   flex-direction: column;
@@ -163,9 +171,7 @@ input:focus {
   line-height: 1.25;
   text-align: left;
 }
-.passwordSection input.error::placeholder {
-  color: var(--secondary-red);
-}
+
 .passwordSection label{
 margin-bottom: 12px;
 }
@@ -175,7 +181,7 @@ margin-bottom: 12px;
 .passwordSection span{
   display: flex;
 }
-.icon_label{
+.icon_label {
   position: relative;
 }
 
@@ -183,11 +189,40 @@ margin-bottom: 12px;
   stroke: var(--primary-blue);
   fill: none;
   position: absolute;
-  right: 10px; /* Відстань до правого краю */
-  top: 65%; /* Розташування по вертикалі */
+  right: 10px; 
+  top: 65%; 
   transform: translateY(-50%);  
   cursor: pointer;
 }
+
+.passwordMask {
+  position: absolute;
+  height: 40px;
+  left: 10px; 
+  top: 47px; 
+  transform: translateY(-50%); 
+  color: var(--primary-blue); 
+
+  background-color: var(--primary-white);
+  padding-top: 15px;
+  font-family: var(--font-family);
+font-weight: 400;
+font-size: 16px;
+line-height: 125%;
+
+}
+/*
+
+
+/* error */
+
+
+/*
+.passwordSection.error  {
+  color: var(--secondary-red);
+}
+
+
 .error {
   color: var(--secondary-red);
   font-size: 12px;
@@ -200,10 +235,9 @@ margin-bottom: 12px;
   color: var(--secondary-red) !important;
 }
 
-/* Стиль для помилок, які відображаються через react-hot-toast */
 .toastError {
-  background-color: transparent; /* Прозорий фон */
-  border: none; /* Прозоре обрамлення */
+  background-color: transparent; 
+  border: none; 
   color: var(--secondary-red); 
 }
 
@@ -212,27 +246,147 @@ margin-bottom: 12px;
   color: var(--secondary-red);
 }
 
-.passwordMask {
-  position: absolute;
-  height: 40px;
-  left: 10px; 
-  top: 47px; 
-  transform: translateY(-50%); 
-  color: var(--primary-blue); 
-/*
-  pointer-events: none;  Запобігання взаємодії з цим елементом */
 
-  background-color: var(--primary-white);
-  padding-top: 15px;
-  font-family: var(--font-family);
-font-weight: 400;
-font-size: 16px;
-line-height: 125%;
-
-}
 .passwordMask.error {
   color: var(--secondary-red);
 }
+*/
+
+
+
+/* added */
+
+.label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--primary-black);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.33;
+  text-align: left;
+}
+
+.field_name,
+.field_email,
+.field_pwd {
+  border: 1px solid var(--secondary-light-blue);
+  background-color: var(--primary-white);
+  border-radius: 6px;
+  padding: 12px 10px;
+  color: var(--primary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.field_name:focus,
+.field_name:active,
+.field_email:focus,
+.field_email:active,
+.field_pwd:focus,
+.field_pwd:active {
+  outline: none;
+}
+
+.field_name::placeholder,
+.field_pwd::placeholder,
+.field_email::placeholder {
+  color: var(--secondary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.pwd_btn {
+  position: absolute;
+  top: 44px;
+  right: 10px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pwd_btn_icon {
+  stroke: var(--primary-blue);
+  fill: transparent;
+  width: 16px;
+  height: 16px;
+}
+/* password*/
+
+.field_name:focus,
+.field_name:active,
+.field_email:focus,
+.field_email:active,
+.field_pwd:focus,
+.field_pwd:active {
+  outline: none;
+}
+
+.field_name::placeholder,
+.field_pwd::placeholder,
+.field_email::placeholder {
+  color: var(--secondary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.pwd_btn {
+  position: absolute;
+  top: 44px;
+  right: 10px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pwd_btn_icon {
+  stroke: var(--primary-blue);
+  fill: transparent;
+  width: 16px;
+  height: 16px;
+}
+
+.error_message {
+  color: var(--secondary-red);
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+  text-align: left;
+}
+
+.field_name.error,
+.field_email.error,
+.field_pwd.error {
+  border-color: var(--secondary-red);
+  color: var(--secondary-red);
+}
+
+.pwd_btn_icon.error {
+  stroke: var(--secondary-red);
+}
+
+.field_email.name::placeholder,
+.field_email.error::placeholder,
+.field_pwd.error::placeholder {
+  color: var(--secondary-red);
+}
+
+
+.passwordSection label {
+  margin-bottom: 12px;
+}
+
+
+
+/* button */
 .saveButtonContainer{
   margin-top: 24px;
 }
@@ -263,16 +417,14 @@ line-height: 125%;
       width: 704px;
       padding: 24px 24px 32px 24px;
   }
+  
   .inputSection input,
   .passwordSection input {
       width: 392px;
   }
 
-  .icon_eye {
-      right: 275px; 
-      top: 65%;
-      transform: translateY(-50%);
-      cursor: pointer;
+  .pwd_btn {
+    right: 275px;
   }
  
   .saveButtonContainer {
@@ -292,10 +444,11 @@ line-height: 125%;
       height: 592px;
       margin-top: 104px;
   }
+  /*
   .genderNameSectionBlock {
     margin-bottom: 0;
   }
-
+*/
   .inputContainer {
     display: flex;
  flex-direction: row;
@@ -311,9 +464,10 @@ line-height: 125%;
   }
   .genderNameSectionBlock {
       display: block;
+      margin-bottom: 0;
   }
   .radioGroup {
-    margin-bottom: 58px;
+    margin-bottom: 61px;
   }
   .inputSectionBlock {
       display: flex;
@@ -323,11 +477,8 @@ line-height: 125%;
       width: 392px;
   }
 
- .icon_eye {
-  right: 10px; 
-  top: 65%; 
-  transform: translateY(-50%); 
-
+  .pwd_btn {
+    right: 10px;
   }
 
 
