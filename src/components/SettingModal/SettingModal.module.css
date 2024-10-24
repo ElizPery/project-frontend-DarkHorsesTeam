@@ -175,7 +175,7 @@ margin-bottom: 12px;
 .passwordSection span{
   display: flex;
 }
-.icon_label {
+.icon_label{
   position: relative;
 }
 
@@ -185,7 +185,7 @@ margin-bottom: 12px;
   position: absolute;
   right: 10px; /* Відстань до правого краю */
   top: 65%; /* Розташування по вертикалі */
-  transform: translateY(-50%); /* Центрування по вертикалі */
+  transform: translateY(-50%);  
   cursor: pointer;
 }
 .error {
@@ -207,6 +207,11 @@ margin-bottom: 12px;
   color: var(--secondary-red); 
 }
 
+.inputSection.error::placeholder,
+.passwordSection.error::placeholder {
+  color: var(--secondary-red);
+}
+
 .passwordMask {
   position: absolute;
   height: 40px;
@@ -225,8 +230,8 @@ font-size: 16px;
 line-height: 125%;
 
 }
-.icon_label {
-  position: relative; /* Дозволяє позиціонувати span поверх інпуту */
+.passwordMask.error {
+  color: var(--secondary-red);
 }
 .saveButtonContainer{
   margin-top: 24px;
@@ -252,6 +257,7 @@ line-height: 125%;
 
 
 /* Media Queries */
+/*tablet*/
 @media (min-width: 768px) {
   .modal {
       width: 704px;
@@ -261,12 +267,14 @@ line-height: 125%;
   .passwordSection input {
       width: 392px;
   }
+
   .icon_eye {
-      right: 275px; /* Відстань до правого краю для ширших екранів */
+      right: 275px; 
       top: 65%;
       transform: translateY(-50%);
       cursor: pointer;
   }
+ 
   .saveButtonContainer {
     display: flex;
     justify-content: flex-end;
@@ -276,6 +284,8 @@ line-height: 125%;
       height: 44px;
   }
 }
+
+/*desktop*/
 @media (min-width: 1024px) {
   .modal {
       width: 1008px;
@@ -303,7 +313,7 @@ line-height: 125%;
       display: block;
   }
   .radioGroup {
-    margin-bottom: 52px;
+    margin-bottom: 58px;
   }
   .inputSectionBlock {
       display: flex;
@@ -312,10 +322,13 @@ line-height: 125%;
   .icon_label {
       width: 392px;
   }
-  .icon_eye {
-      right: 10px; /* Відстань до правого краю для великих екранів */
-      top: 60%;
-      transform: translateY(-50%);
-      cursor: pointer;
+
+ .icon_eye {
+  right: 10px; 
+  top: 65%; 
+  transform: translateY(-50%); 
+
   }
+
+
 }
