@@ -21,7 +21,6 @@ export default function SigninPage() {
   const loginError = useSelector(selectError);
   const handleSubmit = async userData => {
     await dispatch(logIn(userData));
-    toast.success('Login successfully!');
     await dispatch(fetchUser());
   };
   if (loginError) {
