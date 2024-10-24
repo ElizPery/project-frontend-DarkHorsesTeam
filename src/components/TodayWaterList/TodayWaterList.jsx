@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTodayWater } from '../../redux/water/operations.js';
+import { fetchTodayWater, deleteWater } from '../../redux/water/operations.js';
 import {
   selectDailyWaterIntake,
   selectIsLoading,
   selectError,
 } from '../../redux/water/selectors.js';
 import icons from '../../images/icons/icons.svg';
+import ModalDelete from './ModalDelate/ModalDelate.jsx';
 import styles from './TodayWaterList.module.css';
-import waterBottleImg from '../../images/TodayWaterListBottle/TodayWaterListBottle-Mobile.png';
 
 export default function TodayWaterList() {
   const dispatch = useDispatch();
@@ -17,10 +17,26 @@ export default function TodayWaterList() {
   };
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   useEffect(() => {
     dispatch(fetchTodayWater());
   }, [dispatch]);
+
+  const handleDelete = item => {
+    setItemToDelete(item);
+    setModalOpen(true);
+  };
+
+  const confirmDelete = item => {
+    dispatch(deleteWater(item._id));
+    setModalOpen(false);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <div className={styles.container}>
@@ -37,11 +53,9 @@ export default function TodayWaterList() {
             {dailyWaterIntake.records.map(record => (
               <li key={record._id} className={styles.item}>
                 <div className={styles.iconWrapper}>
-                  <img
-                    src={waterBottleImg}
-                    alt="Water Glass"
-                    className={styles.iconPng}
-                  />
+                  <svg className={styles.iconGlassWater}>
+                    <use href={`${icons}#icon-glass-water`}></use>
+                  </svg>
                   <div className={styles.recordDetails}>
                     <span className={styles.volume}>{record.volume} ml</span>
                     <span className={styles.time}>
@@ -59,7 +73,10 @@ export default function TodayWaterList() {
                       <use href={`${icons}#icon-pencil-square`}></use>
                     </svg>
                   </button>
-                  <button className={styles.deleteIcon}>
+                  <button
+                    className={styles.deleteIcon}
+                    onClick={() => handleDelete(record)}
+                  >
                     <svg className={styles.iconDelete}>
                       <use href={`${icons}#icon-trash`}></use>
                     </svg>
@@ -70,9 +87,17 @@ export default function TodayWaterList() {
           </ul>
         )}
       </div>
+
       <div className={styles.addButtonContainer}>
         <button className={styles.addButton}>+ Add Water</button>
       </div>
+
+      <ModalDelete
+        isOpen={modalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+        item={itemToDelete}
+      />
     </div>
   );
 }
