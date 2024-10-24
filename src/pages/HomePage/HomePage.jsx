@@ -1,7 +1,11 @@
-import DocumentTitle from "../../components/DocumentTitle";
+import DocumentTitle from '../../components/DocumentTitle';
+import TodayWaterList from '../../components/TodayWaterList/TodayWaterList.jsx';
 
 export default function HomePage() {
-    return (
-        <DocumentTitle>Home page</DocumentTitle>
-    );
+  return (
+    <div>
+      <TodayWaterList />
+      <DocumentTitle>Home page</DocumentTitle>
+    </div>
+  );
 }
