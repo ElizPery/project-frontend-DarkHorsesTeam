@@ -49,26 +49,11 @@ export default function HomePage() {
             alt="Background element"
           />
         </picture>
-        <img
-          className={styles.ratio_panel}
-          src="https://res.cloudinary.com/ddo1zjbil/image/upload/v1729616387/%D0%97%D0%BD%D1%96%D0%BC%D0%BE%D0%BA_%D0%B5%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2024-10-22_195925_rbfuff.png"
-          alt=""
-        />
       </div>
-      {/* <WaterRatioPanel /> */}
+      {/* <WaterRatioPanel  className={styles.ratio_panel} /> */}
       <div className={styles.container}>
-        <img
-          className={styles.today_list}
-          src="https://res.cloudinary.com/ddo1zjbil/image/upload/v1729617200/%D0%97%D0%BD%D1%96%D0%BC%D0%BE%D0%BA_%D0%B5%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2024-10-22_201230_mwwael.png"
-          alt=""
-        />
-        <img
-          className={styles.month_stats}
-          src="https://res.cloudinary.com/ddo1zjbil/image/upload/v1729617200/%D0%97%D0%BD%D1%96%D0%BC%D0%BE%D0%BA_%D0%B5%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2024-10-22_201252_hscswl.png"
-          alt=""
-        />
-        {/* <TodayWaterList /> */}
-        {/* <MonthStatsTable /> */}
+        {/* <TodayWaterList className={styles.today_list}/> */}
+        {/* <MonthStatsTable className={styles.month_stats} /> */}
       </div>
       <picture className={styles.point}>
         <source
