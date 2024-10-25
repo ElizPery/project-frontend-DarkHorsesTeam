@@ -32,7 +32,7 @@
     font-size: 16px;
     font-weight: 500;
     color: var(--primary-black);
-    border: 2px solid var(--primary-black);
+    border: 1px solid var(--primary-black);
 }
 
 .userLogoName {
@@ -48,6 +48,10 @@
     width: 16px;
     height: 16px;
     stroke: var(--primary-blue);
+    transition: transform 0.3s ease;
+}
+.rotate {
+    transform: rotate(180deg);
 }
 @media screen and (min-width: 768px) {
 .userLogoName{
