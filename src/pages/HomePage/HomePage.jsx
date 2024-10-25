@@ -1,7 +1,7 @@
 import DocumentTitle from '../../components/DocumentTitle';
 import DailyNorma from '../../components/DailyNorma/DailyNorma.jsx';
 // import WaterRatioPanel from '../../components/WaterRatioPanel/WaterRatioPanel.jsx';
-// import MonthStatsTable from '../../components/MonthStatsTable/MonthStatsTable.jsx';
+import MonthStatsTable from '../../components/MonthStatsTable/MonthStatsTable.jsx';
 // import TodayWaterList from '../../components/TodayWaterList/TodayWaterList.jsx';
 import mobileBottleBackground1x from '../../images/homePage/bottle-home-mobile.png';
 import mobileBottleBackground2x from '../../images/homePage/bottle-home-mobile_2x.png';
@@ -15,10 +15,20 @@ import tabletBackground1x from '../../images/homePage/background-home-tablet.png
 import tabletBackground2x from '../../images/homePage/background-home-tablet_2x.png';
 import deskBackground1x from '../../images/homePage/background-home-desk.png';
 import deskBackground2x from '../../images/homePage/background-home-desk_2x.png';
+import toast, { Toaster } from 'react-hot-toast';
+import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
+import { useEffect } from 'react';
 
 import styles from './HomePage.module.css';
+import { useSelector } from 'react-redux';
 
 export default function HomePage() {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  useEffect(() => {
+    if (isLoggedIn) {
+      toast.success('Login successfully!');
+    }
+  }, [isLoggedIn]);
   return (
     <section className={styles.section}>
       <DocumentTitle>Home page</DocumentTitle>
@@ -53,7 +63,7 @@ export default function HomePage() {
       {/* <WaterRatioPanel  className={styles.ratio_panel} /> */}
       <div className={styles.container}>
         {/* <TodayWaterList className={styles.today_list}/> */}
-        {/* <MonthStatsTable className={styles.month_stats} /> */}
+        <MonthStatsTable className={styles.month_stats} />
       </div>
       <picture className={styles.point}>
         <source
@@ -77,6 +87,7 @@ export default function HomePage() {
           alt="Background element"
         />
       </picture>
+      <Toaster />
     </section>
   );
 }
