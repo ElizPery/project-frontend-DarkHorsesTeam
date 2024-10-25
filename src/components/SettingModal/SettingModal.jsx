@@ -264,7 +264,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                           <Field
                             type="radio"
                             name="gender"
-                            value="male"
+                            value="man"
                             className={styles.radio_group_item}
                           />
                           Man
