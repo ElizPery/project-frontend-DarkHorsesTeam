@@ -1,0 +1,27 @@
+.container {
+    margin: 0 auto;
+    max-width: 320px;
+    padding: 24px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+}
+
+@media screen and (min-width:768px) {
+    .container {
+        max-width: 768px;
+        gap: 60px;
+        padding: 40px 32px 50px 32px;
+    }
+}
+
+@media screen and (min-width:1440px) {
+    .container {
+        max-width: 1440px;
+        gap: 81px;
+        flex-direction: row;
+        padding: 80px 210px 294px 216px;
+        align-items: flex-end;
+    }
+}

@@ -31,7 +31,7 @@ export default function WaterRatioPanel() {
               <span className={css.textPercent}>0%</span>
             </div>
             <div className={css.textPercentWrap}>
-              <span className={ css.textPercentSecond}>{parsedWaterRatio}%</span>
+              <span className={ css.textPercentSecond}>50%</span>
             </div>
             <div className={css.textPercentWrap}>
               <span className={css.textPercent}>100%</span>
