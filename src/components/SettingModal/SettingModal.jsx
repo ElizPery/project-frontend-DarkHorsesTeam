@@ -52,7 +52,7 @@ const SettingModal = ({ isOpen, onClose }) => {
   const initialValues = {
     name: user?.name || 'David',
     email: user?.email || 'david01@gmail.com',
-    gender: user?.gender || 'female',
+    gender: user?.gender || 'woman',
     currentPwd: '',
     password: '',
     repeatPassword: '',
@@ -255,7 +255,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                           <Field
                             type="radio"
                             name="gender"
-                            value="female"
+                            value="woman"
                             className={styles.radio_group_item}
                           />
                           Woman
