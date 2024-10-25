@@ -17,18 +17,21 @@ import deskBackground1x from '../../images/homePage/background-home-desk.png';
 import deskBackground2x from '../../images/homePage/background-home-desk_2x.png';
 import toast, { Toaster } from 'react-hot-toast';
 import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './HomePage.module.css';
 import { useSelector } from 'react-redux';
 
 export default function HomePage() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [hasLoggedIn, setHasLoggedIn] = useState(false);
+
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && !hasLoggedIn) {
       toast.success('Login successfully!');
+      setHasLoggedIn(true);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, hasLoggedIn]);
   return (
     <section className={styles.section}>
       <DocumentTitle>Home page</DocumentTitle>

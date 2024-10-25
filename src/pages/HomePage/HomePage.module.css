@@ -42,6 +42,11 @@
   width: 100%;
 }
 
+.hero_container {
+  display: flex;
+  flex-direction: column;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1439px) {
   .section {
     padding: 40px 32px 44px;
@@ -49,7 +54,10 @@
     flex-direction: column;
     align-items: center;
   }
-
+  .hero_container {
+    display: flex;
+    margin-right: auto;
+  }
   .daily_norma {
     margin-bottom: 326px;
   }
@@ -76,10 +84,14 @@
     position: relative;
     display: flex;
     padding: 20px 112px 40px;
-    gap: 32px;
+    justify-content: flex-end;
   }
   .container {
     width: 41.11vw;
+  }
+  .hero_container {
+    display: flex;
+    margin-right: auto;
   }
   .daily_norma {
     margin-bottom: 466px;
