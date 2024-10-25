@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 20px;
+  background-color: var(--primary-white);
+  border: 1px solid var(--secondary-light-blue2);
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px 0px var(--secondary-blue);
+  width: 165px;
+  gap: 12px;
+}
+.title {
+  color: var(--primary-black);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.33;
+}
+.user_info_container {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: end;
+}
+.paragraph {
+  color: var(--primary-blue);
+  font-family: 'Roboto', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+.button {
+  color: #8baeff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  -webkit-tap-highlight-color: transparent;
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--secondary-orange);
+  }
+}
