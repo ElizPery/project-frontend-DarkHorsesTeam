@@ -11,15 +11,22 @@ import deskBottleBackground1x from '../../images/signinPage/bottle-sign-in-desk.
 import deskBottleBackground2x from '../../images/signinPage/bottle-sign-in-desk_2x.png';
 import deskBackground1x from '../../images/signinPage/background-sign-in-desk.png';
 import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x.png';
-import { Toaster } from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
-import { logIn, fetchUser } from '../../redux/auth/operations.js';
+
+import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser, logIn } from '../../redux/auth/operations.js';
+import { selectError } from '../../redux/auth/selectors.js';
+
 export default function SigninPage() {
   const dispatch = useDispatch();
+  const loginError = useSelector(selectError);
   const handleSubmit = async userData => {
     await dispatch(logIn(userData));
     await dispatch(fetchUser());
   };
+  if (loginError) {
+    toast.error(`Login failed: ${loginError}`);
+  }
 
   return (
     <section className={styles.section}>
