@@ -2,6 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
+const storedToken = localStorage.getItem('token');
+if (storedToken) {
+  setAuthHeader(storedToken);
+}
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -65,6 +69,33 @@ export const logIn = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  }
+);
+
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const reduxState = thunkAPI.getState();
+    const token = reduxState.auth.token;
+    if (!token) return thunkAPI.rejectWithValue('No token provided');
+
+    setAuthHeader(token);
+
+    try {
+      const response = await axios.get('/user');
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 401) {
+        thunkAPI.dispatch(logoutUser());
+      }
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const token = thunkAPI.getState().auth.token;
+      return token !== null;
+    },
   }
 );
 
