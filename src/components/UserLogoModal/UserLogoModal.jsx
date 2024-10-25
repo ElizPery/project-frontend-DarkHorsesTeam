@@ -4,16 +4,23 @@ import { IoLogOutOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import SettingModal from '../SettingModal/SettingModal.jsx';
 import LogOutModal from '../UserLogoutModal/UserLogoutModal.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectIsModalOpen } from '../../redux/auth/selectors.js';
+import { resetModalState } from '../../redux/auth/slice.js';
 
 const UserLogoModal = () => {
+  const isOpen = useSelector(selectIsModalOpen);
   const [isModalLogoutOpen, setIsModalLogoutOpen] = useState(false);
-  const [isModalSettingOpen, setIsModalSettingOpen] = useState(false);
+  const [isModalSettingOpen, setIsModalSettingOpen] = useState(isOpen);
+  const dispatch = useDispatch();
 
   const handleOpenModalLogout = () => setIsModalLogoutOpen(true);
   const handleCloseModalLogout = () => setIsModalLogoutOpen(false);
   const handleOpenModalSetting = () => setIsModalSettingOpen(true);
-  const handleCloseModalSetting = () => setIsModalSettingOpen(false);
-
+  const handleCloseModalSetting = () => {
+    dispatch(resetModalState());
+    setIsModalSettingOpen(false);
+  };
   return (
     <div className={css.userMenu}>
       <button onClick={handleOpenModalSetting} className={css.menuItem1}>

@@ -15,7 +15,9 @@ import tabletBackground1x from '../../images/homePage/background-home-tablet.png
 import tabletBackground2x from '../../images/homePage/background-home-tablet_2x.png';
 import deskBackground1x from '../../images/homePage/background-home-desk.png';
 import deskBackground2x from '../../images/homePage/background-home-desk_2x.png';
+
 import toast, { Toaster } from 'react-hot-toast';
+import css from './HomePage.module.css';
 import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
 import { useEffect, useState } from 'react';
 
@@ -34,63 +36,65 @@ export default function HomePage() {
   }, [isLoggedIn, hasLoggedIn]);
   return (
     <section className={styles.section}>
-      <DocumentTitle>Home page</DocumentTitle>
-      <div className={styles.hero_container}>
-        <div className={styles.daily_norma}>
-          <DailyNorma />
-        </div>
+      <div className={css.container}>
+        <DocumentTitle>Home page</DocumentTitle>
+        <div className={styles.hero_container}>
+          <div className={styles.daily_norma}>
+            <DailyNorma />
+          </div>
 
-        <picture className={styles.bottle}>
+          <picture className={styles.bottle}>
+            <source
+              className={styles.bg_bottle}
+              media="(min-width: 320px) and (max-width: 767px)"
+              srcSet={`${mobileBottleBackground1x} 1x, ${mobileBottleBackground2x} 2x `}
+            />
+            <source
+              className={styles.bg_bottle}
+              media="(min-width: 768px) and (max-width: 1439px)"
+              srcSet={`${tabletBottleBackground1x} 1x, ${tabletBottleBackground2x} 2x `}
+            />
+            <source
+              className={styles.bg_bottle}
+              media="(min-width: 1440px)"
+              srcSet={`${deskBottleBackground1x} 1x, ${deskBottleBackground2x} 2x `}
+            />
+            <img
+              className={styles.bg_bottle}
+              src={mobileBottleBackground1x}
+              alt="Background element"
+            />
+          </picture>
+        </div>
+        {/* <WaterRatioPanel  className={styles.ratio_panel} /> */}
+        <div className={styles.container}>
+          {/* <TodayWaterList className={styles.today_list}/> */}
+          <MonthStatsTable className={styles.month_stats} />
+        </div>
+        <picture className={styles.point}>
           <source
-            className={styles.bg_bottle}
+            className={styles.bg_point}
             media="(min-width: 320px) and (max-width: 767px)"
-            srcSet={`${mobileBottleBackground1x} 1x, ${mobileBottleBackground2x} 2x `}
+            srcSet={`${mobileBackground1x} 1x, ${mobileBackground2x} 2x `}
           />
           <source
-            className={styles.bg_bottle}
+            className={styles.bg_point}
             media="(min-width: 768px) and (max-width: 1439px)"
-            srcSet={`${tabletBottleBackground1x} 1x, ${tabletBottleBackground2x} 2x `}
+            srcSet={`${tabletBackground1x} 1x, ${tabletBackground2x} 2x `}
           />
           <source
-            className={styles.bg_bottle}
+            className={styles.bg_point}
             media="(min-width: 1440px)"
-            srcSet={`${deskBottleBackground1x} 1x, ${deskBottleBackground2x} 2x `}
+            srcSet={`${deskBackground1x} 1x, ${deskBackground2x} 2x `}
           />
           <img
-            className={styles.bg_bottle}
-            src={mobileBottleBackground1x}
+            className={styles.bg_point}
+            src={mobileBackground1x}
             alt="Background element"
           />
         </picture>
+        <Toaster />
       </div>
-      {/* <WaterRatioPanel  className={styles.ratio_panel} /> */}
-      <div className={styles.container}>
-        {/* <TodayWaterList className={styles.today_list}/> */}
-        <MonthStatsTable className={styles.month_stats} />
-      </div>
-      <picture className={styles.point}>
-        <source
-          className={styles.bg_point}
-          media="(min-width: 320px) and (max-width: 767px)"
-          srcSet={`${mobileBackground1x} 1x, ${mobileBackground2x} 2x `}
-        />
-        <source
-          className={styles.bg_point}
-          media="(min-width: 768px) and (max-width: 1439px)"
-          srcSet={`${tabletBackground1x} 1x, ${tabletBackground2x} 2x `}
-        />
-        <source
-          className={styles.bg_point}
-          media="(min-width: 1440px)"
-          srcSet={`${deskBackground1x} 1x, ${deskBackground2x} 2x `}
-        />
-        <img
-          className={styles.bg_point}
-          src={mobileBackground1x}
-          alt="Background element"
-        />
-      </picture>
-      <Toaster />
     </section>
   );
 }
