@@ -62,6 +62,13 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
           navigate('/signin')
         } else navigate('/home');
       }
+
+      resetForm();
+    } catch (error) {
+      console.error('Registration error:', error);
+      // const message = error.response?.data?.message || 'Registration failed';
+      // setErrorMessage(message);
+
     } finally {
       setSubmitting(false);
     }
@@ -102,9 +109,6 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
 
   return (
     <>
-      {errorMessage && (
-        <div className={styles.error_message}>{errorMessage}</div>
-      )}
       <Formik
         initialValues={{ email: '', password: '', repeatPassword: '' }}
         validationSchema={userSchema}
