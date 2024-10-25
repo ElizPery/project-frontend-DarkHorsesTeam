@@ -8,7 +8,8 @@ import PrivateRoute from './components/PrivateRoute';
 import { Route, Routes } from 'react-router-dom';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import { SharedLayout } from './components/SharedLayout';
-import { refreshUser } from './redux/auth/operations';
+import { refreshUser, fetchUser } from './redux/auth/operations';
+import { selectIsLoggedIn } from './redux/auth/selectors';
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const SignupPage = lazy(() => import('./pages/SignupPage/SignupPage'));
 const SigninPage = lazy(() => import('./pages/SigninPage/SigninPage'));
@@ -17,14 +18,21 @@ const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-  const token = useSelector(state => state.auth.token); // Ensure token is present
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const token = useSelector(state => state.auth.token);
 
   useEffect(() => {
-    if (token) {
-      dispatch(refreshUser()); // Dispatch only if token exists
-    }
-  }, [dispatch, token]);
+    const refreshAndFetchUser = async () => {
+      await dispatch(refreshUser());
+      if (isLoggedIn) {
+        await dispatch(fetchUser());
+      }
+    };
 
+    if (token) {
+      refreshAndFetchUser();
+    }
+  }, [dispatch, token, isLoggedIn]);
   return isRefreshing ? (
     <RefreshingPage />
   ) : (
