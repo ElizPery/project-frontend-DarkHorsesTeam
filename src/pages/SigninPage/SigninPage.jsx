@@ -11,6 +11,7 @@ import deskBottleBackground1x from '../../images/signinPage/bottle-sign-in-desk.
 import deskBottleBackground2x from '../../images/signinPage/bottle-sign-in-desk_2x.png';
 import deskBackground1x from '../../images/signinPage/background-sign-in-desk.png';
 import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x.png';
+
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser, logIn } from '../../redux/auth/operations.js';
