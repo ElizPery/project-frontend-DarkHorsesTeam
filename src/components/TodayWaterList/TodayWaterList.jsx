@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTodayWater, deleteWater } from '../../redux/water/operations.js';
+import {
+  fetchTodayWater,
+  deleteWater,
+  updateWater,
+} from '../../redux/water/operations.js';
 import {
   selectDailyWaterIntake,
   selectIsLoading,
@@ -8,6 +12,7 @@ import {
 } from '../../redux/water/selectors.js';
 import icons from '../../images/icons/icons.svg';
 import ModalDelete from './ModalDelate/ModalDelate.jsx';
+import TodayListModal from '../TodayListModal/TodayListModal.jsx';
 import styles from './TodayWaterList.module.css';
 
 export default function TodayWaterList() {
@@ -18,7 +23,9 @@ export default function TodayWaterList() {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [itemToEdit, setItemToEdit] = useState(null);
 
   useEffect(() => {
     dispatch(fetchTodayWater());
@@ -30,12 +37,34 @@ export default function TodayWaterList() {
   };
 
   const confirmDelete = item => {
-    dispatch(deleteWater(item._id));
-    setModalOpen(false);
+    dispatch(deleteWater(item._id)).then(() => {
+      dispatch(fetchTodayWater()); // Оновлення даних після видалення
+      setModalOpen(false);
+    });
+  };
+
+  const handleEdit = item => {
+    setItemToEdit(item);
+    setEditModalOpen(true);
+  };
+
+  const handleConfirm = item => {
+    const { _id, volume, date } = item;
+    const formattedData = {
+      volume,
+      date: new Date(date).toISOString().slice(0, 16),
+    };
+
+    console.log('Updating with ID:', _id, 'and data:', formattedData);
+    dispatch(updateWater({ id: _id, waterData: formattedData })).then(() => {
+      dispatch(fetchTodayWater()); // Оновлення даних після оновлення
+      setEditModalOpen(false);
+    });
   };
 
   const closeModal = () => {
     setModalOpen(false);
+    setEditModalOpen(false);
   };
 
   return (
@@ -68,7 +97,10 @@ export default function TodayWaterList() {
                 </div>
 
                 <div className={styles.actionIcons}>
-                  <button className={styles.editIcon}>
+                  <button
+                    className={styles.editIcon}
+                    onClick={() => handleEdit(record)}
+                  >
                     <svg className={styles.iconPencil}>
                       <use href={`${icons}#icon-pencil-square`}></use>
                     </svg>
@@ -97,6 +129,13 @@ export default function TodayWaterList() {
         onClose={closeModal}
         onConfirm={confirmDelete}
         item={itemToDelete}
+      />
+
+      <TodayListModal
+        isOpen={editModalOpen}
+        onClose={closeModal}
+        onConfirm={handleConfirm}
+        item={itemToEdit}
       />
     </div>
   );

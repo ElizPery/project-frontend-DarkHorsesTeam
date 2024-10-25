@@ -1,0 +1,245 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-Regular.ttf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-Medium.ttf');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-bold.ttf');
+  font-weight: 700;
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #fff;
+  padding: 24px 12px;
+  border-radius: 10px;
+  /* width: 280px; */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.titleClose {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+}
+.title {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32px;
+  text-align: left;
+}
+.iconClose {
+  width: 24px;
+  height: 24px;
+  stroke: var(--primary-black);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.waterDetails {
+  display: flex;
+  padding: 8px 24px;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--secondary-light-blue2);
+  border-radius: 10px;
+}
+.iconGlassWater {
+  width: 36px;
+  height: 36px;
+}
+.details {
+  display: flex;
+  gap: 16px;
+}
+.volume {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: var(--primary-blue);
+}
+.time {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  color: var(--primary-black);
+}
+.inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 24px;
+}
+.subtitle {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  margin-bottom: 16px;
+}
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.inputs p {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  margin-bottom: 12px;
+}
+.btnVolume {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--secondary-blue);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.iconValue {
+  width: 24px;
+  height: 24px;
+  text-align: center;
+}
+.volumeInputButton {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--primary-blue);
+  text-align: center;
+  padding: 6px 20px;
+  border-radius: 40px;
+  background-color: var(--secondary-light-blue);
+}
+.amountTimeInput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.timeInput,
+.numberInput {
+  width: 100%;
+  padding: 12px 10px;
+  border: 1px solid var(--secondary-blue);
+  border-radius: 6px;
+  color: var(--primary-blue);
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+}
+/* Для Webkit-браузерів (Chrome, Safari, Edge) */
+input[type='time']::-webkit-inner-spin-button,
+input[type='time']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+/* Для Firefox */
+input[type='time'] {
+  -moz-appearance: textfield;
+}
+.amountWaterInput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.saveValue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.volumeChange {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--primary-blue);
+  text-align: center;
+}
+.saveButton {
+  background-color: var(--primary-blue);
+  color: var(--primary-white);
+  padding: 8px 30px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px 0px #407bff57;
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .modal {
+    margin: 0;
+    min-width: 704px;
+    padding: 24px 32px;
+  }
+  .saveValue {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 24px;
+    font-size: 18px;
+  }
+  .saveButton {
+    padding: 10px 30px;
+    max-width: 160px;
+  }
+  .timeInput,
+  .numberInput {
+    max-width: 544px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .modal {
+    min-width: 592px;
+    padding: 24px 32px;
+  }
+}
