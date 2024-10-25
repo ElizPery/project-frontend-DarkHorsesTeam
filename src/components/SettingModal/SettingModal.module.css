@@ -139,6 +139,18 @@
   gap: 24px;
 }
 
+.label_name,
+.label_email {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--primary-black);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+}
 .label {
   position: relative;
   display: flex;
@@ -148,7 +160,7 @@
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 400;
-  line-height: 1.33;
+  line-height: 1.25;
   text-align: left;
 }
 

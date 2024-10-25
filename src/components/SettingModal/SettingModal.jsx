@@ -80,21 +80,24 @@ const SettingModal = ({ isOpen, onClose }) => {
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .optional(),
   }).test(
-    'password-check',
-    'Current password is required to change your password',
+    'password-fields-check',
+    'To reset the password, all password fields must be filled out',
     function (values) {
-      const { password, currentPwd } = values;
+      const { password, currentPwd, repeatPassword } = values;
 
-      if (
-        password &&
-        password.length > 0 &&
-        (!currentPwd || currentPwd.length === 0)
-      ) {
+      // Перевіряємо, якщо одне з полів заповнене, тоді всі мають бути заповнені
+      const isAnyPasswordFieldFilled = password || currentPwd || repeatPassword;
+      const areAllPasswordFieldsFilled =
+        password && currentPwd && repeatPassword;
+
+      if (isAnyPasswordFieldFilled && !areAllPasswordFieldsFilled) {
         return this.createError({
-          path: 'currentPwd',
-          message: 'Current password is required to change your password',
+          path: 'currentPwd', // Вибираємо одне з полів для показу помилки
+          message:
+            'To reset the password, all password fields must be filled out',
         });
       }
+
       return true;
     }
   );
@@ -276,7 +279,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                     </div>
                     <div className={styles.input_section}>
                       {/* Name Field */}
-                      <label className={styles.label} htmlFor="name">
+                      <label className={styles.label_name} htmlFor="name">
                         Your name
                         <Field
                           className={`${styles.field_name} ${
@@ -294,7 +297,7 @@ const SettingModal = ({ isOpen, onClose }) => {
                         />
                       </label>
                       {/* Email Field */}
-                      <label className={styles.label} htmlFor="email">
+                      <label className={styles.label_email} htmlFor="email">
                         E-mail
                         <Field
                           className={`${styles.field_email} ${
