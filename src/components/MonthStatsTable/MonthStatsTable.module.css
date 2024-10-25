@@ -1,6 +1,7 @@
 .section {
     max-width: 264px;
     background-color: #ECF2FF;
+
 }
 
 .container {
@@ -9,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+
 }
 
 .title {

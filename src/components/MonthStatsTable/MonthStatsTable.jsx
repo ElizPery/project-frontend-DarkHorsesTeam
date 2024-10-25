@@ -14,7 +14,8 @@ export default function MonthStatsTable() {
     const [month, setMonth] = useState(dayjs().month());
     const [daysInMonth, setDaysInMonth] = useState(0);
     const [fullMonth, setFullMonth] = useState('');
-    const [btnTrigger, setBtnTrigger] = useState(true)
+    const [btnTrigger, setBtnTrigger] = useState(true);
+    const [activeDay, setActiveDay] = useState(null);
     const year = new Date().getFullYear();
     const dispatch = useDispatch();
     let currentMonth;
@@ -95,7 +96,8 @@ export default function MonthStatsTable() {
         </div>
         {loader && <Loader />}
         {!loader && <ul className={css.list}>
-                {Array(daysInMonth).fill(0).map((item, index) => <li key={index}><MonthStatsTableItem day={index+1} /></li>)}
+            {Array(daysInMonth).fill(0).map((item, index) => <li key={index}><MonthStatsTableItem day={index + 1} monthName={fullMonth} activeDay={activeDay}
+                    setActiveDay={setActiveDay}/></li>)}
         </ul>}
         </section>
 }

@@ -1,12 +1,10 @@
 import css from './MonthStatsTableItem.module.css';
 import clsx from 'clsx';
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectMonthIntake } from '../../redux/water/selectors';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats.jsx';
 
-export default function MonthStatsTableItem({ day }) {
-    const [showStats, setShowStats] = useState(false);
+export default function MonthStatsTableItem({ day, monthName,activeDay, setActiveDay  }) {
     let persent = "0"
     let trigger = true;
     
@@ -23,18 +21,23 @@ export default function MonthStatsTableItem({ day }) {
             return
         }
     })
-    const handleDayClick = () => {
-        setShowStats(!showStats);
+       const handleDayClick = () => {
+        if (activeDay === day) {
+            setActiveDay(null);
+        } else {
+            setActiveDay(day);
+        }
     };
+    const isActive = activeDay === day;
     return <div className={css.box}>
     <span className={clsx(css.day, trigger && css.dayBorder)} onClick={handleDayClick}>{day}</span>
         <p className={css.persent}>{`${persent}%`}</p>
-    {showStats && (
+    {isActive && (
                 <DaysGeneralStats
-                    date={`${day} April`}  
-                    dailyNorm={data.find(item => item.date.slice(8) === day.toString())?.dailyNorm || '2.0'}
+                    date={`${day}, ${monthName}`}  
+                    dailyNorm={data.find(item => item.date.slice(8) === day.toString())?.dailyNorma / 1000 || '1.5'}
                     fulfillment={persent}
-                    servings={data.find(item => item.date.slice(8) === day.toString())?.servings || 0}
+                    servings={data.find(item => item.date.slice(8) === day.toString())?.consumptionCount || 0}
                 />
             )}
     </div>
