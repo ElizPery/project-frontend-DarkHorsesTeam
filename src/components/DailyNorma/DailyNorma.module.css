@@ -36,4 +36,9 @@
   font-weight: 400;
   line-height: 1.25;
   -webkit-tap-highlight-color: transparent;
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--secondary-orange);
+  }
 }

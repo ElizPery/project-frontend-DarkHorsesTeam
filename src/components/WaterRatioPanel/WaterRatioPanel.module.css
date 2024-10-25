@@ -17,7 +17,7 @@
 }
 
 .textPercent {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 12px;
   line-height: 1.33333;
@@ -26,7 +26,7 @@
 }
 
 .textPercentSecond {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.25;
@@ -34,7 +34,7 @@
 }
 
 .label {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.33333;
@@ -51,7 +51,7 @@
 
 .progressBar {
   position: relative;
-  background: #D7E3FF;
+  background: #d7e3ff;
   height: 8px;
   border-radius: 10px;
   /* overflow: hidden; */
@@ -69,7 +69,6 @@
   background: #9ebbff;
   height: 100%;
   border-radius: 10px 0 0 10px;
-
 }
 
 .elips {
@@ -149,7 +148,7 @@
   stroke: #ff9d43;
 }
 .textButt {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.25;
@@ -157,7 +156,6 @@
   color: #fff;
   transition: color 0.3s ease;
 }
-
 
 @media only screen and (min-width: 768px) and (max-width: 1439px) {
   .addButton {

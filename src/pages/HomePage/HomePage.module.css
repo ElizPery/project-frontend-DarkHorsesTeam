@@ -1,6 +1,7 @@
 .section {
   position: relative;
   padding: 24px 20px 40px;
+  overflow: hidden;
 }
 
 .daily_norma {
@@ -9,11 +10,13 @@
 .bottle {
 }
 .bg_bottle {
+  z-index: -2;
   width: 100%;
   margin-bottom: 16px;
 }
 .ratio_panel {
   margin-bottom: 40px;
+  z-index: 99;
 }
 .container {
   display: flex;
@@ -28,6 +31,9 @@
   width: 100%;
 }
 .today_list {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
 .month_stats {
 }
@@ -88,6 +94,7 @@
   }
   .container {
     width: 41.11vw;
+    padding: 32px 24px;
   }
   .hero_container {
     display: flex;
@@ -104,8 +111,8 @@
   .bg_bottle {
     position: absolute;
     left: 0;
-    top: 0px;
-    width: 51.25vw;
+    top: 0;
+    width: 50.25vw;
   }
   .ratio_panel {
     margin: 0;

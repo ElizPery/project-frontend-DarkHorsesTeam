@@ -1,8 +1,8 @@
 import DocumentTitle from '../../components/DocumentTitle';
 import DailyNorma from '../../components/DailyNorma/DailyNorma.jsx';
-// import WaterRatioPanel from '../../components/WaterRatioPanel/WaterRatioPanel.jsx';
+import WaterRatioPanel from '../../components/WaterRatioPanel/WaterRatioPanel.jsx';
 import MonthStatsTable from '../../components/MonthStatsTable/MonthStatsTable.jsx';
-// import TodayWaterList from '../../components/TodayWaterList/TodayWaterList.jsx';
+import TodayWaterList from '../../components/TodayWaterList/TodayWaterList.jsx';
 import mobileBottleBackground1x from '../../images/homePage/bottle-home-mobile.png';
 import mobileBottleBackground2x from '../../images/homePage/bottle-home-mobile_2x.png';
 import tabletBottleBackground1x from '../../images/homePage/bottle-home-tablet.png';
@@ -17,10 +17,8 @@ import deskBackground1x from '../../images/homePage/background-home-desk.png';
 import deskBackground2x from '../../images/homePage/background-home-desk_2x.png';
 
 import toast, { Toaster } from 'react-hot-toast';
-import css from './HomePage.module.css';
 import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
 import { useEffect, useState } from 'react';
-
 import styles from './HomePage.module.css';
 import { useSelector } from 'react-redux';
 
@@ -36,65 +34,70 @@ export default function HomePage() {
   }, [isLoggedIn, hasLoggedIn]);
   return (
     <section className={styles.section}>
-      <div className={css.container}>
-        <DocumentTitle>Home page</DocumentTitle>
-        <div className={styles.hero_container}>
-          <div className={styles.daily_norma}>
-            <DailyNorma />
-          </div>
+      <DocumentTitle>Home page</DocumentTitle>
+      <div className={styles.hero_container}>
+        <div className={styles.daily_norma}>
+          <DailyNorma />
+        </div>
 
-          <picture className={styles.bottle}>
-            <source
-              className={styles.bg_bottle}
-              media="(min-width: 320px) and (max-width: 767px)"
-              srcSet={`${mobileBottleBackground1x} 1x, ${mobileBottleBackground2x} 2x `}
-            />
-            <source
-              className={styles.bg_bottle}
-              media="(min-width: 768px) and (max-width: 1439px)"
-              srcSet={`${tabletBottleBackground1x} 1x, ${tabletBottleBackground2x} 2x `}
-            />
-            <source
-              className={styles.bg_bottle}
-              media="(min-width: 1440px)"
-              srcSet={`${deskBottleBackground1x} 1x, ${deskBottleBackground2x} 2x `}
-            />
-            <img
-              className={styles.bg_bottle}
-              src={mobileBottleBackground1x}
-              alt="Background element"
-            />
-          </picture>
-        </div>
-        {/* <WaterRatioPanel  className={styles.ratio_panel} /> */}
-        <div className={styles.container}>
-          {/* <TodayWaterList className={styles.today_list}/> */}
-          <MonthStatsTable className={styles.month_stats} />
-        </div>
-        <picture className={styles.point}>
+        <picture className={styles.bottle}>
           <source
-            className={styles.bg_point}
+            className={styles.bg_bottle}
             media="(min-width: 320px) and (max-width: 767px)"
-            srcSet={`${mobileBackground1x} 1x, ${mobileBackground2x} 2x `}
+            srcSet={`${mobileBottleBackground1x} 1x, ${mobileBottleBackground2x} 2x `}
           />
           <source
-            className={styles.bg_point}
+            className={styles.bg_bottle}
             media="(min-width: 768px) and (max-width: 1439px)"
-            srcSet={`${tabletBackground1x} 1x, ${tabletBackground2x} 2x `}
+            srcSet={`${tabletBottleBackground1x} 1x, ${tabletBottleBackground2x} 2x `}
           />
           <source
-            className={styles.bg_point}
+            className={styles.bg_bottle}
             media="(min-width: 1440px)"
-            srcSet={`${deskBackground1x} 1x, ${deskBackground2x} 2x `}
+            srcSet={`${deskBottleBackground1x} 1x, ${deskBottleBackground2x} 2x `}
           />
           <img
-            className={styles.bg_point}
-            src={mobileBackground1x}
+            className={styles.bg_bottle}
+            src={mobileBottleBackground1x}
             alt="Background element"
           />
         </picture>
-        <Toaster />
+
+        <div className={styles.ratio_panel}>
+          <WaterRatioPanel />
+        </div>
       </div>
+      <div className={styles.container}>
+        <div className={styles.today_list}>
+          <TodayWaterList />
+        </div>
+        <div className={styles.month_stats}>
+          <MonthStatsTable />
+        </div>
+      </div>
+      <picture className={styles.point}>
+        <source
+          className={styles.bg_point}
+          media="(min-width: 320px) and (max-width: 767px)"
+          srcSet={`${mobileBackground1x} 1x, ${mobileBackground2x} 2x `}
+        />
+        <source
+          className={styles.bg_point}
+          media="(min-width: 768px) and (max-width: 1439px)"
+          srcSet={`${tabletBackground1x} 1x, ${tabletBackground2x} 2x `}
+        />
+        <source
+          className={styles.bg_point}
+          media="(min-width: 1440px)"
+          srcSet={`${deskBackground1x} 1x, ${deskBackground2x} 2x `}
+        />
+        <img
+          className={styles.bg_point}
+          src={mobileBackground1x}
+          alt="Background element"
+        />
+      </picture>
+      <Toaster />
     </section>
   );
 }
