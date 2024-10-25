@@ -84,15 +84,14 @@ const SettingModal = ({ isOpen, onClose }) => {
     'To reset the password, all password fields must be filled out',
     function (values) {
       const { password, currentPwd, repeatPassword } = values;
-
-      // Перевіряємо, якщо одне з полів заповнене, тоді всі мають бути заповнені
+      
       const isAnyPasswordFieldFilled = password || currentPwd || repeatPassword;
       const areAllPasswordFieldsFilled =
         password && currentPwd && repeatPassword;
 
       if (isAnyPasswordFieldFilled && !areAllPasswordFieldsFilled) {
         return this.createError({
-          path: 'currentPwd', // Вибираємо одне з полів для показу помилки
+          path: 'currentPwd', 
           message:
             'To reset the password, all password fields must be filled out',
         });
