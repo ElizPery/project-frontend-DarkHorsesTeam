@@ -8,76 +8,60 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 .modal {
+  display: flex;
+  flex-direction: column;
   width: 280px;
-  height: 100%;
-  margin-top: 40px;
+  height: 90%;
   background-color: var(--primary-white);
   border-radius: 10px;
-  padding: 12px 12px 32px 12px;
+  padding: 32px 12px;
   position: relative;
   overflow: hidden;
   overflow-y: auto;
+  gap: 24px;
+  z-index: 999;
 }
 /* Header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
 }
+
 .title {
-  font-family: var(--font-family);
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 24px;
-  line-height: 123%;
+  line-height: 1.2;
   color: var(--primary-black);
 }
-.closeButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+
 /* Upload photo */
-.subtitle {
-  font-family: var(--font-family);
+.photo_title {
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 18px;
-  line-height: 111%;
+  line-height: 1.11;
   color: var(--primary-black);
   margin-bottom: 8px;
 }
-.icon_upload {
-  stroke: var(--primary-blue);
-  fill: none;
-  margin-right: 8px;
-}
-.uploadLabel {
+
+.photo_container {
   display: flex;
   align-items: center;
-  cursor: pointer;
-  margin-left: 8px;
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 129%;
-  color: var(--primary-blue);
+  gap: 8px;
 }
-.photoSection {
-  margin-top: 24px;
-}
-.photoContainer {
-  display: flex;
-  align-items: center;
-}
+
 .photo {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  margin-right: 8px;
   object-fit: cover;
 }
+
 .placeholder {
   width: 50px;
   height: 50px;
@@ -87,175 +71,86 @@
   justify-content: center;
   align-items: center;
   color: var(--primary-black);
-    border: 2px solid var(--primary-black);
+  border: 2px solid var(--primary-black);
   background-color: #d0bebe;
 }
-.hiddenInput {
+
+.hidden_input {
   display: none;
 }
-/*gender section*/
-.inputContainer {
-  display: block;
-  flex-direction: column;
-  margin-top: 24px;
+
+.upload_label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.29;
+  color: var(--primary-blue);
+  gap: 8px;
 }
 
-.genderNameSectionBlock {
-  display: block; 
-  flex-direction: column; 
- margin-bottom: 24px;
+.icon_upload {
+  stroke: var(--primary-blue);
+  fill: none;
 }
-.radioGroup {
+
+/*gender section*/
+.input_container {
+  display: block;
+  flex-direction: column;
+}
+
+.gender_name_section_block {
+  display: block;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.gender_title {
+  color: var(--primary-black);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.radio_group_block {
+  margin-bottom: 24px;
+}
+.radio_group {
   display: flex;
   margin-bottom: 24px;
+  gap: 24px;
+}
+.radio_group_label {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
 /* name email*/
 
-.inputSection{
+.input_section {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
-/*
-.inputSection label{
-margin-bottom: 0;
-}
-*/
 
-/*
-.inputSection input{
-display: block;
-border-radius: 6px;
-color: var(--secondary-blue);
-margin-bottom: 4px;
-margin-top: 8px;
-outline: none;
-border: 1px solid var(--secondary-light-blue);
-border-radius: 6px;
-padding: 12px 10px;
-width: 256px;
-height: 44px;
-padding-right: 25px;
-}
-
-.inputSection input:focus,
-.passwordSection input:focus,
-.inputSection input:active,
-.passwordSection input:active {
-color: var(--primary-blue);
-}
-
-input:focus {
-  outline: none;
-  border: 1px solid var(--secondary-light-blue);
-}
-*/
-
-
-
-
-
-/* password */
-/*
-.passwordSection {
+.label_name,
+.label_email {
+  position: relative;
   display: flex;
   flex-direction: column;
-}
-.passwordSection input::placeholder {
-  color: var(--secondary-blue);
+  gap: 8px;
+  color: var(--primary-black);
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.25;
-  text-align: left;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
 }
-
-.passwordSection label{
-margin-bottom: 12px;
-}
-.passwordSection h2 {
-margin-bottom: 12px;
-}
-.passwordSection span{
-  display: flex;
-}
-.icon_label {
-  position: relative;
-}
-
-.icon_eye {
-  stroke: var(--primary-blue);
-  fill: none;
-  position: absolute;
-  right: 10px; 
-  top: 65%; 
-  transform: translateY(-50%);  
-  cursor: pointer;
-}
-
-.passwordMask {
-  position: absolute;
-  height: 40px;
-  left: 10px; 
-  top: 47px; 
-  transform: translateY(-50%); 
-  color: var(--primary-blue); 
-
-  background-color: var(--primary-white);
-  padding-top: 15px;
-  font-family: var(--font-family);
-font-weight: 400;
-font-size: 16px;
-line-height: 125%;
-
-}
-/*
-
-
-/* error */
-
-
-/*
-.passwordSection.error  {
-  color: var(--secondary-red);
-}
-
-
-.error {
-  color: var(--secondary-red);
-  font-size: 12px;
-  font-family: var(--font-family);
-  font-weight: 400;
-  line-height: 125%;
-}
-.errorInput {
-  border: 1px solid var(--secondary-red) !important;
-  color: var(--secondary-red) !important;
-}
-
-.toastError {
-  background-color: transparent; 
-  border: none; 
-  color: var(--secondary-red); 
-}
-
-.inputSection.error::placeholder,
-.passwordSection.error::placeholder {
-  color: var(--secondary-red);
-}
-
-
-.passwordMask.error {
-  color: var(--secondary-red);
-}
-*/
-
-
-
-/* added */
-
 .label {
   position: relative;
   display: flex;
@@ -265,7 +160,7 @@ line-height: 125%;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 400;
-  line-height: 1.33;
+  line-height: 1.25;
   text-align: left;
 }
 
@@ -303,6 +198,13 @@ line-height: 125%;
   line-height: 1.25;
   text-align: left;
 }
+.pasword_title {
+  color: var(--primary-black);
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.1;
+}
 
 .pwd_btn {
   position: absolute;
@@ -317,6 +219,7 @@ line-height: 125%;
   width: 16px;
   height: 16px;
 }
+
 /* password*/
 
 .field_name:focus,
@@ -379,107 +282,98 @@ line-height: 125%;
   color: var(--secondary-red);
 }
 
-
-.passwordSection label {
-  margin-bottom: 12px;
+.password_section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-
-
 
 /* button */
-.saveButtonContainer{
+.save_button_container {
   margin-top: 24px;
 }
-.saveButton {
+
+.save_button {
   width: 256px;
   height: 36px;
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   background-color: var(--primary-blue);
   color: white;
-  border: none;
-  cursor: pointer;
   border-radius: 10px;
   padding: 8px 30px;
 }
-.saveButton:hover {
+.save_button:hover {
   box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
 }
-.saveButton:focus {
+.save_button:focus {
   box-shadow: none;
 }
-
-
 
 /* Media Queries */
 /*tablet*/
 @media (min-width: 768px) {
   .modal {
-      width: 704px;
-      padding: 24px 24px 32px 24px;
+    width: 704px;
+    padding: 32px 24px;
   }
-  
-  .inputSection input,
-  .passwordSection input {
-      width: 392px;
+
+  .input_section input,
+  .password_section input {
+    width: 392px;
   }
 
   .pwd_btn {
     right: 275px;
   }
- 
-  .saveButtonContainer {
+
+  .save_button_bontainer {
     display: flex;
     justify-content: flex-end;
   }
-  .saveButton {
-      width: 160px;
-      height: 44px;
+  .save_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 44px;
+    padding: 10px 30px;
+    margin-left: auto;
   }
 }
 
 /*desktop*/
-@media (min-width: 1024px) {
+@media (min-width: 1440px) {
   .modal {
-      width: 1008px;
-      height: 592px;
-      margin-top: 104px;
+    width: 1008px;
+    height: auto;
   }
-  /*
-  .genderNameSectionBlock {
+
+  .input_container {
+    gap: 24px;
+    display: flex;
+    flex-direction: row;
+  }
+  .password_section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gender_name_section_block {
+    display: block;
     margin-bottom: 0;
   }
-*/
-  .inputContainer {
+  .radio_group {
+    margin-bottom: 59px;
+  }
+  .input_section_block {
     display: flex;
- flex-direction: row;
-  }
-  .passwordSection {
-      display: flex;
-      flex-direction: column;
-      margin-top: 0;
-      padding-right: 152px;
-  }
-  .genderSection {
-      margin-right: 24px;
-  }
-  .genderNameSectionBlock {
-      display: block;
-      margin-bottom: 0;
-  }
-  .radioGroup {
-    margin-bottom: 61px;
-  }
-  .inputSectionBlock {
-      display: flex;
-      gap: 24px;
+    gap: 24px;
   }
   .icon_label {
-      width: 392px;
+    width: 392px;
   }
 
   .pwd_btn {
     right: 10px;
   }
-
-
 }
