@@ -14,7 +14,6 @@ import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x
 import { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { logIn, fetchUser } from '../../redux/auth/operations.js';
-
 export default function SigninPage() {
   const dispatch = useDispatch();
   const handleSubmit = async userData => {

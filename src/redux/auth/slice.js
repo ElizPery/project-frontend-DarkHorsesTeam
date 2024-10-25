@@ -21,6 +21,7 @@ const initialState = {
     sportTime: null,
     dailyNorma: 1500,
   },
+  isModalOpen: false,
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
@@ -44,7 +45,11 @@ const handlePending = state => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-
+  reducers: {
+    resetModalState: state => {
+      state.isModalOpen = false;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(logIn.pending, handlePending)
@@ -65,7 +70,7 @@ const authSlice = createSlice({
         state.error = action.payload;
         toast.error(`Registration failed: ${action.payload}`);
       })
-      .addCase(signUp.fulfilled, (state) => {
+      .addCase(signUp.fulfilled, state => {
         state.isLoading = false;
         state.error = null;
       })
@@ -107,36 +112,42 @@ const authSlice = createSlice({
         toast.error(`Fetch user failed: ${action.payload}`);
       })
       .addCase(updateUserInfo.pending, state => {
+        state.isModalOpen = true;
         state.isLoading = true;
         state.error = null;
       })
       .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.isModalOpen = false;
         state.user.name = action.payload.data.name;
         state.user.email = action.payload.data.email;
         state.user.dailyNorma = action.payload.data.dailyNorma;
         state.user.gender = action.payload.data.gender;
         state.user.photo = action.payload.data.photo;
         state.isLoading = false;
+        toast.success('User information updated successfully!');
       })
       .addCase(updateUserInfo.rejected, (state, action) => {
+        state.isModalOpen = true;
         state.isLoading = false;
         state.error = action.payload;
         toast.error(`Update info failed: ${action.payload}`);
       })
       .addCase(changeUserPhoto.pending, state => {
+        state.isModalOpen = true;
         state.isLoading = true;
         state.error = null;
       })
       .addCase(changeUserPhoto.fulfilled, (state, action) => {
+        state.isModalOpen = true;
         state.user.photo = action.payload.data.photo;
         state.isLoading = false;
       })
       .addCase(changeUserPhoto.rejected, (state, action) => {
+        state.isModalOpen = true;
         state.isLoading = false;
         state.error = action.payload;
-        toast.error(`Change photo failed: ${action.payload}`);
       });
   },
 });
-
+export const { resetModalState } = authSlice.actions;
 export default authSlice.reducer;

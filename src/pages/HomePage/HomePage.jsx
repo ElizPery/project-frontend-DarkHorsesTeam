@@ -1,7 +1,11 @@
-import DocumentTitle from "../../components/DocumentTitle";
+import { Toaster } from 'react-hot-toast';
+import DocumentTitle from '../../components/DocumentTitle';
 
 export default function HomePage() {
-    return (
-        <DocumentTitle>Home page</DocumentTitle>
-    );
+  return (
+    <div>
+      <DocumentTitle>Home page</DocumentTitle>
+      <Toaster />
+    </div>
+  );
 }
