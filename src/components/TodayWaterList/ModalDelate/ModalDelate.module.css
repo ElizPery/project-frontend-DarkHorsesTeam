@@ -1,0 +1,147 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-Medium.ttf');
+  font-weight: 500;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000cc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: var(--primary-white);
+  padding: 32px 24px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 280px;
+  height: 280px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  font-family: 'Roboto', system-ui, sans-serif;
+}
+
+.headerClose {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32px;
+  color: var(--primary-black);
+}
+.iconClose {
+  width: 24px;
+  height: 24px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+.text {
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--primary-black);
+  font-family: Roboto;
+  line-height: 20px;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.deleteButton {
+  font-family: 'Roboto', system-ui, sans-serif;
+  background-color: var(--secondary-red);
+  color: var(--primary-white);
+  padding: 8px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #e04343;
+}
+
+.cancelButton {
+  font-family: 'Roboto', system-ui, sans-serif;
+  background-color: var(--secondary-light-blue);
+  color: var(--primary-blue);
+  padding: 8px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #e0e7ff;
+}
+
+.cancelButton:focus {
+  outline: 2px dashed #3b82f6;
+  outline-offset: 4px;
+}
+@media (min-width: 768px) {
+  .modal {
+    padding: 32px 24px;
+    width: 592px;
+    height: 208px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 24px;
+  }
+
+  .deleteButton {
+    padding: 10px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .cancelButton {
+    padding: 10px 30px;
+    font-size: 18px;
+  }
+
+  .cancelButton:hover {
+    background-color: #e0e7ff;
+    color: #3b82f6;
+  }
+}
