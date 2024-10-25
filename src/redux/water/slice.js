@@ -74,7 +74,7 @@ const waterSlice = createSlice({
         );
         state.error = null;
       })
-      .addCase(deleteWater.rejected, handleRejected);
+      .addCase(deleteWater.rejected, handleRejected)
       .addCase(getWaterMonth.pending, (state) => {
           state.isLoading = true;
           state.error = false;
