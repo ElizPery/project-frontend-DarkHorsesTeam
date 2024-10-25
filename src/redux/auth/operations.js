@@ -3,7 +3,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
 
-const setAuthHeader = (token) => {
+const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -43,14 +43,13 @@ export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, thunkApi) => {
     try {
-      await axios.post("auth/logout");
+      await axios.post('auth/logout');
 
       clearAuthHeader();
 
       localStorage.removeItem('token');
     } catch (error) {
-
-        return thunkApi.rejectWithValue(
+      return thunkApi.rejectWithValue(
         error.response?.data?.message || 'Logout failed'
       );
     }
@@ -98,6 +97,19 @@ export const changeUserPhoto = createAsyncThunk(
   async (photoData, thunkAPI) => {
     try {
       const response = await axios.patch('user/change-photo', photoData);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const updateDailyWaterRate = createAsyncThunk(
+  'auth/updateDailyWaterRate',
+  async (dailyNorma, thunkAPI) => {
+    try {
+      const response = await axios.patch('/user/change-water-rate', {
+        dailyNorma,
+      });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
