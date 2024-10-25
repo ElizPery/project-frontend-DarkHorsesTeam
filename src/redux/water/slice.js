@@ -4,6 +4,7 @@ import {
   addWater,
   updateWater,
   deleteWater,
+  getWaterMonth,
 } from './operations';
 
 const initialState = {
@@ -74,6 +75,18 @@ const waterSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteWater.rejected, handleRejected);
+      .addCase(getWaterMonth.pending, (state) => {
+          state.isLoading = true;
+          state.error = false;
+      })
+      .addCase(getWaterMonth.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.monthIntake = action.payload;
+      })
+      .addCase(getWaterMonth.rejected, (state) => {
+          state.isLoading = false;
+          state.error = true;
+      })
   },
 });
 
