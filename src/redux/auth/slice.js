@@ -6,6 +6,7 @@ import {
   changeUserPhoto,
   signUp,
   logoutUser,
+  refreshUser,
 } from './operations';
 import toast from 'react-hot-toast';
 import axios from 'axios';
@@ -93,6 +94,17 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.isRefreshing = false;
       })
       .addCase(fetchUser.pending, state => {
         state.isLoading = true;
