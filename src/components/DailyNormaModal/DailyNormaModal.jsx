@@ -123,14 +123,12 @@ const DailyNormaModal = () => {
             <span className={styles.blue_text}> V=(M*0,04) + (T*0,6)</span>
           </p>
         </div>
-
         <p className={styles.description}>
           <span className={styles.blue_text}>*</span> V is the volume of the
           water norm in liters per day, M is your body weight, T is the time of
           active sports, or another type of activity commensurate in terms of
           loads (in the absence of these, you must set 0)
         </p>
-
         <h3 className={styles.subtitle}>Calculate your rate:</h3>
         <div className={styles.radioGroup}>
           <label>
@@ -153,7 +151,6 @@ const DailyNormaModal = () => {
             <span className={styles.radiotext}>For man</span>
           </label>
         </div>
-
         <div className={styles.formGroup}>
           <label className={`${styles.common_text} ${styles.text_input}`}>
             Your weight in kilograms:
@@ -166,7 +163,7 @@ const DailyNormaModal = () => {
           />
           {errors.weight && <div className={styles.error}>{errors.weight}</div>}
         </div>
-
+        {/* wfwfwfe */}
         <div className={styles.formGroup}>
           <label className={`${styles.common_text} ${styles.text_input}`}>
             The time of active participation in sports or other activities with
@@ -182,14 +179,12 @@ const DailyNormaModal = () => {
             <div className={styles.error}>{errors.activityTime}</div>
           )}
         </div>
-
         <div className={styles.another}>
           <p className={`${styles.common_text} ${styles.text_waterNorm}`}>
             The required amount of water in liters per day:
           </p>
           <p className={styles.waterNorm}>{waterNorm} L</p>
         </div>
-
         <div className={styles.formGroup}>
           <p className={styles.downtext}>
             Write down how much water you will drink:
@@ -201,7 +196,6 @@ const DailyNormaModal = () => {
             min="0"
           />
         </div>
-
         <button className={styles.saveButton} onClick={handleSubmit}>
           Save
         </button>
