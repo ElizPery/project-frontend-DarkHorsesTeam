@@ -80,7 +80,7 @@
 }
 
 .description {
-  border: 1px solid #c3d4e6;
+  border: 1px solid #D7E3FF;
   border-radius: 10px;
   padding: 10px;
   font-size: 12px;
@@ -128,10 +128,11 @@
 }
 
 input[type='number'] {
+  color: #407BFF;
   width: 100%;
   height: 44px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #D7E3FF;
   border-radius: 4px;
   margin-top: 8px;
 }
