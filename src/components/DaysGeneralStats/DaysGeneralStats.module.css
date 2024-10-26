@@ -33,6 +33,7 @@
 
 .value {
     color: var(--primary-blue);
+    font-size: 18px;
     font-weight: 500;
 }
 @media screen and (min-width: 768px) {
