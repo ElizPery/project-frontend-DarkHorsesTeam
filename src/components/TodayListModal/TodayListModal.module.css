@@ -1,0 +1,293 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: #fff;
+    padding: 24px 12px;
+    border-radius: 10px;
+    width: 280px;
+    position: relative;
+    margin-top: 70px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #1c9e08;
+}
+
+.header {
+    color: #2F2F2F;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 32px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.waterAmountContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 256px;
+    margin-bottom: 24px;
+    padding: 8px 24px 8px 24px;
+    gap: 20px;
+    border-radius: 10px;
+    opacity: 0px;
+    background-color: #ECF2FF;
+}
+
+.contAmountTimeData {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* width: 100%; */
+    gap: 20px;
+}
+
+.icons {
+    width: 32px;
+    height: 32px;
+    color: rgba(64, 123, 255, 1);
+    fill: rgba(64, 123, 255, 1);
+}
+
+.iconGlass {
+    width: 36px;
+    height: 36px;
+}
+
+.waterAmount {
+    color: #407BFF;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+
+.waterTime {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: #2F2F2F;
+}
+
+.titleCorrect {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+    margin-bottom: 16px;
+}
+
+.contAmPlMn {
+    margin-bottom: 24px;
+}
+
+.inputContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 7px;
+}
+
+.subTitleCorrect {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    color: #2F2F2F;
+    margin-bottom: 12px;
+}
+
+.iconsMinus {
+    width: 24px;
+    height: 24px;
+    fill: rgba(64, 123, 255, 1);
+}
+
+.iconsPlus {
+    width: 24px;
+    height: 24px;
+    fill: rgba(64, 123, 255, 1);
+    display: inline-block;
+    /* Дозволяє застосувати трансформацію */
+    transform: rotate(45deg);
+}
+
+.decrement,
+.increment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    width: 44px;
+    height: 44px;
+    border: solid 1px;
+    border-color: #9EBBFF;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.volumeDisplay {
+    font-size: 18px;
+    width: 92px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background-color: #D7E3FF;
+    color: #407BFF;
+}
+
+.timeInputContainer {
+    margin-bottom: 24px;
+}
+
+.timeSelect {
+    display: block;
+    margin-top: 12px;
+    /* width: 100%;
+    margin-top: 12px;
+    color: #407BFF;
+    padding: 12px 10px 12px 10px;
+    border-radius: 6px;
+    border: solid 1px #D7E3FF;
+    opacity: 0px;
+    height: 44px;
+
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px; */
+    text-align: left;
+}
+
+.inputVolumeContainer {
+    margin-bottom: 24px;
+}
+
+.subTitleEntVol {
+    color: #2F2F2F;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+}
+
+.inputVolume {
+    display: block;
+    width: 100%;
+    height: 44px;
+    margin-top: 12px;
+    color: #407BFF;
+    padding: 12px 10px 12px 10px;
+    border-radius: 6px;
+    border: solid 1px #D7E3FF;
+    opacity: 0px;
+
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    transition: border-color 225ms ease;
+}
+
+.inputVolume:hover {
+    border-color: #407BFF;
+}
+
+.inputVolume:focus {
+    border-color: #407BFF;
+}
+
+.volumeTotalDisplay {
+    display: block;
+    color: #407BFF;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+}
+
+.saveButton {
+    width: 100%;
+    background-color: #007bff;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    color: #FFFFFF;
+    transition: background-color 225ms ease;
+}
+
+.saveButton:hover {
+    background-color: rgba(64, 123, 255, 0.54);
+}
+
+.saveButton:focus {
+    background-color: rgba(64, 123, 255, 0.54);
+}
+
+@media (min-width: 768px) {
+    .modalContent {
+        width: 704px;
+        padding: 32px 24px;
+        margin-top: 40px;
+    }
+
+    .timeSelect {
+        width: 544px;
+    }
+
+    .inputVolume {
+        width: 544px;
+    }
+
+    .totalSaveCont {
+        display: flex;
+        justify-content: flex-end;
+        align-content: center;
+        gap: 24px;
+    }
+
+    .volumeTotalDisplay {
+        margin-bottom: 0;
+        align-self: center;
+        text-align: center;
+        width: 72px;
+    }
+
+    .saveButton {
+        width: 160px;
+        padding: 10px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .modalContent {
+        width: 592px;
+    }
+}
