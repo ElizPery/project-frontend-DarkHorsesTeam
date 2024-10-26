@@ -162,6 +162,7 @@ const DailyNormaModal = () => {
             type="number"
             value={weight}
             onChange={e => setWeight(e.target.value)}
+            min="0"
           />
           {errors.weight && <div className={styles.error}>{errors.weight}</div>}
         </div>
@@ -197,6 +198,7 @@ const DailyNormaModal = () => {
             type="number"
             value={plannedWater}
             onChange={e => setPlannedWater(e.target.value)}
+            min="0"
           />
         </div>
 
