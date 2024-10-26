@@ -6,6 +6,7 @@ import {
   changeUserPhoto,
   signUp,
   logoutUser,
+  updateDailyWaterRate,
   refreshUser,
 } from './operations';
 import toast from 'react-hot-toast';
@@ -162,4 +163,5 @@ const authSlice = createSlice({
   },
 });
 export const { resetModalState } = authSlice.actions;
+
 export default authSlice.reducer;
