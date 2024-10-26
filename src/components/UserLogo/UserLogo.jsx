@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState} from 'react';
 import { useSelector } from 'react-redux';
 import { selectIsModalOpen, selectUser } from '../../redux/auth/selectors.js';
 import UserLogoModal from '../UserLogoModal/UserLogoModal.jsx';
@@ -22,15 +22,6 @@ const UserLogo = () => {
     return '?';
   };
 
-  const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
-  const bgColor = useMemo(() => (photo ? null : getRandomColor()), [photo]);
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -42,7 +33,7 @@ const UserLogo = () => {
         {photo ? (
           <img className={css.userLogoAvatar} src={photo} alt={name} />
         ) : (
-          <div className={css.userLogoInitial} style={{ backgroundColor: bgColor }}>{getInitials()}</div>
+          <div className={css.userLogoInitial}>{getInitials()}</div>
         )}
         <svg className={`${css.userLogoIcon} ${isModalOpen ? css.rotate : ''}`} width="16" height="16">
           <use href={`${icons}#icon-chevron-double-up`} />
