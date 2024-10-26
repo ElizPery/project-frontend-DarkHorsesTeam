@@ -21,7 +21,7 @@ export default function MonthStatsTableItem({ day, monthName,activeDay, setActiv
             return
         }
     })
-       const handleDayClick = () => {
+    const handleDayClick = () => {
         if (activeDay === day) {
             setActiveDay(null);
         } else {
@@ -32,7 +32,7 @@ export default function MonthStatsTableItem({ day, monthName,activeDay, setActiv
     return <div className={css.box}>
     <span className={clsx(css.day, trigger && css.dayBorder)} onClick={handleDayClick}>{day}</span>
         <p className={css.persent}>{`${persent}%`}</p>
-    {isActive && (
+        {isActive && (
                 <DaysGeneralStats
                     date={`${day}, ${monthName}`}  
                     dailyNorm={data.find(item => item.date.slice(8) === day.toString())?.dailyNorma / 1000 || '1.5'}

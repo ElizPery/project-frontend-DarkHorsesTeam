@@ -4,9 +4,7 @@ const DaysGeneralStats = ({ date, dailyNorm, fulfillment, servings }) => {
     return (
         <div className={css.container}>
             <div className={css.allText}>
-                <p className={css.date}>
-                    <span className={css.value}>{date}</span>
-                </p>
+                <p className={css.date}>{date}</p>
                 <p className={css.dailyNorm}>
                     <span>Daily norma: </span>
                     <span className={css.value}>{dailyNorm} L</span>
