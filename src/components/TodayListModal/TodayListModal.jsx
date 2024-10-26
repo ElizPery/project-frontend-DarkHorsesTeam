@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './TodayListModal.module.css';
 import icons from '../../images/icons/icons.svg';
 
-export default function TodayListModal({ isOpen, onClose, onConfirm, item }) {
+function TodayListModal({ isOpen, onClose, onConfirm, item }) {
   const [volume, setVolume] = useState(item?.volume || 0);
   const [time, setTime] = useState('');
 
@@ -126,3 +126,5 @@ export default function TodayListModal({ isOpen, onClose, onConfirm, item }) {
     </div>
   );
 }
+
+export default TodayListModal;
