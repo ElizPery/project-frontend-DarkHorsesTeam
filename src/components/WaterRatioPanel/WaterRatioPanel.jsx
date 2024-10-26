@@ -10,8 +10,12 @@ export default function WaterRatioPanel() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const {percentage} = useSelector(selectDailyWaterIntake);
-  const parsedWaterRatio = parseInt(percentage)
-  let width = parsedWaterRatio;
+  let parsedWaterRatio = parseInt(percentage)
+  if(parsedWaterRatio >= 100) {
+    parsedWaterRatio = 100;
+  }
+
+  let width = parsedWaterRatio;  
   if(parsedWaterRatio >= 60) {
     width = parsedWaterRatio+3
   }
