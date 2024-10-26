@@ -5,12 +5,14 @@ import * as Yup from 'yup';
 import { toast, Toaster } from 'react-hot-toast';
 import styles from './SettingModal.module.css';
 import icons from '../../images/icons/icons.svg';
+
 import { updateUserInfo, changeUserPhoto } from '../../redux/auth/operations';
 import {
   selectUser,
   selectError,
   selectIsLoading,
 } from '../../redux/auth/selectors';
+
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const SettingModal = ({ isOpen, onClose }) => {
@@ -200,6 +202,7 @@ const SettingModal = ({ isOpen, onClose }) => {
     }
     return '?';
   };
+  
   if (!isOpen) return null;
 
   return (
@@ -481,4 +484,5 @@ const SettingModal = ({ isOpen, onClose }) => {
     </div>
   );
 };
+
 export default SettingModal;
