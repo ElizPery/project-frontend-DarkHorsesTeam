@@ -1,235 +1,152 @@
-.modalOverlay {
-  width: 100%;
-  height: 100%;
+.backdrop {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 50px;
-  z-index: 1000;
+  align-items: center;
+  z-index: 800;
 }
-
 .modal {
-  background: var(--primary-white);
-  padding-top: 24px;
-  padding-bottom: 24px;
-  padding-left: 12px;
-  padding-right: 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  width: 280px;
-  max-height: 816px;
-  box-sizing: border-box;
+  width: 280px; /* Мобільна версія */
+  padding: 24px 12px;
+  border-radius: 10px;
+  background: white; /* Задній фон модального вікна */
+  z-index: 801;
 }
-
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  margin-bottom: 24px;
+  align-items: center;
 }
-
 .title {
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 26px;
-  line-height: 123%;
-  color: var(--primary-black);
   font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 24px;
+  font-family: var(--font-family);
+font-weight: 500;
+font-size: 26px;
+line-height: 123%;
+color: --primary-black;
 }
-
 .closeButton {
   background: none;
   border: none;
   cursor: pointer;
 }
-
-.common_text {
-  color: var(--primary-black);
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.formula {
-  display: flex;
-  flex-direction: column;
+.formulas {
   margin-bottom: 12px;
 }
-
-.text_for_girl {
-  margin-bottom: 16px;
-}
-
-.text_for_man {
-  margin-bottom: 12px;
-}
-
-.blue_text {
+.formulaText {
   font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 129%;
-  color: var(--primary-blue);
+font-weight: 400;
+font-size: 16px;
+line-height: 125%;
+color: --primary-black;
+margin-bottom: 18px;
 }
-
-.description {
-  border: 1px solid #c3d4e6;
+.span{
+font-family: var(--font-family);
+font-weight: 400;
+font-size: 18px;
+line-height: 133%;
+color: var(--primary-blue);
+}
+.infoText {
+  border: 1px solid var(--secondary-light-blue);
   border-radius: 10px;
   padding: 10px;
-  font-size: 12px;
-  color: #6b6b6b;
+  width: 100%px;
+  height: 100%;
+  color: #8f8f8f;
   margin-bottom: 24px;
+  font-weight: 400;
+font-size: 12px;
+line-height: 133%;
 }
-
-.subtitle {
+.infoTextBlok {
+  margin-bottom: 24px;
+  
+}
+.formText {
   font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 111%;
-  color: var(--primary-black);
-  margin-bottom: 16px;
-}
+font-weight: 400;
+font-size: 16px;
+line-height: 125%;
+color: var(--primery-color-black);
 
-.radioGroup {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
 }
-
-.radio_button {
-  margin-left: 24px;
-}
-
-.radiotext {
-  margin-left: 8px;
-}
-
-.down_text {
-  font-family: var(--font-family);
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 111%;
-  color: var(--primary-black);
-}
-
-.formGroup {
-  margin-bottom: 15px;
-}
-
-.text_input {
-  margin-bottom: 8px !important;
-}
-
-input[type='number'] {
-  width: 100%;
+.input {
+  border: 1px solid var(--secondary-light-blue);
+  border-radius: 6px;
+  padding: 12px 10px;
+  width: 100%; /* Мобільна версія */
   height: 44px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin-bottom: 24px; /* Відступ між інпутами */
   margin-top: 8px;
-}
-
-.another {
-  display: flex;
-  width: 253px;
-  margin-bottom: 24px;
-}
-
-.text_waterNorm {
-  width: 190px;
-}
-
-.waterNorm {
-  margin-top: 8px;
-  font-family: var(--font-family);
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 129%;
+  outline-style: none;
   color: var(--primary-blue);
 }
-
-.downtext {
-  margin-bottom: 8px;
+.genderField{
+  display: flex;
+  gap: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
-
+.weightField .input{
+  margin-bottom: 12px;
+}
+.litersField{
+  display: flex;
+  margin-bottom: 24px;
+  gap: 6px;
+}
+.litersField .span{
+ 
+}
 .saveButton {
-  width: 100%;
-  padding: 10px;
-  background-color: var(--primary-blue);
-  color: var(--primary-white);
-  border: none;
   border-radius: 10px;
-  cursor: pointer;
-  margin-top: 9px;
+  padding: 8px 30px;
+  width: 256px; /* Мобільна версія */
+  height: 36px;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background-color: var(--primary-blue);
+  color: white; /* Колір тексту на кнопці */
 }
-
+.input::placeholder{
+  font-family: var(--font-family);
+font-weight: 400;
+font-size: 18px;
+line-height: 133%;
+color: var(--primary-blue);
+}
+/* Стилі для планшетів */
 @media (min-width: 768px) {
   .modal {
-    height: 696px;
-    width: 704px;
-    padding-top: 32px;
-    padding-bottom: 32px;
-    padding-left: 24px;
-    padding-right: 24px;
-    position: relative;
+      width: 704px; /* Ширина для планшетів */
+      height: 696px;
+      padding: 32px 24px;
   }
-
-  .formula {
-    margin-bottom: 12px;
-    flex-direction: row;
+  .formulas {
+    display: flex;
+    gap: 24px;
   }
-
-  .text_for_girl {
-    margin-bottom: 0;
-    margin-right: 24px;
-  }
-
-  .another {
-    width: 100%;
-    margin-bottom: 24px;
-    align-items: center;
-  }
-
-  .text_waterNorm {
-    width: 328px;
-  }
-
-  .waterNorm {
-    margin-top: 0;
-    margin-left: 8px;
+  .saveButtonBlok {
+    display: flex;
+    flex-direction:row-reverse;
   }
   .saveButton {
-    width: 160px;
-    margin-top: 20px;
-    margin-left: auto;
-    position: absolute;
-    left: 520px;
+      width: 160px; /* Ширина кнопки для планшетів */
   }
 }
-
-@media (min-width: 1024px) {
+/* Стилі для комп'ютерів */
+@media (min-width: 1200px) {
   .modal {
-    height: 712px;
-    width: 592px;
-    position: relative;
+      width: 592px; /* Ширина для комп'ютерів */
+      height: 712px;
   }
 
-  .description {
-    height: 68px;
-  }
-
-  .saveButton {
-    width: 160px;
-    margin-top: 20px;
-    margin-left: auto;
-    position: absolute;
-    left: 410px;
-  }
 }

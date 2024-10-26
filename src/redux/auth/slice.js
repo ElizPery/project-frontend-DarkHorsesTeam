@@ -159,7 +159,22 @@ const authSlice = createSlice({
         state.isModalOpen = true;
         state.isLoading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(updateDailyWaterRate.pending, state => {
+        state.isModalOpen = true;
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateDailyWaterRate.fulfilled, (state, action) => {
+        state.isModalOpen = true;
+        state.user.dailyNorma = action.payload.data.dailyNorma;
+        state.isLoading = false;
+      })
+      .addCase(updateDailyWaterRate.rejected, (state, action) => {
+        state.isModalOpen = true;
+        state.isLoading = false;
+        state.error = action.payload;
+      })
   },
 });
 export const { resetModalState } = authSlice.actions;
