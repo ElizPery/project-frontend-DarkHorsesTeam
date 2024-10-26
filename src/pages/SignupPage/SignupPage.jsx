@@ -11,14 +11,22 @@ import deskBottleBackground1x from '../../images/signinPage/bottle-sign-in-desk.
 import deskBottleBackground2x from '../../images/signinPage/bottle-sign-in-desk_2x.png';
 import deskBackground1x from '../../images/signinPage/background-sign-in-desk.png';
 import deskBackground2x from '../../images/signinPage/background-sign-in-desk_2x.png';
-import { Toaster } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../redux/auth/operations.js';
+import { Toaster } from 'react-hot-toast';
 
 export default function SignupPage() {
   const dispatch = useDispatch();
   const handleSubmit = async userData => {
-    await dispatch(signUp(userData));
+    try {
+      const resultAction = await dispatch(signUp(userData));
+      if (signUp.rejected.match(resultAction)) {
+        return { error: resultAction.payload };
+      }
+      return true;
+    } catch {
+      return { error: 'An unexpected error occurred during sign up' };
+    }
   };
 
   return (
@@ -68,7 +76,6 @@ export default function SignupPage() {
             alt="Background element"
           />
         </picture>
-
         <Toaster position="top-center" reverseOrder={false} />
       </div>
     </section>

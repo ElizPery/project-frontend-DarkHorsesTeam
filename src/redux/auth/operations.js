@@ -2,6 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://project-backend-darkhorsesteam.onrender.com/';
+const storedToken = localStorage.getItem('token');
+if (storedToken) {
+  setAuthHeader(storedToken);
+}
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -21,16 +25,14 @@ export const signUp = createAsyncThunk(
     } catch (error) {
       if (error.response) {
         const status = error.response.status;
+        let errorMessage = 'Something went wrong. Please try again.';
         if (status === 409) {
-          return thunkAPI.rejectWithValue(
-            'This email is already registered. Please sign in.'
-          );
+          errorMessage = 'This email is already registered. Please sign in.';
         }
         if (status === 400) {
-          return thunkAPI.rejectWithValue(
-            'Invalid data provided. Please check your inputs.'
-          );
+          errorMessage = 'Invalid data provided. Please check your inputs.';
         }
+        return thunkAPI.rejectWithValue(errorMessage);
       }
       return thunkAPI.rejectWithValue(
         'Something went wrong. Please try again.'
@@ -67,6 +69,33 @@ export const logIn = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  }
+);
+
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const reduxState = thunkAPI.getState();
+    const token = reduxState.auth.token;
+    if (!token) return thunkAPI.rejectWithValue('No token provided');
+
+    setAuthHeader(token);
+
+    try {
+      const response = await axios.get('/user');
+      return response.data;
+    } catch (error) {
+      if (error.response?.status === 401) {
+        thunkAPI.dispatch(logoutUser());
+      }
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const token = thunkAPI.getState().auth.token;
+      return token !== null;
+    },
   }
 );
 

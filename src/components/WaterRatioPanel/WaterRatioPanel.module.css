@@ -1,0 +1,231 @@
+.container {
+  width: 100%;
+}
+
+.labelContainer {
+  flex: 1;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.icons {
+  fill: none;
+  stroke: #fff;
+  width: 24px;
+  height: 24px;
+  transition: stroke 0.3s ease;
+}
+
+.textPercent {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33333;
+  text-align: center;
+  color: #407bff;
+}
+
+.textPercentSecond {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #407bff;
+}
+
+.label {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.33333;
+
+  color: #407bff;
+}
+
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  align-items: center;
+}
+
+.progressBar {
+  position: relative;
+  background: #d7e3ff;
+  height: 8px;
+  border-radius: 10px;
+  /* overflow: hidden; */
+  width: 256px;
+  /* margin-left: 12px; */
+  /* margin-right: 12px; */
+  /* width: 100%; */
+  /* padding: 0 10px; */
+  margin-bottom: 6px;
+
+  /* margin-left: 7px; */
+}
+
+.progressFill {
+  background: #9ebbff;
+  height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+
+.elips {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #407bff;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: -3px;
+  /* transform: translateY(50%); */
+  /* z-index: 2px; */
+}
+
+.textPercentWrap {
+  margin-top: 12px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.textPercentWrap:nth-child(1) {
+  width: 22px;
+  justify-content: flex-end;
+}
+
+.textPercentWrap:nth-child(2) {
+  width: 50px;
+}
+
+.textPercentWrap:nth-child(3) {
+  width: 30px;
+}
+
+.textPercentWrap::before {
+  content: '';
+  position: absolute;
+  border: 1px solid #d7e3ff;
+  width: 1px;
+  height: 8px;
+  left: 50%;
+  transform: translate(-50%);
+  top: -12px;
+}
+
+.percentageContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 3px 0 6px;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  margin-top: 16px;
+  /* width: 280px; */
+  height: 36px;
+  /* padding: 6px 76px; */
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
+  background: #407bff;
+  transition: box-shadow 0.3s ease;
+}
+
+.addButton:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.addButton:hover .textButt {
+  color: #ff9d43;
+}
+.addButton:hover .icons {
+  stroke: #ff9d43;
+}
+.textButt {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  text-align: center;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1439px) {
+  .addButton {
+    width: 336px;
+    margin-top: 0;
+    position: relative;
+    bottom: 25px;
+  }
+
+  .labelContainer {
+    margin-bottom: 0;
+  }
+
+  .progressAndButtWrapp {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  } */
+
+  .labelContainer {
+    margin-bottom: 16px;
+  }
+
+  .progressContainer {
+    height: 50px;
+    width: 356px;
+  }
+  .progressBar {
+    width: 325px;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  .addButton {
+    width: 178px;
+    margin-top: 0;
+    position: relative;
+    bottom: 25px;
+  }
+
+  .labelContainer {
+    width: 391px;
+  }
+
+  .progressAndButtWrapp {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .labelContainer {
+    margin-bottom: 16px;
+  }
+
+  .progressContainer {
+    height: 50px;
+    width: 391px;
+  }
+  .progressBar {
+    width: 360px;
+  }
+}
