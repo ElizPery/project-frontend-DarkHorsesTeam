@@ -3,6 +3,7 @@ import styles from './TodayListModal.module.css';
 import icons from '../../images/icons/icons.svg';
 import { useSelector } from 'react-redux';
 import { selectDailyWaterIntake } from '../../redux/water/selectors.js';
+import { toast } from 'react-hot-toast';
 
 export default function TodayListModal({
   isOpen,
@@ -45,6 +46,11 @@ export default function TodayListModal({
   };
 
   const handleSave = () => {
+    if (volume <= 0) {
+    toast.error('Value must be greater than 0.'); 
+    console.error('Volume must be greater than 0.');
+    return;
+  }
     if (!item?._id && !isAdding) {
       console.error('Item ID is undefined.');
       return;
@@ -198,6 +204,7 @@ export default function TodayListModal({
               value={volume}
               onChange={e => handleVolumeChange(Number(e.target.value))}
               onBlur={() => handleVolumeChange(volume)}
+              onFocus={() => setVolume('')}
               className={styles.numberInput}
             />
           </div>
