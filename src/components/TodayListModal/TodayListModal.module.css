@@ -248,6 +248,16 @@ input[type='time'] {
 .minuteOption:hover {
   background-color: var(--secondary-light-blue);
 }
+.errorInput {
+  border: 1px solid var(--secondary-red);
+}
+.error {
+  color: var(--secondary-red);
+  font-family: 'Roboto', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+}
 
 @media (min-width: 768px) {
   .modal {
