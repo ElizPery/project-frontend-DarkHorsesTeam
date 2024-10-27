@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { toast, Toaster } from 'react-hot-toast';
@@ -8,23 +7,7 @@ import { updateDailyWaterRate } from '../../redux/auth/operations';
 const DailyNormaModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     
-    useEffect(() => {
-      const handleEsc = event => {
-        if (event.key === 'Escape' || event.key === 'Esc') {
-          onClose();
-        }
-      };
-      document.body.style.overflow = 'hidden';
-      if (isOpen) {
-        window.addEventListener('keydown', handleEsc);
-      }
-  
-      return () => {
-        window.removeEventListener('keydown', handleEsc);
-        document.body.style.overflow = 'auto';
-      };
-    }, [isOpen, onClose]);
-    
+
     const calculateWaterIntake = (weight, activityTime, gender) => {
         if (!weight || !activityTime) return 1.8;  
         const M = Number(weight);

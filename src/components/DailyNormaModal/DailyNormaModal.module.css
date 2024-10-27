@@ -2,8 +2,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
@@ -18,26 +18,29 @@
   z-index: 801;
   margin-top: 40px;
   overflow-y: auto;
+  overflow: hidden;
 }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 24px;
 }
 .title {
-  font-size: 24px;
   font-weight: bold;
-  padding-bottom: 24px;
   font-family: var(--font-family);
 font-weight: 500;
 font-size: 26px;
-line-height: 123%;
+line-height: 1.2;
 color: --primary-black;
 }
 .closeButton {
   background: none;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .formulas {
   margin-bottom: 12px;
@@ -46,7 +49,7 @@ color: --primary-black;
   font-family: var(--font-family);
 font-weight: 400;
 font-size: 16px;
-line-height: 125%;
+line-height: 1.3;
 color: --primary-black;
 margin-bottom: 18px;
 }
@@ -54,7 +57,7 @@ margin-bottom: 18px;
 font-family: var(--font-family);
 font-weight: 400;
 font-size: 18px;
-line-height: 133%;
+line-height: 1.3;
 color: var(--primary-blue);
 }
 .infoText {
@@ -67,13 +70,13 @@ color: var(--primary-blue);
   margin-bottom: 24px;
   font-weight: 400;
 font-size: 12px;
-line-height: 133%;
+line-height: 1.3;
 }
 .infoSpan{
   font-family: var(--font-family);
 font-weight: 400;
 font-size: 12px;
-line-height: 133%;
+line-height: 1.3;
 color: var(--primary-blue);
 }
 .infoTextBlok {
@@ -84,7 +87,7 @@ color: var(--primary-blue);
   font-family: var(--font-family);
 font-weight: 400;
 font-size: 16px;
-line-height: 125%;
+line-height: 1.2;
 color: var(--primery-color-black);
 
 }
@@ -126,7 +129,7 @@ color: var(--primery-color-black);
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 16px;
-  line-height: 125%;
+  line-height: 1.2;
   color: --primary-black;
   margin-bottom: 18px;
   width: 180px;
@@ -135,7 +138,7 @@ color: var(--primery-color-black);
   font-family: var(--font-family);
 font-weight: 700;
 font-size: 18px;
-line-height: 133%;
+line-height: 1.3;
 color: var(--primary-blue);
 }
 .saveButton {
@@ -159,7 +162,7 @@ color: var(--primary-blue);
   font-family: var(--font-family);
 font-weight: 400;
 font-size: 18px;
-line-height: 133%;
+line-height: 1.3;
 color: var(--primary-blue);
 }
 /* Стилі для планшетів */
