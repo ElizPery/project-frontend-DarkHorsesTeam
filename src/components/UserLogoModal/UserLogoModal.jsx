@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import css from './UserLogoModal.module.css';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { IoLogOutOutline } from 'react-icons/io5';
@@ -7,8 +8,23 @@ const UserLogoModal = ({
   handleOpenModalSetting,
   toggleModal,
 }) => {
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        toggleModal();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [toggleModal]);
+
   return (
-    <div className={css.userMenu}>
+    <div ref={modalRef} className={css.userMenu}>
       <button
         onClick={() => {
           handleOpenModalSetting();
