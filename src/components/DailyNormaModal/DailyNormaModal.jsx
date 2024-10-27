@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { toast, Toaster } from 'react-hot-toast';
@@ -6,6 +7,23 @@ import icons from '../../images/icons/icons.svg';
 import { updateDailyWaterRate } from '../../redux/auth/operations'; 
 const DailyNormaModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
+    
+    useEffect(() => {
+      const handleEsc = event => {
+        if (event.key === 'Escape' || event.key === 'Esc') {
+          onClose();
+        }
+      };
+      document.body.style.overflow = 'hidden';
+      if (isOpen) {
+        window.addEventListener('keydown', handleEsc);
+      }
+  
+      return () => {
+        window.removeEventListener('keydown', handleEsc);
+        document.body.style.overflow = 'auto';
+      };
+    }, [isOpen, onClose]);
     
     const calculateWaterIntake = (weight, activityTime, gender) => {
         if (!weight || !activityTime) return 1.8;  
@@ -22,9 +40,8 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
 
   
    const handleSubmit = async (values) => {
-    console.log(values.waterIntake);
-    const waterAmount = parseFloat(values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)) * 1000; // Перетворюємо на число і множимо на 1000
-    console.log(waterAmount);
+    
+    const waterAmount = parseFloat(values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)) * 1000; 
     const result = await dispatch(updateDailyWaterRate({ dailyNorma: waterAmount })); 
     if (updateDailyWaterRate.fulfilled.match(result)) {
        toast.success('Data saved successfully!');
@@ -51,20 +68,20 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                         </svg>
                     </button>
                 </div>
-                {/* Формули */}
+           
                 <div className={styles.formulas}>
                     <p className={styles.formulaText}>For girl: <span className={styles.span}>V=(M*0,03) + (T*0,4)</span></p>
                     <p className={styles.formulaText}>For man: <span className={styles.span}>V=(M*0,04) + (T*0,6)</span></p>
                 </div>
                 <div className={styles.infoTextBlok}>
                     <p className={styles.infoText}>
-                        <span className={styles.span}>*</span> V is the volume of the water norm in liters per day, M is your body weight,
+                        <span className={styles.infoSpan}>*</span> V is the volume of the water norm in liters per day, M is your body weight,
                         T is the time of active sports, or another type of activity commensurate in terms of loads (in the absence of these, you must set 0)
                     </p>
                 </div>
-                {/* Форма */}
+             
                 <Formik
-                    initialValues={{ weight: '', activityTime: '', gender: 'female', waterIntake: '' }} // Встановлюємо "female" за замовчуванням
+                    initialValues={{ weight: '', activityTime: '', gender: 'female', waterIntake: '' }} 
                     onSubmit={handleSubmit}
                 >
                     {({ values }) => (
@@ -92,10 +109,10 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                             </div>
                             <div className={styles.litersField}>
                                 <div>
-                                    <p className={styles.formulaText}>The required amount of water in liters per day:</p>
+                                    <p className={styles.litersText}>The required amount of water in liters per day:</p>
                                 </div>
                                 <div>
-                                    <span className={styles.span}>{calculateWaterIntake(values.weight, values.activityTime, values.gender)} L</span> {/* Повертає результат в літрах */}
+                                    <span className={styles.litersSpan}>{calculateWaterIntake(values.weight, values.activityTime, values.gender)} L</span> 
                                 </div>
                             </div>
                             <div>
@@ -105,7 +122,7 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                                     className={styles.input}
                                     placeholder="Water Intake"
                                     type="text"
-                                    value={values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)} // Значення за замовчуванням
+                                    value={values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)} 
                                 />
                                 <ErrorMessage name="waterIntake" component="span" />
                             </div>

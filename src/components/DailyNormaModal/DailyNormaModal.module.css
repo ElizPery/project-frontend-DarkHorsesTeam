@@ -11,11 +11,13 @@
   z-index: 800;
 }
 .modal {
-  width: 280px; /* Мобільна версія */
+  width: 280px; 
   padding: 24px 12px;
   border-radius: 10px;
-  background: white; /* Задній фон модального вікна */
+  background: var(--primary-white);
   z-index: 801;
+  margin-top: 40px;
+  overflow-y: auto;
 }
 .header {
   display: flex;
@@ -67,6 +69,13 @@ color: var(--primary-blue);
 font-size: 12px;
 line-height: 133%;
 }
+.infoSpan{
+  font-family: var(--font-family);
+font-weight: 400;
+font-size: 12px;
+line-height: 133%;
+color: var(--primary-blue);
+}
 .infoTextBlok {
   margin-bottom: 24px;
   
@@ -96,6 +105,11 @@ color: var(--primery-color-black);
   padding-top: 16px;
   padding-bottom: 16px;
 }
+.genderField label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .weightField .input{
   margin-bottom: 12px;
 }
@@ -103,19 +117,44 @@ color: var(--primery-color-black);
   display: flex;
   margin-bottom: 24px;
   gap: 6px;
+  align-items: center;
 }
 .litersField .span{
  
 }
+.litersText {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: --primary-black;
+  margin-bottom: 18px;
+  width: 180px;
+}
+.litersSpan{
+  font-family: var(--font-family);
+font-weight: 700;
+font-size: 18px;
+line-height: 133%;
+color: var(--primary-blue);
+}
 .saveButton {
   border-radius: 10px;
   padding: 8px 30px;
-  width: 256px; /* Мобільна версія */
+  width: 256px; 
   height: 36px;
   box-shadow: 0 4px 8px 0 rgba(64, 123, 255, 0.34);
   background-color: var(--primary-blue);
-  color: white; /* Колір тексту на кнопці */
+  color: var(--primary-white);
 }
+
+.saveButton:hover {
+  box-shadow: 0 4px 14px 0 rgba(64, 123, 255, 0.54);
+}
+.saveButton:focus {
+  box-shadow: none;
+}
+
 .input::placeholder{
   font-family: var(--font-family);
 font-weight: 400;
@@ -134,18 +173,24 @@ color: var(--primary-blue);
     display: flex;
     gap: 24px;
   }
+  .litersText {
+    width: 328px;
+  }
+
   .saveButtonBlok {
     display: flex;
     flex-direction:row-reverse;
   }
   .saveButton {
-      width: 160px; /* Ширина кнопки для планшетів */
+      width: 160px; 
+      height: 44px;
   }
 }
-/* Стилі для комп'ютерів */
+
 @media (min-width: 1200px) {
   .modal {
-      width: 592px; /* Ширина для комп'ютерів */
+    margin-top: 110px;
+      width: 592px; 
       height: 712px;
   }
 
