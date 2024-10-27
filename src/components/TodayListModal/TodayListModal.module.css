@@ -154,6 +154,7 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
+  position: relative;
 }
 .timeInput,
 .numberInput {
@@ -213,6 +214,41 @@ input[type='time'] {
   line-height: 20px;
   text-align: center;
 }
+.timePicker {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  z-index: 10;
+  top: 100%;
+}
+
+.timeColumns {
+  display: flex;
+}
+
+.hoursColumn,
+.minutesColumn {
+  max-height: 150px;
+  overflow-y: auto;
+  width: 50px;
+  color: var(--primary-blue);
+}
+
+.hourOption,
+.minuteOption {
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.hourOption:hover,
+.minuteOption:hover {
+  background-color: var(--secondary-light-blue);
+}
+
 @media (min-width: 768px) {
   .modal {
     margin: 0;

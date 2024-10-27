@@ -4,6 +4,7 @@ import {
   fetchTodayWater,
   deleteWater,
   updateWater,
+  addWater,
 } from '../../redux/water/operations.js';
 import {
   selectDailyWaterIntake,
@@ -26,6 +27,7 @@ export default function TodayWaterList() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [itemToEdit, setItemToEdit] = useState(null);
+  const [isAddingWater, setIsAddingWater] = useState(false);
 
   useEffect(() => {
     dispatch(fetchTodayWater());
@@ -38,7 +40,7 @@ export default function TodayWaterList() {
 
   const confirmDelete = item => {
     dispatch(deleteWater(item._id)).then(() => {
-      dispatch(fetchTodayWater()); // Оновлення даних після видалення
+      dispatch(fetchTodayWater());
       setModalOpen(false);
     });
   };
@@ -46,6 +48,7 @@ export default function TodayWaterList() {
   const handleEdit = item => {
     setItemToEdit(item);
     setEditModalOpen(true);
+    setIsAddingWater(false);
   };
 
   const handleConfirm = item => {
@@ -57,14 +60,29 @@ export default function TodayWaterList() {
 
     console.log('Updating with ID:', _id, 'and data:', formattedData);
     dispatch(updateWater({ id: _id, waterData: formattedData })).then(() => {
-      dispatch(fetchTodayWater()); // Оновлення даних після оновлення
+      dispatch(fetchTodayWater());
       setEditModalOpen(false);
+    });
+  };
+
+  const handleAddWater = () => {
+    setItemToEdit(null);
+    setIsAddingWater(true);
+    setEditModalOpen(true);
+  };
+
+  const handleConfirmAddWater = newItem => {
+    dispatch(addWater(newItem)).then(() => {
+      dispatch(fetchTodayWater());
+      setEditModalOpen(false);
+      setIsAddingWater(false);
     });
   };
 
   const closeModal = () => {
     setModalOpen(false);
     setEditModalOpen(false);
+    setIsAddingWater(false);
   };
 
   return (
@@ -121,7 +139,9 @@ export default function TodayWaterList() {
       </div>
 
       <div className={styles.addButtonContainer}>
-        <button className={styles.addButton}>+ Add Water</button>
+        <button className={styles.addButton} onClick={handleAddWater}>
+          + Add Water
+        </button>
       </div>
 
       <ModalDelete
@@ -134,8 +154,9 @@ export default function TodayWaterList() {
       <TodayListModal
         isOpen={editModalOpen}
         onClose={closeModal}
-        onConfirm={handleConfirm}
+        onConfirm={isAddingWater ? handleConfirmAddWater : handleConfirm}
         item={itemToEdit}
+        isAdding={isAddingWater}
       />
     </div>
   );
