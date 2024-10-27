@@ -23,6 +23,7 @@ export default function TodayListModal({
 
   useEffect(() => {
     if (isOpen) {
+      setShowTimePicker(false);
       if (item && !isAdding) {
         setVolume(item.volume);
         const recordTime = new Date(item.date);
