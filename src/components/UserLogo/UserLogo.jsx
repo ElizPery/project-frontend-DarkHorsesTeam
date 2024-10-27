@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsModalOpen, selectUser } from '../../redux/auth/selectors.js';
 import UserLogoModal from '../UserLogoModal/UserLogoModal.jsx';
@@ -22,7 +22,7 @@ const UserLogo = () => {
   };
   const user = useSelector(selectUser);
   const { email, name } = user;
-
+  const buttonRef = useRef(null);
   let photo;
   if (user.photo) photo = user.photo;
 
@@ -36,13 +36,16 @@ const UserLogo = () => {
   };
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen(prev => !prev);
   };
-
   return (
     <div className={css.userLogo}>
       <span className={css.userLogoName}>{name}</span>
-      <button className={css.userLogoButton} onClick={toggleModal}>
+      <button
+        className={css.userLogoButton}
+        ref={buttonRef}
+        onClick={toggleModal}
+      >
         {photo ? (
           <img className={css.userLogoAvatar} src={photo} alt={name} />
         ) : (
@@ -61,6 +64,7 @@ const UserLogo = () => {
           handleOpenModalLogout={handleOpenModalLogout}
           handleOpenModalSetting={handleOpenModalSetting}
           toggleModal={toggleModal}
+          buttonRef={buttonRef}
         />
       )}
       {isModalSettingOpen && (
