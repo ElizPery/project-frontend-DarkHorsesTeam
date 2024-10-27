@@ -1,4 +1,8 @@
 import { useDispatch } from 'react-redux';
+
+import { selectUser } from '../../redux/auth/selectors.js';
+import { useSelector } from 'react-redux';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { toast, Toaster } from 'react-hot-toast';
 import styles from './DailyNormaModal.module.css';
@@ -7,9 +11,12 @@ import { updateDailyWaterRate } from '../../redux/auth/operations';
 const DailyNormaModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     
+    const user = useSelector(selectUser);
+
+    const dailyNorma = user.dailyNorma / 1000 || "waterIntake";
 
     const calculateWaterIntake = (weight, activityTime, gender) => {
-        if (!weight || !activityTime) return 1.8;  
+        if (!weight || !activityTime) return 0;  
         const M = Number(weight);
         const T = Number(activityTime);
         let V;
@@ -64,7 +71,7 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                 </div>
              
                 <Formik
-                    initialValues={{ weight: '', activityTime: '', gender: 'female', waterIntake: '' }} 
+                    initialValues={{ weight: '', activityTime: '', gender: 'female', waterIntake: dailyNorma.toString() }} 
                     onSubmit={handleSubmit}
                 >
                     {({ values }) => (
@@ -95,7 +102,7 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                                     <p className={styles.litersText}>The required amount of water in liters per day:</p>
                                 </div>
                                 <div>
-                                    <span className={styles.litersSpan}>{calculateWaterIntake(values.weight, values.activityTime, values.gender)} L</span> 
+                                    <span className={styles.litersSpan}>{ values.weight && values.activityTime ? calculateWaterIntake(values.weight, values.activityTime, values.gender) : '0' } L</span> 
                                 </div>
                             </div>
                             <div>
@@ -105,7 +112,7 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                                     className={styles.input}
                                     placeholder="0"
                                     type="text"
-                                    value={values.waterIntake} 
+                                    value={values.waterIntake}
                                 />
                                 <ErrorMessage name="waterIntake" component="span" />
                             </div>
