@@ -27,8 +27,8 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
     const waterAmount = parseFloat(values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)) * 1000; 
     const result = await dispatch(updateDailyWaterRate({ dailyNorma: waterAmount })); 
     if (updateDailyWaterRate.fulfilled.match(result)) {
-       toast.success('Data saved successfully!');
-
+        toast.success('Data saved successfully!');
+        onClose(); 
     } else {
        toast.error(result.payload || 'Failed to save data.'); 
    }
