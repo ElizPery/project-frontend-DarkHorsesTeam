@@ -1,10 +1,19 @@
 import { useState } from 'react';
 import styles from './DailyNorma.module.css';
+import { selectUser } from '../../redux/auth/selectors.js';
+import { useSelector } from 'react-redux';
+import DailyNormaModal from '../DailyNormaModal/DailyNormaModal.jsx';
 export default function DailyNorma() {
-  const [openDailyNormaModal, setOpenDailyNormaModal] = useState(true);
+
+  const user = useSelector(selectUser);
+
+
+  const [openDailyNormaModal, setOpenDailyNormaModal] = useState(false);
   const closeModal = () => setOpenDailyNormaModal(false);
   const openModal = () => setOpenDailyNormaModal(true);
-  const dailyNorma = 1.5;
+
+  const dailyNorma = user.dailyNorma / 1000;
+
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>My daily norma</h3>
@@ -19,6 +28,9 @@ export default function DailyNorma() {
         >
           Edit
         </button>
+        <DailyNormaModal
+        isOpen={openDailyNormaModal}
+        onClose={closeModal}/>
       </div>
     </div>
   );
