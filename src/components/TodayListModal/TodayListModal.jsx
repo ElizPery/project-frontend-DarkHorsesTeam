@@ -38,6 +38,7 @@ export default function TodayListModal({
           recordTime.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
+            hour12: false,
           })
         );
       } else {
@@ -47,6 +48,7 @@ export default function TodayListModal({
           now.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
+            hour12: false,
           })
         );
         setInitialVolume(150);
@@ -54,6 +56,7 @@ export default function TodayListModal({
           now.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
+            hour12: false,
           })
         );
       }
@@ -70,10 +73,12 @@ export default function TodayListModal({
   };
 
   const handleSave = () => {
+    // Перевірка на об'єм
     if (volume <= 0) {
       setError('Enter the amount of water.');
       return;
     }
+
     const [hours, minutes] = time.split(':');
     let localDate;
 
