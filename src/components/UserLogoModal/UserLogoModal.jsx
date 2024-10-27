@@ -7,21 +7,26 @@ const UserLogoModal = ({
   handleOpenModalLogout,
   handleOpenModalSetting,
   toggleModal,
+  buttonRef,
 }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = event => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
         toggleModal();
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [toggleModal]);
+  }, [toggleModal, buttonRef]);
 
   return (
     <div ref={modalRef} className={css.userMenu}>
