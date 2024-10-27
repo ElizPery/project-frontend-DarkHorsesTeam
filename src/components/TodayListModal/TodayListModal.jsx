@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './TodayListModal.module.css';
 import icons from '../../images/icons/icons.svg';
 import { useSelector } from 'react-redux';
-import { selectDailyWaterIntake } from '../../redux/water/selectors.js';
+import { selectUser } from '../../redux/auth/selectors.js';
 
 export default function TodayListModal({
   isOpen,
@@ -14,7 +14,7 @@ export default function TodayListModal({
   const [volume, setVolume] = useState(item?.volume || 0);
   const [time, setTime] = useState('');
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const dailyNorma = useSelector(selectDailyWaterIntake).dailyNorma;
+  const dailyNorma = useSelector(selectUser).dailyNorma;
 
   useEffect(() => {
     if (item && !isAdding) {

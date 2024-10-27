@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats.jsx';
 
 export default function MonthStatsTableItem({ day, monthName,activeDay, setActiveDay  }) {
-    // let persent = "0"
-    // let trigger = true;
     const { data } = useSelector(selectMonthIntake);
     const [persent, setPersent] = useState("0");
     const [trigger, setTrigger] = useState(true);
@@ -29,20 +27,6 @@ export default function MonthStatsTableItem({ day, monthName,activeDay, setActiv
         })
     }, [data, day]);
     
-    
-
-    // data.map((item) => {
-    //     if (item.date.slice(8) === day.toString() || item.date.slice(8) === `0${day}`) {            
-    //         if (Number(item.percentage.slice(0,3))>100) {
-    //             persent = '100';
-    //             trigger = false
-    //             return
-    //         };
-    //         persent = item.percentage.slice(0, 2);
-    //         trigger = true;
-    //         return
-    //     }
-    // })
     const handleDayClick = () => {
         if (activeDay === day) {
             setActiveDay(null);

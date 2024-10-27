@@ -12,8 +12,7 @@ import { selectDailyWaterIntake } from "../../redux/water/selectors";
 
 export default function MonthStatsTable() {
     const loader = useSelector(selectIsLoading);
-    const {percentage} = useSelector(selectDailyWaterIntake);
-    console.log("MonthStatsTable ~ dailyWater:", percentage)
+    const todayWater = useSelector(selectDailyWaterIntake)
     const [month, setMonth] = useState(dayjs().month());
     const [daysInMonth, setDaysInMonth] = useState(0);
     const [fullMonth, setFullMonth] = useState('');
@@ -22,7 +21,6 @@ export default function MonthStatsTable() {
     const year = new Date().getFullYear();
     const dispatch = useDispatch();
     let currentMonth;
-    
     
     useEffect(() => {
         dispatch(getWaterMonth({month: month +1}));
@@ -68,7 +66,7 @@ export default function MonthStatsTable() {
         if (month === 11) {
             setFullMonth("December");
         };        
-    }, [dispatch, month, year, percentage]);
+    }, [dispatch, month, year, todayWater.percentage]);
     
     return <section className={css.section}>
             <div className={css.container}>
