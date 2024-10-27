@@ -1,12 +1,25 @@
-import { useState} from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectIsModalOpen, selectUser } from '../../redux/auth/selectors.js';
 import UserLogoModal from '../UserLogoModal/UserLogoModal.jsx';
 import css from './UserLogo.module.css';
 import icons from '../../images/icons/icons.svg';
+import SettingModal from '../SettingModal/SettingModal.jsx';
+import LogOutModal from '../UserLogoutModal/UserLogoutModal.jsx';
+import { resetModalState } from '../../redux/auth/slice.js';
 const UserLogo = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isOpen = useSelector(selectIsModalOpen);
-  const [isModalOpen, setIsModalOpen] = useState(isOpen);
+  const [isModalLogoutOpen, setIsModalLogoutOpen] = useState(false);
+  const [isModalSettingOpen, setIsModalSettingOpen] = useState(isOpen);
+  const dispatch = useDispatch();
+  const handleOpenModalLogout = () => setIsModalLogoutOpen(true);
+  const handleCloseModalLogout = () => setIsModalLogoutOpen(false);
+  const handleOpenModalSetting = () => setIsModalSettingOpen(true);
+  const handleCloseModalSetting = () => {
+    dispatch(resetModalState());
+    setIsModalSettingOpen(false);
+  };
   const user = useSelector(selectUser);
   const { email, name } = user;
 
@@ -35,11 +48,28 @@ const UserLogo = () => {
         ) : (
           <div className={css.userLogoInitial}>{getInitials()}</div>
         )}
-        <svg className={`${css.userLogoIcon} ${isModalOpen ? css.rotate : ''}`} width="16" height="16">
+        <svg
+          className={`${css.userLogoIcon} ${isModalOpen ? css.rotate : ''}`}
+          width="16"
+          height="16"
+        >
           <use href={`${icons}#icon-chevron-double-up`} />
         </svg>
       </button>
-      {isModalOpen && <UserLogoModal />}
+      {isModalOpen && (
+        <UserLogoModal
+          handleOpenModalLogout={handleOpenModalLogout}
+          handleOpenModalSetting={handleOpenModalSetting}
+          toggleModal={toggleModal}
+        />
+      )}
+      {isModalSettingOpen && (
+        <SettingModal
+          isOpen={isModalSettingOpen}
+          onClose={handleCloseModalSetting}
+        />
+      )}
+      {isModalLogoutOpen && <LogOutModal onClose={handleCloseModalLogout} />}
     </div>
   );
 };
