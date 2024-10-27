@@ -18,13 +18,13 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
         } else {
             V = (M * 0.04) + (T * 0.6); 
         }
-        return V; 
+        return V.toFixed(1); 
     };
 
   
    const handleSubmit = async (values) => {
     
-    const waterAmount = parseFloat(values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)) * 1000; 
+    const waterAmount = parseFloat(values.waterIntake) * 1000; 
     const result = await dispatch(updateDailyWaterRate({ dailyNorma: waterAmount })); 
     if (updateDailyWaterRate.fulfilled.match(result)) {
         toast.success('Data saved successfully!');
@@ -103,9 +103,9 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                                 <Field
                                     name="waterIntake"
                                     className={styles.input}
-                                    placeholder="Water Intake"
+                                    placeholder="0"
                                     type="text"
-                                    value={values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)} 
+                                    value={values.waterIntake} 
                                 />
                                 <ErrorMessage name="waterIntake" component="span" />
                             </div>
