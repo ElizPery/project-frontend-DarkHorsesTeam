@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-
+import { useEffect } from 'react';
 import { selectUser } from '../../redux/auth/selectors.js';
 import { useSelector } from 'react-redux';
 
@@ -28,7 +28,14 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
         return V.toFixed(1); 
     };
 
-  
+    useEffect(() => { if (isOpen) { 
+      document.body.style.position = 'fixed'; document.body.style.top = `-${window.scrollY}px`; } 
+      else { 
+        const scrollY = document.body.style.top; document.body.style.position = ''; 
+        document.body.style.top = ''; window.scrollTo(0, parseInt(scrollY || '0') * -1); } }, 
+        [isOpen]);
+
+
    const handleSubmit = async (values) => {
     
     const waterAmount = parseFloat(values.waterIntake) * 1000; 
