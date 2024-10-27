@@ -38,7 +38,7 @@ function App() {
   ) : (
     <SharedLayout>
       <Routes>
-        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/" element={<WelcomePage />} />
         <Route
           path="/signup"
           element={
