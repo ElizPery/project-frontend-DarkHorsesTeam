@@ -204,6 +204,7 @@ export default function TodayListModal({
               value={volume}
               onChange={e => handleVolumeChange(Number(e.target.value))}
               onBlur={() => handleVolumeChange(volume)}
+              onFocus={() => setVolume('')}
               className={styles.numberInput}
             />
           </div>
