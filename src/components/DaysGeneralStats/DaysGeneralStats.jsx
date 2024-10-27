@@ -1,24 +1,8 @@
 import css from './DaysGeneralStats.module.css';
 
-const DaysGeneralStats = ({
-  date,
-  dailyNorm,
-  fulfillment,
-  servings,
-  centerPosition,
-}) => {
-  const popupLength = 280;
-  let left = 'auto';
-  let right = 'auto';
-  if (centerPosition - popupLength / 2 < 0) {
-    left = 0;
-  }
-  if (centerPosition + popupLength / 2 > window.innerWidth) {
-    right = 0;
-  }
-
+const DaysGeneralStats = ({ date, dailyNorm, fulfillment, servings }) => {
   return (
-    <div className={css.container} style={{ left: left, right: right }}>
+    <div className={css.container}>
       <div className={css.allText}>
         <p className={css.date}>{date}</p>
         <p className={css.dailyNorm}>

@@ -1,9 +1,11 @@
+import * as React from 'react';
 import { useState } from 'react';
 import css from './MonthStatsTableItem.module.css';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { selectMonthIntake } from '../../redux/water/selectors';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats.jsx';
+import Popover from '@mui/material/Popover';
 
 export default function MonthStatsTableItem({
   day,
@@ -13,9 +15,13 @@ export default function MonthStatsTableItem({
 }) {
   let persent = '0';
   let trigger = true;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const { data } = useSelector(selectMonthIntake);
-  const [x, setX] = useState(-1);
 
   data.map(item => {
     if (item.date.slice(8) === day.toString()) {
@@ -30,7 +36,7 @@ export default function MonthStatsTableItem({
     }
   });
   const handleDayClick = element => {
-    setX(element.pageX);
+    setAnchorEl(element.currentTarget);
     if (activeDay === day) {
       setActiveDay(null);
     } else {
@@ -47,7 +53,20 @@ export default function MonthStatsTableItem({
         {day}
       </span>
       <p className={css.persent}>{`${persent}%`}</p>
-      {isActive && (
+      <Popover
+        id={`day${day}`}
+        open={anchorEl !== null && isActive}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
         <DaysGeneralStats
           Stats
           date={`${day}, ${monthName}`}
@@ -60,9 +79,8 @@ export default function MonthStatsTableItem({
             data.find(item => item.date.slice(8) === day.toString())
               ?.consumptionCount || 0
           }
-          centerPosition={x}
         />
-      )}
+      </Popover>
     </div>
   );
 }
