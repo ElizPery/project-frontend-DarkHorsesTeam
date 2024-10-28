@@ -82,6 +82,7 @@ export default function TodayListModal({
     if (volume > 5000) {
       toast.error('Value must be less than 5000'); 
       console.error('Value must be less than 5000');
+      return;
     }
     if (!item?._id && !isAdding) {
       console.error('Item ID is undefined.');
