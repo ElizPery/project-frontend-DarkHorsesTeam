@@ -6,7 +6,7 @@ import { useState } from 'react';
 import TodayListModal from '../TodayListModal/TodayListModal';
 import { useDispatch } from 'react-redux';
 import { addWater } from '../../redux/water/operations';
-
+import { fetchTodayWater } from '../../redux/water/operations';
 export default function WaterRatioPanel() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemToAdd, setItemToAdd] = useState(null);
@@ -34,8 +34,10 @@ export default function WaterRatioPanel() {
   };
 
   const handleConfirmAddWater = newItem => {
-    dispatch(addWater(newItem));
-    setIsModalOpen(false);
+    dispatch(addWater(newItem)).then(() => {
+      dispatch(fetchTodayWater());
+      setIsModalOpen(false);
+    });
   };
 
   return (
