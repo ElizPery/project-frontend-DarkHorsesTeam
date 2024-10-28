@@ -75,9 +75,13 @@ export default function TodayListModal({
 
   const handleSave = () => {
     if (volume <= 0) {
-    toast.error('Value must be greater than 0.'); 
-    return;
-  }
+      toast.error('Value must be greater than 0.'); 
+      return;
+    }
+    if (volume > 5000) {
+      toast.error('Value must be less than 5000'); 
+      return;
+    }
     if (!item?._id && !isAdding) {
       toast.error('Item ID is undefined.'); 
       return;
@@ -240,7 +244,7 @@ export default function TodayListModal({
             </h3>
             <input
               type="number"
-              value={volume > 0 ? volume : ''}
+              value={volume}
               min="0"
               onChange={e => handleVolumeChange(Number(e.target.value))}
               onBlur={() => handleVolumeChange(volume)}
