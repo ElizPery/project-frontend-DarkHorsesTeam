@@ -12,7 +12,7 @@ export default function Logo() {
     if (isLoggedIn) {
       navigate('/home');
     } else {
-      navigate('/welcome');
+      navigate('/');
     }
   }
 
