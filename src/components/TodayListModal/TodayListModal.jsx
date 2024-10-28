@@ -3,6 +3,7 @@ import styles from './TodayListModal.module.css';
 import icons from '../../images/icons/icons.svg';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/auth/selectors.js';
+import { toast } from 'react-hot-toast';
 
 export default function TodayListModal({
   isOpen,
@@ -11,57 +12,106 @@ export default function TodayListModal({
   item,
   isAdding,
 }) {
-  const [volume, setVolume] = useState(item?.volume || 0);
+  const [volume, setVolume] = useState(0);
   const [time, setTime] = useState('');
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [error, setError] = useState('');
+
+  const [initialVolume, setInitialVolume] = useState(0);
+  const [initialTime, setInitialTime] = useState('');
+
   const dailyNorma = useSelector(selectUser).dailyNorma;
 
   useEffect(() => {
-    if (item && !isAdding) {
-      setVolume(item.volume);
-      const recordTime = new Date(item.date);
-      setTime(
-        recordTime.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-      );
-    } else {
-      const now = new Date();
-      setVolume(150);
-      setTime(
-        now.toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        })
-      );
+    if (isOpen) {
+      setShowTimePicker(false);
+      if (item && !isAdding) {
+        setVolume(item.volume);
+        const recordTime = new Date(item.date);
+        setTime(
+          recordTime.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          })
+        );
+        setInitialVolume(item.volume);
+        setInitialTime(
+          recordTime.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })
+        );
+      } else {
+        const now = new Date();
+        setVolume(150);
+        setTime(
+          now.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })
+        );
+        setInitialVolume(150);
+        setInitialTime(
+          now.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          })
+        );
+      }
     }
-  }, [item, isAdding]);
+  }, [isOpen, item, isAdding]);
 
   if (!isOpen) return null;
 
   const handleVolumeChange = newVolume => {
-    if (newVolume >= 0) setVolume(newVolume);
+    if (newVolume >= 0) {
+      setVolume(newVolume);
+      setError('');
+    }
   };
 
   const handleSave = () => {
+    if (volume <= 0) {
+    toast.error('Value must be greater than 0.'); 
+    console.error('Volume must be greater than 0.');
+    return;
+  }
     if (!item?._id && !isAdding) {
       console.error('Item ID is undefined.');
       return;
     }
+
+    const [hours, minutes] = time.split(':');
+    let localDate;
+
+    if (isAdding) {
+      localDate = new Date();
+      localDate.setHours(Number(hours), Number(minutes), 0, 0);
+    } else {
+      localDate = new Date(
+        Date.UTC(
+          new Date().getUTCFullYear(),
+          new Date().getUTCMonth(),
+          new Date().getUTCDate(),
+          Number(hours),
+          Number(minutes)
+        )
+      );
+    }
+
     const updatedItem = {
       ...item,
       volume,
-      date: new Date(item?.date || Date.now()).setHours(
-        Number(time.split(':')[0]),
-        Number(time.split(':')[1])
-      ),
+      date: localDate.toISOString(),
     };
 
     if (isAdding) {
       const newRecord = {
         volume,
-        date: new Date(updatedItem.date).toISOString(),
+        date: updatedItem.date,
         dailyNorma,
       };
       onConfirm(newRecord);
@@ -75,17 +125,15 @@ export default function TodayListModal({
   };
 
   const handleHourChange = hour => {
-    const [currentMinute] = time.split(':');
+    const [_, currentMinute] = time.split(':');
     const newTime = `${hour < 10 ? `0${hour}` : hour}:${currentMinute}`;
     setTime(newTime);
-  
   };
 
   const handleMinuteChange = minute => {
-    const [currentHour] = time.split(':');
+    const [currentHour, _] = time.split(':');
     const newTime = `${currentHour}:${minute < 10 ? `0${minute}` : minute}`;
     setTime(newTime);
-
   };
 
   const handleOutsideClick = e => {
@@ -95,10 +143,7 @@ export default function TodayListModal({
   };
 
   return (
-    <div
-      className={styles.backdrop}
-      onClick={handleOutsideClick} 
-    >
+    <div className={styles.backdrop} onClick={handleOutsideClick}>
       <div className={styles.modal}>
         <div className={styles.titleClose}>
           <h2 className={styles.title}>
@@ -117,8 +162,8 @@ export default function TodayListModal({
               <use href={`${icons}#icon-glass-water`}></use>
             </svg>
             <div className={styles.details}>
-              <span className={styles.volume}>{volume} ml</span>
-              <span className={styles.time}>{time}</span>
+              <span className={styles.volume}>{initialVolume} ml</span>
+              <span className={styles.time}>{initialTime}</span>
             </div>
           </div>
         )}
@@ -146,6 +191,7 @@ export default function TodayListModal({
                 </svg>
               </button>
             </div>
+            {error && <span className={styles.error}>{error}</span>}
           </div>
 
           <div className={styles.amountTimeInput}>
@@ -153,9 +199,9 @@ export default function TodayListModal({
             <input
               type="text"
               value={time}
-              onClick={toggleTimePicker} 
+              onClick={toggleTimePicker}
               className={styles.timeInput}
-              readOnly 
+              readOnly
             />
             {showTimePicker && (
               <div className={styles.timePicker}>
@@ -195,11 +241,18 @@ export default function TodayListModal({
             </h3>
             <input
               type="number"
-              value={volume}
+              value={volume > 0 ? volume : ''}
+              min="0"
               onChange={e => handleVolumeChange(Number(e.target.value))}
               onBlur={() => handleVolumeChange(volume)}
+              // className={`${styles.numberInput} ${
+              //   error ? styles.errorInput : ''
+              // }`}
+              onFocus={() => setVolume('')}
               className={styles.numberInput}
             />
+
+            {error && <span className={styles.error}>{error}</span>}
           </div>
         </div>
         <div className={styles.saveValue}>

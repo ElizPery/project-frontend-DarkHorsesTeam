@@ -1,4 +1,8 @@
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { selectUser } from '../../redux/auth/selectors.js';
+import { useSelector } from 'react-redux';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { toast, Toaster } from 'react-hot-toast';
 import styles from './DailyNormaModal.module.css';
@@ -7,9 +11,12 @@ import { updateDailyWaterRate } from '../../redux/auth/operations';
 const DailyNormaModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
     
+    const user = useSelector(selectUser);
+
+    const dailyNorma = user.dailyNorma / 1000 || "waterIntake";
 
     const calculateWaterIntake = (weight, activityTime, gender) => {
-        if (!weight || !activityTime) return 1.8;  
+        if (!weight || !activityTime) return 0;  
         const M = Number(weight);
         const T = Number(activityTime);
         let V;
@@ -18,13 +25,20 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
         } else {
             V = (M * 0.04) + (T * 0.6); 
         }
-        return V; 
+        return V.toFixed(1); 
     };
 
-  
+    useEffect(() => { if (isOpen) { 
+      document.body.style.position = 'fixed'; document.body.style.top = `-${window.scrollY}px`; } 
+      else { 
+        const scrollY = document.body.style.top; document.body.style.position = ''; 
+        document.body.style.top = ''; window.scrollTo(0, parseInt(scrollY || '0') * -1); } }, 
+        [isOpen]);
+
+
    const handleSubmit = async (values) => {
     
-    const waterAmount = parseFloat(values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)) * 1000; 
+    const waterAmount = parseFloat(values.waterIntake) * 1000; 
     const result = await dispatch(updateDailyWaterRate({ dailyNorma: waterAmount })); 
     if (updateDailyWaterRate.fulfilled.match(result)) {
         toast.success('Data saved successfully!');
@@ -64,7 +78,7 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                 </div>
              
                 <Formik
-                    initialValues={{ weight: '', activityTime: '', gender: 'female', waterIntake: '' }} 
+                    initialValues={{ weight: '', activityTime: '', gender: 'female', waterIntake: dailyNorma.toString() }} 
                     onSubmit={handleSubmit}
                 >
                     {({ values }) => (
@@ -95,7 +109,7 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                                     <p className={styles.litersText}>The required amount of water in liters per day:</p>
                                 </div>
                                 <div>
-                                    <span className={styles.litersSpan}>{calculateWaterIntake(values.weight, values.activityTime, values.gender)} L</span> 
+                                    <span className={styles.litersSpan}>{ values.weight && values.activityTime ? calculateWaterIntake(values.weight, values.activityTime, values.gender) : '0' } L</span> 
                                 </div>
                             </div>
                             <div>
@@ -103,9 +117,9 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                                 <Field
                                     name="waterIntake"
                                     className={styles.input}
-                                    placeholder="Water Intake"
+                                    placeholder="0"
                                     type="text"
-                                    value={values.waterIntake || calculateWaterIntake(values.weight, values.activityTime, values.gender)} 
+                                    value={values.waterIntake}
                                 />
                                 <ErrorMessage name="waterIntake" component="span" />
                             </div>

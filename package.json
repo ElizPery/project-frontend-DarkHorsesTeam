@@ -33,7 +33,10 @@
     "react-select": "^5.8.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "@mui/material": "6.1.5",
+    "@emotion/react": "11.13.3",
+    "@emotion/styled": "11.13.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",

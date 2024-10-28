@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+   
   z-index: 800;
 }
 .modal {
@@ -17,8 +18,9 @@
   background: var(--primary-white);
   z-index: 801;
   margin-top: 40px;
+   overflow: hidden;
+   height: 90%;
   overflow-y: auto;
-  overflow: hidden;
 }
 .header {
   display: flex;
