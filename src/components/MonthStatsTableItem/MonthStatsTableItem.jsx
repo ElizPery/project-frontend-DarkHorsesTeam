@@ -3,9 +3,13 @@ import { useEffect, useState } from 'react';
 import css from './MonthStatsTableItem.module.css';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { selectMonthIntake } from '../../redux/water/selectors.js';
+import {
+  selectDailyWaterIntake,
+  selectMonthIntake,
+} from '../../redux/water/selectors.js';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats.jsx';
 import Popover from '@mui/material/Popover';
+import { selectUser } from '../../redux/auth/selectors.js';
 
 export default function MonthStatsTableItem({
   day,
@@ -17,37 +21,62 @@ export default function MonthStatsTableItem({
   const [trigger, setTrigger] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const { data } = useSelector(selectMonthIntake) || {};
+  const { percentage } = useSelector(selectDailyWaterIntake);
+  const { dailyNorma } = useSelector(selectUser);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const { data } = useSelector(selectMonthIntake);
+  const today = new Date();
+  const isToday = today.getDate() === day;
+  const isCurrentMonth =
+    today.toLocaleString('en-US', { month: 'long' }) === monthName;
+  const isCurrentYear = today.getFullYear() === new Date().getFullYear();
 
-useEffect(() => {
-  data.map((item) => {
-    if (item.date.slice(8) === day.toString() || item.date.slice(8) === `0${day}`) {
-      if (Number(item.percentage.slice(0, 3)) >= 100) {
-          setPersent('100');
-          setTrigger(false);
-          return
-      };
-      setPersent(parseInt(item.percentage.slice(0, -1)));
-      setTrigger(true);
-      return
+  useEffect(() => {
+    if (isToday && isCurrentMonth && isCurrentYear) {
+      const todayPercentage =
+        typeof percentage === 'string'
+          ? parseInt(percentage.replace('%', ''), 10)
+          : percentage;
+
+      if (!isNaN(todayPercentage)) {
+        setPersent(todayPercentage >= 100 ? '100' : todayPercentage.toString());
+        setTrigger(todayPercentage < 100);
+      }
+    } else {
+      if (Array.isArray(data)) {
+        // Ensure data is an array
+        const dayData = data.find(
+          item =>
+            item.date.slice(8) === day.toString() ||
+            item.date.slice(8) === `0${day}`
+        );
+
+        if (dayData) {
+          const dayPercentage = parseInt(dayData.percentage.slice(0, -1));
+          setPersent(dayPercentage >= 100 ? '100' : dayPercentage.toString());
+          setTrigger(dayPercentage < 100);
+        } else {
+          setPersent('0');
+          setTrigger(true);
+        }
+      } else {
+        setPersent('0');
+        setTrigger(true);
+      }
     }
-  })
-}, [data, day]);
-  
+  }, [data, day, percentage, isToday, isCurrentMonth, isCurrentYear]);
 
-const handleDayClick = element => {
-  setAnchorEl(element.currentTarget);
-  if (activeDay === day) {
-    setActiveDay(null);
-  } else {
-    setActiveDay(day);
-  }
-};
-const isActive = activeDay === day;
+  const handleDayClick = element => {
+    setAnchorEl(element.currentTarget);
+    setActiveDay(activeDay === day ? null : day);
+  };
+
+  const isActive = activeDay === day;
+
   return (
     <div className={css.box}>
       <span
@@ -72,15 +101,16 @@ const isActive = activeDay === day;
         }}
       >
         <DaysGeneralStats
-          Stats
           date={`${day}, ${monthName}`}
           dailyNorm={
-            data.find(item => item.date.slice(8) === day.toString())
-              ?.dailyNorma / 1000 || '1.5'
+            isToday
+              ? dailyNorma / 1000
+              : data?.find(item => item.date.slice(8) === day.toString())
+                  ?.dailyNorma / 1000 || '1.5'
           }
           fulfillment={persent}
           servings={
-            data.find(item => item.date.slice(8) === day.toString())
+            data?.find(item => item.date.slice(8) === day.toString())
               ?.consumptionCount || 0
           }
         />
