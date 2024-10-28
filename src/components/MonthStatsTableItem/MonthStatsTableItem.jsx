@@ -26,7 +26,7 @@ export default function MonthStatsTableItem({
 useEffect(() => {
   data.map((item) => {
     if (item.date.slice(8) === day.toString() || item.date.slice(8) === `0${day}`) {
-      if (Number(item.percentage.slice(0, 3)) > 100) {
+      if (Number(item.percentage.slice(0, 3)) >= 100) {
           setPersent('100');
           setTrigger(false);
           return
