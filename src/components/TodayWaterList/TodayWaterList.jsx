@@ -12,6 +12,7 @@ import {
   selectError,
 } from '../../redux/water/selectors.js';
 import icons from '../../images/icons/icons.svg';
+import { toast } from 'react-hot-toast';
 import ModalDelete from './ModalDelate/ModalDelate.jsx';
 import TodayListModal from '../TodayListModal/TodayListModal.jsx';
 import styles from './TodayWaterList.module.css';
@@ -58,6 +59,7 @@ export default function TodayWaterList() {
       date: new Date(date).toISOString().slice(0, 16),
     };
     dispatch(updateWater({ id: _id, waterData: formattedData })).then(() => {
+      toast.success('Data saved successfully!');
       dispatch(fetchTodayWater());
       setEditModalOpen(false);
     });
@@ -71,6 +73,7 @@ export default function TodayWaterList() {
 
   const handleConfirmAddWater = newItem => {
     dispatch(addWater(newItem)).then(() => {
+      toast.success('Data saved successfully!');
       dispatch(fetchTodayWater());
       setEditModalOpen(false);
       setIsAddingWater(false);
