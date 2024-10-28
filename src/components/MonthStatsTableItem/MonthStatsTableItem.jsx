@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import css from './MonthStatsTableItem.module.css';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { selectMonthIntake } from '../../redux/water/selectors';
+import { selectMonthIntake } from '../../redux/water/selectors.js';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats.jsx';
 import Popover from '@mui/material/Popover';
 
@@ -13,8 +13,8 @@ export default function MonthStatsTableItem({
   activeDay,
   setActiveDay,
 }) {
-  let persent = '0';
-  let trigger = true;
+  const [persent, setPersent] = useState('0');
+  const [trigger, setTrigger] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClose = () => {
@@ -23,27 +23,31 @@ export default function MonthStatsTableItem({
 
   const { data } = useSelector(selectMonthIntake);
 
-  data.map(item => {
-    if (item.date.slice(8) === day.toString()) {
+useEffect(() => {
+  data.map((item) => {
+    if (item.date.slice(8) === day.toString() || item.date.slice(8) === `0${day}`) {
       if (Number(item.percentage.slice(0, 3)) > 100) {
-        persent = '100';
-        trigger = false;
-        return;
-      }
-      persent = item.percentage.slice(0, 2);
-      trigger = true;
-      return;
+          setPersent('100');
+          setTrigger(false);
+          return
+      };
+      setPersent(item.percentage.slice(0, 2));
+      setTrigger(true);
+      return
     }
-  });
-  const handleDayClick = element => {
-    setAnchorEl(element.currentTarget);
-    if (activeDay === day) {
-      setActiveDay(null);
-    } else {
-      setActiveDay(day);
-    }
-  };
-  const isActive = activeDay === day;
+  })
+}, [data, day]);
+  
+
+const handleDayClick = element => {
+  setAnchorEl(element.currentTarget);
+  if (activeDay === day) {
+    setActiveDay(null);
+  } else {
+    setActiveDay(day);
+  }
+};
+const isActive = activeDay === day;
   return (
     <div className={css.box}>
       <span
