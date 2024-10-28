@@ -9,6 +9,7 @@ import {
 } from '../../redux/water/selectors.js';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats.jsx';
 import Popover from '@mui/material/Popover';
+import { selectUser } from '../../redux/auth/selectors.js';
 
 export default function MonthStatsTableItem({
   day,
@@ -22,6 +23,7 @@ export default function MonthStatsTableItem({
 
   const { data } = useSelector(selectMonthIntake);
   const { percentage } = useSelector(selectDailyWaterIntake);
+  const { dailyNorma } = useSelector(selectUser);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -31,12 +33,19 @@ export default function MonthStatsTableItem({
   const isToday = today.getDate() === day;
   const isCurrentMonth =
     today.toLocaleString('en-US', { month: 'long' }) === monthName;
+  const isCurrentYear = today.getFullYear() === new Date().getFullYear();
 
   useEffect(() => {
-    if (isToday && isCurrentMonth) {
-      const todayPercentage = percentage.replace('%', '');
-      setPersent(todayPercentage >= 100 ? '100' : todayPercentage);
-      setTrigger(todayPercentage < 100);
+    if (isToday && isCurrentMonth && isCurrentYear) {
+      const todayPercentage =
+        typeof percentage === 'string'
+          ? parseInt(percentage.replace('%', ''), 10)
+          : percentage;
+
+      if (!isNaN(todayPercentage)) {
+        setPersent(todayPercentage >= 100 ? '100' : todayPercentage.toString());
+        setTrigger(todayPercentage < 100);
+      }
     } else {
       const dayData = data.find(
         item =>
@@ -53,7 +62,7 @@ export default function MonthStatsTableItem({
         setTrigger(true);
       }
     }
-  }, [data, day, percentage, isToday, isCurrentMonth]);
+  }, [data, day, percentage, isToday, isCurrentMonth, isCurrentYear]);
 
   const handleDayClick = element => {
     setAnchorEl(element.currentTarget);
@@ -88,8 +97,10 @@ export default function MonthStatsTableItem({
         <DaysGeneralStats
           date={`${day}, ${monthName}`}
           dailyNorm={
-            data.find(item => item.date.slice(8) === day.toString())
-              ?.dailyNorma / 1000 || '1.5'
+            isToday
+              ? dailyNorma / 1000
+              : data.find(item => item.date.slice(8) === day.toString())
+                  ?.dailyNorma / 1000 || '1.5'
           }
           fulfillment={persent}
           servings={
