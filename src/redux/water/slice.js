@@ -12,7 +12,6 @@ const initialState = {
     records: [],
     percentage: 0,
     totalWaterAmount: 0,
-    dailyNorma: 1500,
   },
   monthIntake: [],
   isLoading: false,
