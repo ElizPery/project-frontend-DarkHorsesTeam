@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react';
 import css from './MonthStatsTableItem.module.css';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { selectMonthIntake } from '../../redux/water/selectors.js';
+import {
+  selectDailyWaterIntake,
+  selectMonthIntake,
+} from '../../redux/water/selectors.js';
 import DaysGeneralStats from '../DaysGeneralStats/DaysGeneralStats.jsx';
 import Popover from '@mui/material/Popover';
 
@@ -17,37 +20,48 @@ export default function MonthStatsTableItem({
   const [trigger, setTrigger] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const { data } = useSelector(selectMonthIntake);
+  const { percentage } = useSelector(selectDailyWaterIntake);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const { data } = useSelector(selectMonthIntake);
+  const today = new Date();
+  const isToday = today.getDate() === day;
+  const isCurrentMonth =
+    today.toLocaleString('en-US', { month: 'long' }) === monthName;
 
-useEffect(() => {
-  data.map((item) => {
-    if (item.date.slice(8) === day.toString() || item.date.slice(8) === `0${day}`) {
-      if (Number(item.percentage.slice(0, 3)) >= 100) {
-          setPersent('100');
-          setTrigger(false);
-          return
-      };
-      setPersent(parseInt(item.percentage.slice(0, -1)));
-      setTrigger(true);
-      return
+  useEffect(() => {
+    if (isToday && isCurrentMonth) {
+      const todayPercentage = percentage.replace('%', '');
+      setPersent(todayPercentage >= 100 ? '100' : todayPercentage);
+      setTrigger(todayPercentage < 100);
+    } else {
+      const dayData = data.find(
+        item =>
+          item.date.slice(8) === day.toString() ||
+          item.date.slice(8) === `0${day}`
+      );
+
+      if (dayData) {
+        const dayPercentage = parseInt(dayData.percentage.slice(0, -1));
+        setPersent(dayPercentage >= 100 ? '100' : dayPercentage.toString());
+        setTrigger(dayPercentage < 100);
+      } else {
+        setPersent('0');
+        setTrigger(true);
+      }
     }
-  })
-}, [data, day]);
-  
+  }, [data, day, percentage, isToday, isCurrentMonth]);
 
-const handleDayClick = element => {
-  setAnchorEl(element.currentTarget);
-  if (activeDay === day) {
-    setActiveDay(null);
-  } else {
-    setActiveDay(day);
-  }
-};
-const isActive = activeDay === day;
+  const handleDayClick = element => {
+    setAnchorEl(element.currentTarget);
+    setActiveDay(activeDay === day ? null : day);
+  };
+
+  const isActive = activeDay === day;
+
   return (
     <div className={css.box}>
       <span
@@ -72,7 +86,6 @@ const isActive = activeDay === day;
         }}
       >
         <DaysGeneralStats
-          Stats
           date={`${day}, ${monthName}`}
           dailyNorm={
             data.find(item => item.date.slice(8) === day.toString())
