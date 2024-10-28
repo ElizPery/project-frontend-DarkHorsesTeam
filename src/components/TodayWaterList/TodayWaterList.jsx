@@ -57,8 +57,6 @@ export default function TodayWaterList() {
       volume,
       date: new Date(date).toISOString().slice(0, 16),
     };
-
-    console.log('Updating with ID:', _id, 'and data:', formattedData);
     dispatch(updateWater({ id: _id, waterData: formattedData })).then(() => {
       dispatch(fetchTodayWater());
       setEditModalOpen(false);
