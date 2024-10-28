@@ -31,7 +31,7 @@ useEffect(() => {
           setTrigger(false);
           return
       };
-      setPersent(item.percentage.slice(0, 2));
+      setPersent(parseInt(item.percentage.slice(0, -1)));
       setTrigger(true);
       return
     }
