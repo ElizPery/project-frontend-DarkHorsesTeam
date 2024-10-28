@@ -38,7 +38,12 @@ function App() {
   ) : (
     <SharedLayout>
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
+        <Route
+          path="/"
+          element={
+            <RestrictedRoute component={<WelcomePage />} redirectTo="/home" />
+          }
+        />
         <Route
           path="/signup"
           element={
