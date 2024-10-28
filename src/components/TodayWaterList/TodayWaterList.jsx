@@ -14,6 +14,7 @@ import {
 import icons from '../../images/icons/icons.svg';
 import { toast } from 'react-hot-toast';
 import ModalDelete from './ModalDelate/ModalDelate.jsx';
+import Loader from '../Loader/Loader.jsx';
 import TodayListModal from '../TodayListModal/TodayListModal.jsx';
 import styles from './TodayWaterList.module.css';
 
@@ -90,8 +91,8 @@ export default function TodayWaterList() {
     <div className={styles.container}>
       <h2 className={styles.title}>Today</h2>
 
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      {isLoading && <Loader />}
+      {error && toast.error(`Something went wrong: ${error}`)}
 
       <div className={styles.scrollContainer}>
         {dailyWaterIntake.records.length === 0 ? (
