@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useId, useState } from 'react';
 import icons from '../../images/icons/icons.svg';
 import styles from './AuthForm.module.css';
+import { toast } from 'react-hot-toast';
+
 export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -55,7 +57,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
       };
       const result = await onSubmit(userData);
       if (result?.error) {
-        console.log(result.error);
+        toast.error(result.error);
       } else {
         resetForm();
         if (submitButtonLabel === 'Sign up') {
@@ -65,7 +67,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
 
       resetForm();
     } catch (error) {
-      console.error('Registration error:', error);
+      toast.error('Registration error:', error);
       // const message = error.response?.data?.message || 'Registration failed';
       // setErrorMessage(message);
 

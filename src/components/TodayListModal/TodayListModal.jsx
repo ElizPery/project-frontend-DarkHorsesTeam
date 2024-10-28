@@ -76,11 +76,10 @@ export default function TodayListModal({
   const handleSave = () => {
     if (volume <= 0) {
     toast.error('Value must be greater than 0.'); 
-    console.error('Volume must be greater than 0.');
     return;
   }
     if (!item?._id && !isAdding) {
-      console.error('Item ID is undefined.');
+      toast.error('Item ID is undefined.'); 
       return;
     }
 

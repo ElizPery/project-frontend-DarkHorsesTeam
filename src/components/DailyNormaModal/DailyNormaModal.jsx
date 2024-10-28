@@ -15,17 +15,22 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
 
     const dailyNorma = user.dailyNorma / 1000 || "waterIntake";
 
-    const calculateWaterIntake = (weight, activityTime, gender) => {
-        if (!weight || !activityTime) return 0;  
+    const calculateWaterIntake = (weight = 0, activityTime = 0, gender) => {
+        if (!weight && !activityTime) return 0;  
         const M = Number(weight);
         const T = Number(activityTime);
-        let V;
-       if (gender === 'female') {
-            V = (M * 0.03) + (T * 0.4); 
+        if (!isNaN(M) && !isNaN(T)) {
+          let V;
+          if (gender === 'female') {
+            V = M * 0.03 + T * 0.4;
+          } else {
+            V = M * 0.04 + T * 0.6;
+          }
+          return V.toFixed(1);
         } else {
-            V = (M * 0.04) + (T * 0.6); 
-        }
-        return V.toFixed(1); 
+          toast.error('Value must be a number.');
+          return 0;
+        };
     };
 
     useEffect(() => { if (isOpen) { 
@@ -109,7 +114,7 @@ const DailyNormaModal = ({ isOpen, onClose }) => {
                                     <p className={styles.litersText}>The required amount of water in liters per day:</p>
                                 </div>
                                 <div>
-                                    <span className={styles.litersSpan}>{ values.weight && values.activityTime ? calculateWaterIntake(values.weight, values.activityTime, values.gender) : '0' } L</span> 
+                                    <span className={styles.litersSpan}>{values.weight || values.activityTime ? calculateWaterIntake(values.weight, values.activityTime, values.gender) : '0' } L</span> 
                                 </div>
                             </div>
                             <div>
