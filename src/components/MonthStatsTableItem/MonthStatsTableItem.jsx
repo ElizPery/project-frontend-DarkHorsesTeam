@@ -21,7 +21,7 @@ export default function MonthStatsTableItem({
   const [trigger, setTrigger] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const { data } = useSelector(selectMonthIntake);
+  const { data } = useSelector(selectMonthIntake) || {};
   const { percentage } = useSelector(selectDailyWaterIntake);
   const { dailyNorma } = useSelector(selectUser);
 
@@ -47,16 +47,22 @@ export default function MonthStatsTableItem({
         setTrigger(todayPercentage < 100);
       }
     } else {
-      const dayData = data.find(
-        item =>
-          item.date.slice(8) === day.toString() ||
-          item.date.slice(8) === `0${day}`
-      );
+      if (Array.isArray(data)) {
+        // Ensure data is an array
+        const dayData = data.find(
+          item =>
+            item.date.slice(8) === day.toString() ||
+            item.date.slice(8) === `0${day}`
+        );
 
-      if (dayData) {
-        const dayPercentage = parseInt(dayData.percentage.slice(0, -1));
-        setPersent(dayPercentage >= 100 ? '100' : dayPercentage.toString());
-        setTrigger(dayPercentage < 100);
+        if (dayData) {
+          const dayPercentage = parseInt(dayData.percentage.slice(0, -1));
+          setPersent(dayPercentage >= 100 ? '100' : dayPercentage.toString());
+          setTrigger(dayPercentage < 100);
+        } else {
+          setPersent('0');
+          setTrigger(true);
+        }
       } else {
         setPersent('0');
         setTrigger(true);
@@ -99,12 +105,12 @@ export default function MonthStatsTableItem({
           dailyNorm={
             isToday
               ? dailyNorma / 1000
-              : data.find(item => item.date.slice(8) === day.toString())
+              : data?.find(item => item.date.slice(8) === day.toString())
                   ?.dailyNorma / 1000 || '1.5'
           }
           fulfillment={persent}
           servings={
-            data.find(item => item.date.slice(8) === day.toString())
+            data?.find(item => item.date.slice(8) === day.toString())
               ?.consumptionCount || 0
           }
         />
