@@ -61,7 +61,7 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
       } else {
         resetForm();
         if (submitButtonLabel === 'Sign up') {
-          navigate('/signin')
+          navigate('/signin');
         } else navigate('/home');
       }
 
@@ -70,7 +70,6 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
       toast.error('Registration error:', error);
       // const message = error.response?.data?.message || 'Registration failed';
       // setErrorMessage(message);
-
     } finally {
       setSubmitting(false);
     }
@@ -80,33 +79,33 @@ export default function AuthForm({ onSubmit, submitButtonLabel = 'Sign in' }) {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;
 
+    let updatedValue;
+
     if (inputType === 'deleteContentBackward') {
-      const updatedValue = inputValue.slice(0, -1);
-      setInputValue(updatedValue);
-      setMaskedValue('*'.repeat(updatedValue.length));
-      setFieldValue('password', updatedValue);
+      updatedValue = inputValue.slice(0, -1);
     } else {
-      const updatedValue = inputValue + value.slice(-1);
-      setInputValue(updatedValue);
-      setMaskedValue('*'.repeat(updatedValue.length));
-      setFieldValue('password', updatedValue);
+      updatedValue = inputValue + value.slice(inputValue.length);
     }
+
+    setInputValue(updatedValue);
+    setMaskedValue('*'.repeat(updatedValue.length));
+    setFieldValue('password', updatedValue);
   };
   const handleRepeatInputChange = (e, setFieldValue) => {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;
 
+    let updatedValue;
+
     if (inputType === 'deleteContentBackward') {
-      const updatedValue = inputRepeatValue.slice(0, -1);
-      setInputRepeatValue(updatedValue);
-      setMaskedRepeatValue('*'.repeat(updatedValue.length));
-      setFieldValue('repeatPassword', updatedValue);
+      updatedValue = inputRepeatValue.slice(0, -1);
     } else {
-      const updatedValue = inputRepeatValue + value.slice(-1);
-      setInputRepeatValue(updatedValue);
-      setMaskedRepeatValue('*'.repeat(updatedValue.length));
-      setFieldValue('repeatPassword', updatedValue);
+      updatedValue = inputRepeatValue + value.slice(inputRepeatValue.length);
     }
+
+    setInputRepeatValue(updatedValue);
+    setMaskedRepeatValue('*'.repeat(updatedValue.length));
+    setFieldValue('repeatPassword', updatedValue);
   };
 
   return (
