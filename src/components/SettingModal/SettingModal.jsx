@@ -139,49 +139,52 @@ const SettingModal = ({ isOpen, onClose }) => {
   const handleInputChange = (e, setFieldValue) => {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;
+
+    let updatedValue;
+
     if (inputType === 'deleteContentBackward') {
-      const updatedValue = inputValue.slice(0, -1);
-      setInputValue(updatedValue);
-      setMaskedValue('*'.repeat(updatedValue.length));
-      setFieldValue('currentPwd', updatedValue);
+      updatedValue = inputRepeatValue.slice(0, -1);
     } else {
-      const updatedValue = inputValue + value.slice(-1);
-      setInputValue(updatedValue);
-      setMaskedValue('*'.repeat(updatedValue.length));
-      setFieldValue('currentPwd', updatedValue);
+      updatedValue = inputRepeatValue + value.slice(inputRepeatValue.length);
     }
+
+    setInputValue(updatedValue);
+    setMaskedValue('*'.repeat(updatedValue.length));
+    setFieldValue('currentPwd', updatedValue);
   };
 
   const handleNewInputChange = (e, setFieldValue) => {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;
+
+    let updatedValue;
+
     if (inputType === 'deleteContentBackward') {
-      const updatedValue = inputNewValue.slice(0, -1);
-      setInputNewValue(updatedValue);
-      setMaskedNewValue('*'.repeat(updatedValue.length));
-      setFieldValue('password', updatedValue);
+      updatedValue = inputRepeatValue.slice(0, -1);
     } else {
-      const updatedValue = inputNewValue + value.slice(-1);
-      setInputNewValue(updatedValue);
-      setMaskedNewValue('*'.repeat(updatedValue.length));
-      setFieldValue('password', updatedValue);
+      updatedValue = inputRepeatValue + value.slice(inputRepeatValue.length);
     }
+
+    setInputNewValue(updatedValue);
+    setMaskedNewValue('*'.repeat(updatedValue.length));
+    setFieldValue('password', updatedValue);
   };
 
   const handleRepeatInputChange = (e, setFieldValue) => {
     const { value } = e.target;
     const inputType = e.nativeEvent.inputType;
+
+    let updatedValue;
+
     if (inputType === 'deleteContentBackward') {
-      const updatedValue = inputRepeatValue.slice(0, -1);
-      setInputRepeatValue(updatedValue);
-      setMaskedRepeatValue('*'.repeat(updatedValue.length));
-      setFieldValue('repeatPassword', updatedValue);
+      updatedValue = inputRepeatValue.slice(0, -1);
     } else {
-      const updatedValue = inputRepeatValue + value.slice(-1);
-      setInputRepeatValue(updatedValue);
-      setMaskedRepeatValue('*'.repeat(updatedValue.length));
-      setFieldValue('repeatPassword', updatedValue);
+      updatedValue = inputRepeatValue + value.slice(inputRepeatValue.length);
     }
+
+    setInputRepeatValue(updatedValue);
+    setMaskedRepeatValue('*'.repeat(updatedValue.length));
+    setFieldValue('repeatPassword', updatedValue);
   };
 
   const togglePasswordVisibility = () => {
