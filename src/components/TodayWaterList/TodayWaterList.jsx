@@ -94,7 +94,7 @@ export default function TodayWaterList() {
       {isLoading && <Loader />}
       {error && toast.error(`Something went wrong: ${error}`)}
 
-      <div className={styles.scrollContainer}>
+      {!isLoading && !error && <div className={styles.scrollContainer}>
         {dailyWaterIntake.records.length === 0 ? (
           <></>
         ) : (
@@ -139,13 +139,13 @@ export default function TodayWaterList() {
             ))}
           </ul>
         )}
-      </div>
+      </div>}
 
-      <div className={styles.addButtonContainer}>
+      {!isLoading && <div className={styles.addButtonContainer}>
         <button className={styles.addButton} onClick={handleAddWater}>
           + Add Water
         </button>
-      </div>
+      </div>}
 
       <ModalDelete
         isOpen={modalOpen}
